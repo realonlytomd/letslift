@@ -1,0 +1,62 @@
+<div class="container-fluid">
+
+  <div class="row">
+
+    <img src="../assets/img/burger.png" alt="burgerpic">
+
+    <h1>Eat Da Burger!</h1>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-3">
+
+    </div>
+
+    <div class="col-md-3">
+
+      <h3>Yummy Burgers to Eat</h3>
+
+      <ul>
+        {{#each burger}}
+          {{#unless devoured}}
+            {{> burgers/burger-block devour=true}}
+          {{/unless}}
+        {{/each}}
+      </ul>
+
+    </div>
+
+    <div class="col-md-3">
+
+      <h3>Burgers Already Eaten</h3>
+
+      <ul>
+        {{#each burger}}
+          {{#if devoured}}
+            {{> burgers/burger-block-nobutton devour=false}}
+          {{/if}}
+        {{/each}}
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <h2>Type in a Burger You Would Like to Eat, then click Submit!</h2>
+
+      <div class="form">
+        <form id="createburger" class="button-size">
+          <textarea type="text" id="newname" name="burger"></textarea>
+          <br>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+
+  </div>
+
+</div>
+

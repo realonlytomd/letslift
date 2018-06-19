@@ -1,0 +1,13 @@
+<li>
+  <div>
+    <p>
+      {{this.dataValues.id}}. {{this.dataValues.burger_name}}
+    </p>
+
+    <button class="change-devour" data-id="{{this.dataValues.id}}" data-newdevour="{{devour}}">
+			{{#if devour}}Devour it!{{/if}}
+	  </button>
+
+  </div>
+</li>
+
