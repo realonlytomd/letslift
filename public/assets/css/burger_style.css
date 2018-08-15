@@ -2,6 +2,7 @@ body {
 	background-image: url("../img/Burger-Inn-Counter.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
+	background-position: center;
 }
 
 img {
