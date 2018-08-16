@@ -29,11 +29,11 @@
         <form class="login">
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="email-input" placeholder="Email">
+            <input type="email" class="form-control" id="email-login-input" placeholder="Email">
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="password-input" placeholder="Password">
+            <input type="password" class="form-control" id="password-login-input" placeholder="Password">
           </div>
           <button type="submit" class="btn btn-default">Login</button>
         </form>
@@ -49,7 +49,8 @@
       </a>
     </div>
     <div class="col-md-6">
-      <h2>Welcome <span class="member-name"></span></h2>
+      <!-- I think I need handlebars reference for data here-->
+      <h2>Welcome <span id="member-id"></span>.  <span id="member-name"></span></h2>
     </div>
   </div>
 
