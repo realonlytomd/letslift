@@ -9,7 +9,7 @@
 var express = require("express");
 
 var router = express.Router();
-// Requiring the burger model
+// Requiring the burger and user models
 var db = require("../models");
 var passport = require("../config/passport");
 
@@ -70,16 +70,16 @@ module.exports = function(router) {
   router.get("/", function(req, res) {
     db.Burger.findAll({})
     .then(function(dbBurger) {
-      console.log(dbBurger);
+      // console.log(dbBurger);
       var burger = {burger:dbBurger};
-      console.log(burger);
+      // console.log(burger);
       res.render("index",burger);
     });
   });
 
   // POST route for saving a new burger
   router.post("/api/burgers", function(req, res) {
-    console.log(req.body);
+    // console.log(req.body);
     db.Burger.create({
       burger_name: req.body.burger_name
     })

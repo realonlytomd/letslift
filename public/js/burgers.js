@@ -73,7 +73,7 @@ $(document).ready(function() {
 
     // This is the members portion
     $.get("/api/user_data").then(function(data) {
-      $("#member-id").text(data.id);
+      $("#member-id").text(data.id); // I added this for interest
       $("#member-name").text(data.email);
     });  
 

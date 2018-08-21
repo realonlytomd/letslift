@@ -10,7 +10,7 @@ passport.use(new LocalStrategy(
     usernameField: "email"
   },
   function(email, password, done) {
-    // When a user tries to sign in this code runs
+    // When a user tries to sign in, this code runs
     db.User.findOne({
       where: {
         email: email
