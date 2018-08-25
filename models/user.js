@@ -17,6 +17,26 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    // Workout A
+    workoutA: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    // Exercise One of Workout A
+    exerciseOne: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    // Number of Sets of Exercise One of Workout A
+    setsOne: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    // Number of Reps for each Set of Exercise One of Workout A
+    repsOne: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   });
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
