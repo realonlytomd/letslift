@@ -9,7 +9,7 @@
 var express = require("express");
 
 var router = express.Router();
-// Requiring the burger and user models
+// Requiring the user models
 var db = require("../models");
 var passport = require("../config/passport");
 
