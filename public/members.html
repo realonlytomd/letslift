@@ -19,13 +19,39 @@
     </div>
   </div>
 </nav>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <h2>Welcome <span class="member-id"></span>. <span class="member-name"></span></h2>
-      </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h2>Welcome <span class="member-id"></span>. <span class="member-name"></span></h2>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Enter a Workout (Maximum of 2)</h2>
+        <form class="enterWorkoutA">
+          <div class="form-group">
+            <label for="workoutNameA">Name of Workout A</label>
+            <input type="text" class="form-control" id="workout-nameA" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exerciseOne">Name of First Exercise</label>
+            <input type="text" class="form-control" id="exercise-oneA" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exerciseOneSets">Number of Sets</label>
+            <input type="number" class="form-control" id="exercise-oneA-sets" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exerciseOneReps">Number of Reps</label>
+            <input type="number" class="form-control" id="exercise-oneA-reps" placeholder="">
+          </div>
+          
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+  </div>
+</div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="js/members.js"></script>
