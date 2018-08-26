@@ -24,17 +24,22 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     // Exercise One of Workout A
-    exerciseOne: {
+    exerciseOneofA: {
       type: DataTypes.STRING,
       allowNull: true
     },
+    // The Weight in pounds to be used during the exercise
+    weightOneofA: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
     // Number of Sets of Exercise One of Workout A
-    setsOne: {
+    setsOneofA: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
     // Number of Reps for each Set of Exercise One of Workout A
-    repsOne: {
+    repsOneofA: {
       type: DataTypes.INTEGER,
       allowNull: true
     }
