@@ -4,8 +4,7 @@ $(document).ready(function() {
     $.get("/api/user_data").then(function(data) {
       $(".member-id").text(data.id);
       $(".member-name").text(data.email);
-    });
-    
+    //putting all of the below inside this get.
 
     // Getting references to the input form for building a workout
     var workoutAForm = $("form.enterWorkoutA");
@@ -79,6 +78,7 @@ $(document).ready(function() {
           location.reload();
         }
       );
+    });
     });
   });
   
