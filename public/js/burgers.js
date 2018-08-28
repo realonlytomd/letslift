@@ -1,4 +1,5 @@
-
+// this is a version of burgers.js that was a combination of the passport demo, and the
+// sequelize burger homework. Used for reference.
 $(document).ready(function() {
     // For signup section
     // When the signup button is clicked, we validate the email and password are not blank

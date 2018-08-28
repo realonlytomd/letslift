@@ -5,6 +5,7 @@ $(document).ready(function() {
       $(".member-id").text(data.id);
       $(".member-name").text(data.email);
     });
+    
 
     // Getting references to the input form for building a workout
     var workoutAForm = $("form.enterWorkoutA");
@@ -29,10 +30,12 @@ $(document).ready(function() {
       
       //make sure the workout at least has a name
       if (!workoutAData.workoutnameA) {
+        //maybe add an alert here?
         return;
       }
-      // If we have an the necessary inputs, run the createWorkoutA function
-      createWorkoutA(workoutAData.workoutnameA, workoutAData.exerciseOneA, workoutAData.weightOneA, workoutAData.setsOneA, workoutAData,repsOneA);
+      // If we have the necessary inputs, run the createWorkoutA function
+      createWorkoutA(workoutAData.workoutnameA, workoutAData.exerciseOneA, workoutAData.weightOneA, workoutAData.setsOneA, workoutAData.repsOneA);
+      // ...and empty out the input fields for the first exercise in the first workout
       workoutnameAInput.val("");
       exerciseOneAInput.val("");
       weightOneAInput.val("");
@@ -41,33 +44,37 @@ $(document).ready(function() {
     });
 
     function createWorkoutA(workoutnameA, exerciseOneA, weightOneA, setsOneA, repsOneA) {
-      $.post("/api/signup", {
-        email: email,
-        password: password
+      $.post("/api/createWorkoutA", {
+        workoutnameA: workoutnameA,
+        exerciseOneA: exerciseOneA,
+        weightOneA: weightOneA,
+        setsOneA: setsOneA,
+        repsOneA: repsOneA
       }).then(function(data) {
         window.location.replace(data);
         // If there's an error, handle it by throwing up a boostrap alert
-      }).catch(handleLoginErr);
+      });
     }
 
+    //  I'm leaving this here as reference in case I need to add later the currentURL variable for deployment
 
-    $("#createburger").on("submit", function(event) {
-      // Make sure to preventDefault on a submit event.
-      event.preventDefault();
+    // This is the old burgers homework portion that will be redone for letslift
+    $(".change-devour").on("click", function(event) {
+      var id = $(this).data("id");
+      var newDevour = $(this).data("newdevour");
   
-      var newBurger = {
-        burger_name: $("#newname").val().trim(),
-        devoured: false
+      var newDevourState = {
+        devoured: newDevour
       };
-  
+
       var currentURL = window.location.origin;
-      // Send the POST request.
-      $.ajax(currentURL + "/api/burgers", {
-        type: "POST",
-        data: newBurger
+      // Send the PUT request.
+      $.ajax(currentURL + "/api/burgers/" + id, {
+        type: "PUT",
+        data: newDevourState
       }).then(
         function() {
-          console.log("created new burger");
+          console.log("changed devour to", newDevour);
           // Reload the page to get the updated list
           location.reload();
         }
