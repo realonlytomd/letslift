@@ -43,25 +43,19 @@ module.exports = function(router) {
       // res.status(422).json(err.errors[0].message);
     });
   });
-  // route to store the first exercise of the first workout in the database, user.
-  router.post("/api/createWorkoutA", function(req, res) {
-    console.log(req.body);
-    db.User.create({
-      workoutA: req.body.workoutnameA,
-      exerciseOneofA: req.body.exerciseOneA,
-      weightOneofA: req.body.weightOneA,
-      setsOneofA: req.body.setsOneA,
-      repsOneofA: req.body.repsOneA
-    }).then(function(result) {
+
+  // PUT route for updating name and inputs for workout
+  router.put("/api/createWorkoutA/:id", function(req, res) {
+    db.User.update(
+      req.body,{
+      where: {
+      id: req.params.id
+    }
+  })
+    .then(function(result) {
       res.json(result);
-    }).catch(function(err) {
-      console.log(err);
-      res.json(err);
-      // res.status(422).json(err.errors[0].message);
     });
   });
-
-
 
   // Route for logging user out
   router.get("/logout", function(req, res) {
