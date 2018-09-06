@@ -28,8 +28,7 @@ $(document).ready(function() {
           type: "PUT",
           data: workoutAInputs
         }).then(function() {
-          //window.location.replace(result);
-          window.location.reload(true);
+          location.reload(true);
           // If there's an error, handle it by throwing up a boostrap alert
         });
       // ...and empty out the input fields for the first exercise in the first workout

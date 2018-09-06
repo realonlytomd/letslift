@@ -52,8 +52,8 @@ module.exports = function(router) {
       id: req.params.id
     }
   })
-    .then(function() {
-      res.redirect(307, "/api/login");
+    .then(function(result) {
+      res.json(result);
     });
   });
 
