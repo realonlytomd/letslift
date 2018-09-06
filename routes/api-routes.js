@@ -73,8 +73,9 @@ module.exports = function(router) {
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
+        id: req.user.id,
         email: req.user.email,
-        id: req.user.id
+        workoutA: req.user.workoutA
       });
     }
   });

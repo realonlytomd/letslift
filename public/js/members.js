@@ -4,6 +4,7 @@ $(document).ready(function() {
     $.get("/api/user_data").then(function(data) {
       $(".member-id").text(data.id);
       $(".member-name").text(data.email);
+      $("#workoutA").text(data.workoutA);
     //putting all of the below inside this get.
 
     // When the submit button for building a workout is clicked,
@@ -22,20 +23,22 @@ $(document).ready(function() {
       if (!workoutAInputs.workoutA) {
         //maybe add an alert here?
         return;
-      }
-      $.ajax("/api/createWorkoutA/" + data.id, {
-        type: "PUT",
-        data: workoutAInputs
-      }).then(function(result) {
-        window.location.replace(result);
-        // If there's an error, handle it by throwing up a boostrap alert
-      });
+      } else {
+        $.ajax("/api/createWorkoutA/" + data.id, {
+          type: "PUT",
+          data: workoutAInputs
+        }).then(function() {
+          //window.location.replace(result);
+          window.location.reload(true);
+          // If there's an error, handle it by throwing up a boostrap alert
+        });
       // ...and empty out the input fields for the first exercise in the first workout
       $("input#workout-nameA").val("");
       $("input#exercise-oneA").val("");
       $("input#exercise-oneA-weight").val("");
       $("input#exercise-oneA-sets").val("");
       $("input#exercise-oneA-reps").val("");
+      }
     });
     //  I'm leaving this here as reference in case I need to add later the currentURL variable for deployment
     // This is the old burgers homework portion that will be redone for letslift
@@ -46,7 +49,6 @@ $(document).ready(function() {
     //   var newDevourState = {
     //     devoured: newDevour
     //   };
-
     //   var currentURL = window.location.origin;
     //   // Send the PUT request.
     //   $.ajax(currentURL + "/api/burgers/" + id, {
