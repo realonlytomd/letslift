@@ -74,44 +74,55 @@ module.exports = function(router) {
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         id: req.user.id,
-        email: req.user.email,
-        workoutA: req.user.workoutA
+        email: req.user.email
       });
     }
   });
 
-  // GET route for getting all of the burgers
-  router.get("/", function(req, res) {
-    db.Burger.findAll({})
-    .then(function(dbBurger) {
-      // console.log(dbBurger);
-      var burger = {burger:dbBurger};
-      // console.log(burger);
-      res.render("index",burger);
-    });
+  // Below is my attempt at reading the db instead of just doing whatever the above has been doing
+  router.get("/api/specific_user_data/:id", function(req, res) {
+      db.User.findAll({
+        id: req.body.id
+      })
+      .then(function(dbUser) {
+        console.log("dbUser from inside the .get for a specific user", dbUser);
+        console.log("dbUser.workoutA = " + dbUser.workoutA);
+        res.json({dbUser});
+      });
   });
 
-  // POST route for saving a new burger
-  router.post("/api/burgers", function(req, res) {
-    // console.log(req.body);
-    db.Burger.create({
-      burger_name: req.body.burger_name
-    })
-    .then(function(result) {
-      res.json(result);
-    });
-  });
+  // // GET route for getting all of the burgers
+  // router.get("/", function(req, res) {
+  //   db.Burger.findAll({})
+  //   .then(function(dbBurger) {
+  //     // console.log(dbBurger);
+  //     var burger = {burger:dbBurger};
+  //     // console.log(burger);
+  //     res.render("index",burger);
+  //   });
+  // });
 
-  // PUT route for updating devoured
-  router.put("/api/burgers/:id", function(req, res) {
-    db.Burger.update(
-      req.body,{
-      where: {
-      id: req.params.id
-    }
-  })
-    .then(function(result) {
-      res.json(result);
-    });
-  });
+  // // POST route for saving a new burger
+  // router.post("/api/burgers", function(req, res) {
+  //   // console.log(req.body);
+  //   db.Burger.create({
+  //     burger_name: req.body.burger_name
+  //   })
+  //   .then(function(result) {
+  //     res.json(result);
+  //   });
+  // });
+
+  // // PUT route for updating devoured
+  // router.put("/api/burgers/:id", function(req, res) {
+  //   db.Burger.update(
+  //     req.body,{
+  //     where: {
+  //     id: req.params.id
+  //   }
+  // })
+  //   .then(function(result) {
+  //     res.json(result);
+  //   });
+  // });
 };

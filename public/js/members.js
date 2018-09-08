@@ -2,9 +2,9 @@ $(document).ready(function() {
     // This portion does a GET request to figure out which user is logged in
     // and updates the HTML on the page
     $.get("/api/user_data").then(function(data) {
+      console.log("object'data' inside of the first .get is ", data);
       $(".member-id").text(data.id);
       $(".member-name").text(data.email);
-      $("#workoutA").text(data.workoutA);
     //putting all of the below inside this get.
 
     // When the submit button for building a workout is clicked,
@@ -24,27 +24,39 @@ $(document).ready(function() {
         //maybe add an alert here?
         return;
       } else {
-        $.ajax("/api/createWorkoutA/" + data.id, {
+        var currentURL = window.location.origin;
+        $.ajax(currentURL + "/api/createWorkoutA/" + data.id, {
           type: "PUT",
           data: workoutAInputs
         }).then(function() {
-          location.reload(true);
+          //$.get("/api/user_data").then(function(data) {
+            //console.log("object'data' inside of the second .get is ", data);
+            //$("#workoutA").text(data.workoutA);
+          });
+          //location.reload(true);
           // If there's an error, handle it by throwing up a boostrap alert
-        });
+        
       // ...and empty out the input fields for the first exercise in the first workout
-      $("input#workout-nameA").val("");
-      $("input#exercise-oneA").val("");
-      $("input#exercise-oneA-weight").val("");
-      $("input#exercise-oneA-sets").val("");
-      $("input#exercise-oneA-reps").val("");
+        $("input#workout-nameA").val("");
+        $("input#exercise-oneA").val("");
+        $("input#exercise-oneA-weight").val("");
+        $("input#exercise-oneA-sets").val("");
+        $("input#exercise-oneA-reps").val("");
       }
+    });
+
+    $("#showWorkouts").on("click", function(event) {
+      $.get("/api/specific_user_data/" + data.id).then(function(data) {
+        console.log("object 'data' inside of the workouts button .get is ", data);
+        console.log("testing testing to find individual values - workout name: " + data.dbUser[0].workoutA);
+        $("#workoutA").text(data.dbUser[0].workoutA);
+      });
     });
     //  I'm leaving this here as reference in case I need to add later the currentURL variable for deployment
     // This is the old burgers homework portion that will be redone for letslift
     // $(".change-devour").on("click", function(event) {
     //   var id = $(this).data("id");
     //   var newDevour = $(this).data("newdevour");
-  
     //   var newDevourState = {
     //     devoured: newDevour
     //   };
@@ -62,5 +74,7 @@ $(document).ready(function() {
     //   );
     // });
     });
+
+    
   });
   
