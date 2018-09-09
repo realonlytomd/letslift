@@ -5,12 +5,15 @@ $(document).ready(function() {
     console.log("object 'data' inside of the first .get is ", data);
     $(".member-id").text(data.id);
     $(".member-name").text(data.email);
-
+    var currentUser = data.id - 1;
     //putting all of the below inside this get so as to have the correct id (user)
 
     // gets the current workoutA before the user has built a new one using the form
+    
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
-      $("#workoutA").text(data.dbUser[0].workoutA);
+      console.log("object 'data' inside of the workouts button .get is ", data);
+      console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
+      $("#workoutA").text(data.dbUser[currentUser].workoutA);
     });
     // When the submit button for building a workout is clicked,
     $("form.enterWorkoutA").on("submit", function(event) {
@@ -36,8 +39,8 @@ $(document).ready(function() {
         }).then(function() {
           $.get("/api/specific_user_data/" + data.id).then(function(data) {
             //console.log("object 'data' inside of the workouts button .get is ", data);
-            //console.log("testing testing to find individual values - workout name: " + data.dbUser[0].workoutA);
-            $("#workoutA").text(data.dbUser[0].workoutA);
+            //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
+            $("#workoutA").text(data.dbUser[currentUser].workoutA);
           });
         });
           //location.reload(true);
@@ -55,8 +58,8 @@ $(document).ready(function() {
     $("#showWorkouts").on("click", function(event) {
       $.get("/api/specific_user_data/" + data.id).then(function(data) {
         //console.log("object 'data' inside of the workouts button .get is ", data);
-        //console.log("testing testing to find individual values - workout name: " + data.dbUser[0].workoutA);
-        $("#workoutA").text(data.dbUser[0].workoutA);
+        //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
+        $("#workoutA").text(data.dbUser[currentUser].workoutA);
       });
     });
     //  I'm leaving this here as reference in case I need to add later the currentURL variable for deployment
