@@ -85,8 +85,8 @@ module.exports = function(router) {
         id: req.body.id
       })
       .then(function(dbUser) {
-        console.log("dbUser from inside the .get for a specific user", dbUser);
-        console.log("dbUser.workoutA = " + dbUser.workoutA);
+        //console.log("dbUser from inside the .get for a specific user", dbUser);
+        //console.log("dbUser[0].dataValues.workoutA = " + dbUser[0].dataValues.workoutA);
         res.json({dbUser});
       });
   });
