@@ -15,6 +15,23 @@ $(document).ready(function() {
       console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
       $("#workoutA").text(data.dbUser[currentUser].workoutA);
     });
+
+    // This function selects the workout the user chooses to use currently.
+    $(".selectedWorkout").on("click", function(event) {
+      //what do I want to happen? Hide previous divs. Show new actual workout div.
+      // Build the workout page  -  where the user sees the exercises
+      // and corresponding sets buttons, the weight, and reps displayed after those buttons
+      // are presssed.  Also the count up clock.
+      $.get("/api/specific_user_data/" + data.id).then(function(data) {
+        $("#workoutA").text(data.dbUser[currentUser].workoutA);
+        $("#exerciseOneofA").text(data.dbUser[currentUser].exerciseOneofA);
+        $("#weightsOneofA").text(data.dbUser[currentUser].weightsOneofA);
+        $("#setsOneofA").text(data.dbUser[currentUser].setsOneofA);
+        $("#repsOneofA").text(data.dbUser[currentUser].repsOneofA);
+      });
+
+    });
+
     // When the submit button for building a workout is clicked,
     $("form.enterWorkoutA").on("submit", function(event) {
       event.preventDefault();
@@ -54,11 +71,12 @@ $(document).ready(function() {
         $("input#exercise-oneA-reps").val("");
       }
     });
-
+    // this button may not be necessary since the function is already accomplished when page loads
+    // and after a new workout is added in the form.
     $("#showWorkouts").on("click", function(event) {
       $.get("/api/specific_user_data/" + data.id).then(function(data) {
-        //console.log("object 'data' inside of the workouts button .get is ", data);
-        //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
+        console.log("object 'data' inside of the workouts button .get is ", data);
+        console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
         $("#workoutA").text(data.dbUser[currentUser].workoutA);
       });
     });

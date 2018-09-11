@@ -82,6 +82,7 @@ module.exports = function(router) {
   // Below is my attempt at reading the db instead of just doing whatever the above has been doing
   router.get("/api/specific_user_data/:id", function(req, res) {
       db.User.findAll({
+        // I think I need to add a WHERE here to just get the current id.
         id: req.body.id
       })
       .then(function(dbUser) {
