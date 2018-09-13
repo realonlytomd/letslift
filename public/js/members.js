@@ -5,29 +5,31 @@ $(document).ready(function() {
     console.log("object 'data' inside of the first .get is ", data);
     $(".member-id").text(data.id);
     $(".member-name").text(data.email);
+    //don't need this variable anymore - delete it when convenient
     var currentUser = data.id - 1;
     //putting all of the below inside this get so as to have the correct id (user)
 
     // gets the current workoutA before the user has built a new one using the form
     
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
-      console.log("object 'data' inside of the workouts button .get is ", data);
-      console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
-      $("#workoutA").text(data.dbUser[currentUser].workoutA);
+      console.log("object 'data' inside the first .get (runs every time) = ", data);
+      console.log("workout name inside of first .get (runs every time) = " + data.workoutA);
+      $("span#workoutA").text(data.workoutA);
+      $("span#exerciseOneofA").text(data.exerciseOneofA);
+      $("span#weightOneofA").text(data.weightOneofA);
+      $("span#setsOneofA").text(data.setsOneofA);
+      $("span#repsOneofA").text(data.repsOneofA);
     });
 
-    // This function selects the workout the user chooses to use currently.
+    // This function happens when the user clicks the chosed workout.
     $(".selectedWorkout").on("click", function(event) {
       //what do I want to happen? Hide previous divs. Show new actual workout div.
       // Build the workout page  -  where the user sees the exercises
-      // and corresponding sets buttons, the weight, and reps displayed after those buttons
+      // and corresponding sets buttonsk with for loops, the weight, and reps displayed after those buttons
       // are presssed.  Also the count up clock.
       $.get("/api/specific_user_data/" + data.id).then(function(data) {
-        $("#workoutA").text(data.dbUser[currentUser].workoutA);
-        $("#exerciseOneofA").text(data.dbUser[currentUser].exerciseOneofA);
-        $("#weightsOneofA").text(data.dbUser[currentUser].weightsOneofA);
-        $("#setsOneofA").text(data.dbUser[currentUser].setsOneofA);
-        $("#repsOneofA").text(data.dbUser[currentUser].repsOneofA);
+        console.log("data.workoutA = " + data.workoutA);
+        console.log("data.exerciseOneofA = " + data.exerciseOneofA);
       });
 
     });
@@ -55,9 +57,9 @@ $(document).ready(function() {
           data: workoutAInputs
         }).then(function() {
           $.get("/api/specific_user_data/" + data.id).then(function(data) {
-            //console.log("object 'data' inside of the workouts button .get is ", data);
+            console.log("object 'data' inside of the workouts button .get is ", data);
             //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
-            $("#workoutA").text(data.dbUser[currentUser].workoutA);
+            $("#workoutA").text(data.workoutA);
           });
         });
           //location.reload(true);
@@ -75,34 +77,10 @@ $(document).ready(function() {
     // and after a new workout is added in the form.
     $("#showWorkouts").on("click", function(event) {
       $.get("/api/specific_user_data/" + data.id).then(function(data) {
-        console.log("object 'data' inside of the workouts button .get is ", data);
-        console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
-        $("#workoutA").text(data.dbUser[currentUser].workoutA);
+        console.log("object 'data' inside of the show workouts button .get is ", data);
+        //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
+        $("#workoutA").text(data.workoutA);
       });
     });
-    //  I'm leaving this here as reference in case I need to add later the currentURL variable for deployment
-    // This is the old burgers homework portion that will be redone for letslift
-    // $(".change-devour").on("click", function(event) {
-    //   var id = $(this).data("id");
-    //   var newDevour = $(this).data("newdevour");
-    //   var newDevourState = {
-    //     devoured: newDevour
-    //   };
-    //   var currentURL = window.location.origin;
-    //   // Send the PUT request.
-    //   $.ajax(currentURL + "/api/burgers/" + id, {
-    //     type: "PUT",
-    //     data: newDevourState
-    //   }).then(
-    //     function() {
-    //       console.log("changed devour to", newDevour);
-    //       // Reload the page to get the updated list
-    //       location.reload();
-    //     }
-    //   );
-    // });
-    });
-
-    
   });
-  
+});

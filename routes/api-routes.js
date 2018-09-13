@@ -63,15 +63,14 @@ module.exports = function(router) {
     res.redirect("/");
   });
 
-  // Route for getting some data about our user to be used client side
+  // Route for getting some data about the user
   router.get("/api/user_data", function(req, res) {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
     }
     else {
-      // Otherwise send back the user's email and id
-      // Sending back a password, even a hashed password, isn't a good idea
+      // Otherwise, this sends back the user's email and id as they were input, not from the db
       res.json({
         id: req.user.id,
         email: req.user.email
@@ -79,16 +78,25 @@ module.exports = function(router) {
     }
   });
 
-  // Below is my attempt at reading the db instead of just doing whatever the above has been doing
+  // Below gets the data from just one user (the current user) in the db
   router.get("/api/specific_user_data/:id", function(req, res) {
+      //console.log("this is req in the .get of api-routes.js", req);
       db.User.findAll({
         // I think I need to add a WHERE here to just get the current id.
-        id: req.body.id
+        where: {
+          id: req.params.id
+        }
       })
       .then(function(dbUser) {
-        //console.log("dbUser from inside the .get for a specific user", dbUser);
-        //console.log("dbUser[0].dataValues.workoutA = " + dbUser[0].dataValues.workoutA);
-        res.json({dbUser});
+        console.log("dbUser from inside the .get for a specific user", dbUser);
+        console.log("dbUser[0].dataValues.workoutA = " + dbUser[0].dataValues.workoutA);
+        res.json({
+          workoutA: dbUser[0].dataValues.workoutA,
+          exerciseOneofA: dbUser[0].dataValues.exerciseOneofA,
+          weightOneofA: dbUser[0].dataValues.weightOneofA,
+          setsOneofA: dbUser[0].dataValues.setsOneofA,
+          repsOneofA: dbUser[0].dataValues.repsOneofA
+        });
       });
   });
 
