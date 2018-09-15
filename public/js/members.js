@@ -8,20 +8,11 @@ $(document).ready(function() {
     //don't need this variable anymore - delete it when convenient
     var currentUser = data.id - 1;
     //putting all of the below inside this get so as to have the correct id (user)
-
-    // gets the current workoutA before the user has built a new one using the form
-    
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
-      console.log("object 'data' inside the first .get (runs every time) = ", data);
-      console.log("workout name inside of first .get (runs every time) = " + data.workoutA);
       $("span#workoutA").text(data.workoutA);
-      $("span#exerciseOneofA").text(data.exerciseOneofA);
-      $("span#weightOneofA").text(data.weightOneofA);
-      $("span#setsOneofA").text(data.setsOneofA);
-      $("span#repsOneofA").text(data.repsOneofA);
     });
 
-    // This function happens when the user clicks the chosed workout.
+      // This function happens when the user clicks the chosed workout.
     $(".selectedWorkout").on("click", function(event) {
       //what do I want to happen? Hide previous divs. Show new actual workout div.
       // Build the workout page  -  where the user sees the exercises
@@ -30,6 +21,11 @@ $(document).ready(function() {
       $.get("/api/specific_user_data/" + data.id).then(function(data) {
         console.log("data.workoutA = " + data.workoutA);
         console.log("data.exerciseOneofA = " + data.exerciseOneofA);
+        $("span#workoutA").text(data.workoutA);
+        $("span#exerciseOneofA").text(data.exerciseOneofA);
+        $("span#weightOneofA").text(data.weightOneofA);
+        $("span#setsOneofA").text(data.setsOneofA);
+        $("span#repsOneofA").text(data.repsOneofA);
       });
 
     });
