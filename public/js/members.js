@@ -12,20 +12,35 @@ $(document).ready(function() {
       $("span#workoutA").text(data.workoutA);
     });
 
-      // This function happens when the user clicks the chosed workout.
+      // This function happens when the user clicks the chosen workout.
     $(".selectedWorkout").on("click", function(event) {
       //what do I want to happen? Hide previous divs. Show new actual workout div.
       // Build the workout page  -  where the user sees the exercises
       // and corresponding sets buttonsk with for loops, the weight, and reps displayed after those buttons
       // are presssed.  Also the count up clock.
       $.get("/api/specific_user_data/" + data.id).then(function(data) {
-        console.log("data.workoutA = " + data.workoutA);
-        console.log("data.exerciseOneofA = " + data.exerciseOneofA);
+        //console.log("data.workoutA = " + data.workoutA);
+        //console.log("data.exerciseOneofA = " + data.exerciseOneofA);
         $("span#workoutA").text(data.workoutA);
         $("span#exerciseOneofA").text(data.exerciseOneofA);
         $("span#weightOneofA").text(data.weightOneofA);
         $("span#setsOneofA").text(data.setsOneofA);
         $("span#repsOneofA").text(data.repsOneofA);
+
+
+        $("#setsRepsButtons").empty();
+      
+              // create loop to go through the array of sets
+              //this section isn't even close to being finished - got interrupted
+          
+          for (var i = 0; i < data.setsOneofA; i++) {
+            
+            console.log("i = " + i);
+            $("<button>").text(data.repsOneofA);
+            $("#setsRepsButtons").append($("<button>"));
+          }
+          
+        
       });
 
     });
