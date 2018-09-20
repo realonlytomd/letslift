@@ -2,7 +2,7 @@ $(document).ready(function() {
     // This portion does a GET request to figure out which user is logged in
     // and updates the HTML on the page
   $.get("/api/user_data").then(function(data) {
-    console.log("object 'data' inside of the first .get is ", data);
+    //console.log("object 'data' inside of the first .get is ", data);
     $(".member-id").text(data.id);
     $(".member-name").text(data.email);
     //don't need this variable anymore - delete it when convenient
@@ -26,18 +26,23 @@ $(document).ready(function() {
         $("span#weightOneofA").text(data.weightOneofA);
         $("span#setsOneofA").text(data.setsOneofA);
         $("span#repsOneofA").text(data.repsOneofA);
+        console.log("data.repsOneofA: " + data.repsOneofA);
 
 
         $("#setsRepsButtons").empty();
       
               // create loop to go through the array of sets
-              //this section isn't even close to being finished - got interrupted
           
           for (var i = 0; i < data.setsOneofA; i++) {
-            
-            console.log("i = " + i);
-            $("<button>").text(data.repsOneofA);
-            $("#setsRepsButtons").append($("<button>"));
+            var holder = $("<button>");
+            //console.log("i = " + i);
+
+            holder.attr("type","button");
+            holder.addClass("btn");
+            holder.addClass("btn-success");
+            holder.text(data.setsOneofA);
+
+            $("#setsRepsButtons").append(holder);
           }
           
         
