@@ -44,6 +44,12 @@ $(document).ready(function() {
 
             $("#setsRepsButtons").append(holder);
           }
+
+    // I need to start and stop the time - maybe a full page modal to count up - 
+    //shouldn't cover the buttons, as that starts the timer over - 
+    // it's a timer for between sets
+    //also, the reps number will be set to a new variable that counts down each time the button is pressed
+    // AFTER the first time.  NOT the first time.
           
         
       });
