@@ -40,7 +40,7 @@ $(document).ready(function() {
             holder.attr("type","button");
             holder.addClass("btn");
             holder.addClass("btn-success");
-            holder.text(data.setsOneofA);
+            holder.text(data.repsOneofA);
 
             $("#setsRepsButtons").append(holder);
           }
