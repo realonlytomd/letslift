@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    
+  // set up some variables
+  var startCount = 0;
+  var myTimer;
     // This portion does a GET request to figure out which user is logged in
     // and updates the HTML on the page
   $.get("/api/user_data").then(function(data) {
@@ -16,19 +20,18 @@ $(document).ready(function() {
     $(".selectedWorkout").on("click", function(event) {
       //what do I want to happen? Hide previous divs. Show new actual workout div.
       // Build the workout page  -  where the user sees the exercises
-      // and corresponding sets buttonsk with for loops, the weight, and reps displayed after those buttons
+      // and corresponding sets buttons with for loops, the weight, and reps displayed after those buttons
       // are presssed.  Also the count up clock.
       $.get("/api/specific_user_data/" + data.id).then(function(data) {
         //console.log("data.workoutA = " + data.workoutA);
         //console.log("data.exerciseOneofA = " + data.exerciseOneofA);
         $("span#workoutA").text(data.workoutA);
         $("span#exerciseOneofA").text(data.exerciseOneofA);
-        $("span#weightOneofA").text(data.weightOneofA);
-        $("span#setsOneofA").text(data.setsOneofA);
-        $("span#repsOneofA").text(data.repsOneofA);
-        console.log("data.repsOneofA: " + data.repsOneofA);
+        $("span#weightOneofA").text(" " + data.weightOneofA + "lb");
+        $("span#setsOneofA").text(data.setsOneofA + " sets X ");
+        $("span#repsOneofA").text(data.repsOneofA + " reps at ");
 
-
+        //empty out the div containing sets/reps buttons
         $("#setsRepsButtons").empty();
       
               // create loop to go through the array of sets
@@ -40,6 +43,7 @@ $(document).ready(function() {
             holder.attr("type","button");
             holder.addClass("btn");
             holder.addClass("btn-success");
+            holder.addClass("startTimer");
             holder.text(data.repsOneofA);
 
             $("#setsRepsButtons").append(holder);
@@ -55,6 +59,24 @@ $(document).ready(function() {
       });
 
     });
+    
+    //this function is started when the user clicks a set button after they have
+    // finished the set of reps for an exercise. It starts the timer clock in the following div
+    // so, it also has to stop the timer clock if it is currently running.
+
+    function timer() {
+      
+      $("#timerDisplay").text(startCount);
+      startCount = startCount + 1;
+      myTimer = setTimeout(function(){ timer() }, 1000);
+    }
+
+    function stopTimer() {
+        clearTimeout(myTimer);
+    }
+    
+    $(document).on("click", ".startTimer", timer);
+  
 
     // When the submit button for building a workout is clicked,
     $("form.enterWorkoutA").on("submit", function(event) {
