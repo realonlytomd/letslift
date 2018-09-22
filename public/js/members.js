@@ -3,14 +3,14 @@ $(document).ready(function() {
   // set up some variables
   var startCount = 0;
   var myTimer;
+  var clicksOfSetButton = 0;
+
     // This portion does a GET request to figure out which user is logged in
-    // and updates the HTML on the page
   $.get("/api/user_data").then(function(data) {
     //console.log("object 'data' inside of the first .get is ", data);
     $(".member-id").text(data.id);
     $(".member-name").text(data.email);
-    //don't need this variable anymore - delete it when convenient
-    var currentUser = data.id - 1;
+
     //putting all of the below inside this get so as to have the correct id (user)
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
       $("span#workoutA").text(data.workoutA);
@@ -32,7 +32,11 @@ $(document).ready(function() {
         $("span#repsOneofA").text(data.repsOneofA + " reps at ");
 
         //empty out the div containing sets/reps buttons
-        $("#setsRepsButtons").empty();
+
+        // make the creation of the set buttons into a function
+        function makeSetButtons() {
+        
+          $("#setsRepsButtons").empty();
       
               // create loop to go through the array of sets
           
@@ -44,18 +48,42 @@ $(document).ready(function() {
             holder.addClass("btn");
             holder.addClass("btn-success");
             holder.addClass("startTimer");
-            holder.text(data.repsOneofA);
+            holder.attr("data-number",data.repsOneofA - clicksOfSetButton);
+            holder.text(data.repsOneofA - clicksOfSetButton);
 
             $("#setsRepsButtons").append(holder);
           }
+        }
 
-    // I need to start and stop the time - maybe a full page modal to count up - 
-    //shouldn't cover the buttons, as that starts the timer over - 
-    // it's a timer for between sets
-    //also, the reps number will be set to a new variable that counts down each time the button is pressed
-    // AFTER the first time.  NOT the first time.
-          
-        
+        makeSetButtons ();
+
+    //also, the reps number will be set to a new variable that counts down each time
+    //the button is pressed AFTER the first time.  NOT the first time.
+          function timer() {
+            $("#timerDisplay").text(startCount);
+            startCount = startCount + 1;
+            myTimer = setTimeout(function(){ timer() }, 1000);
+          }
+
+          function stopTimer() {
+            clearTimeout(myTimer);
+            startCount = 0;
+          }
+    
+          // when a set button is clicked, this calls the timer function
+          $(document).on("click", ".startTimer", function() {
+            stopTimer();
+            timer();
+            // I need code here that counts the reps down with each push of the button
+            // ...and doesn't start the timer over
+            // ... and changes the text of just that button, not any of the others.
+            //  ... even though right now, I'm redrawing the whole row of buttons....
+            // this resets ALL of the buttons - also, the first press should still show
+            //the desired rep number, not take it down by one.
+            clicksOfSetButton = clicksOfSetButton + 1;
+            makeSetButtons();
+          });
+
       });
 
     });
@@ -64,19 +92,7 @@ $(document).ready(function() {
     // finished the set of reps for an exercise. It starts the timer clock in the following div
     // so, it also has to stop the timer clock if it is currently running.
 
-    function timer() {
-      
-      $("#timerDisplay").text(startCount);
-      startCount = startCount + 1;
-      myTimer = setTimeout(function(){ timer() }, 1000);
-    }
-
-    function stopTimer() {
-        clearTimeout(myTimer);
-    }
     
-    $(document).on("click", ".startTimer", timer);
-  
 
     // When the submit button for building a workout is clicked,
     $("form.enterWorkoutA").on("submit", function(event) {
