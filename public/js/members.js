@@ -3,8 +3,8 @@ $(document).ready(function() {
   // set up some variables
   var startCount = 0;
   var myTimer;
-  var clicksOfSetButton = 0;
-  var indexOfChosenSet = 0;
+  var clicksOfSetButton = -1;
+  var indexOfChosenSet = 20;
 
     // This portion does a GET request to figure out which user is logged in
   $.get("/api/user_data").then(function(data) {
@@ -34,7 +34,7 @@ $(document).ready(function() {
 
         //empty out the div containing sets/reps buttons inside the makeSetbuttons function
         // make the creation of the set buttons into a function
-        function makeSetButtons(indexOfChosenSet) {
+        function makeSetButtons() {
         
           $("#setsRepsButtons").empty();
       
@@ -42,7 +42,7 @@ $(document).ready(function() {
           
           for (var i = 0; i < data.setsOneofA; i++) {
             var holder = $("<button>");
-            //console.log("i = " + i);
+            console.log("i = " + i);
 
             holder.attr("type","button");
             holder.addClass("btn");
@@ -53,16 +53,16 @@ $(document).ready(function() {
             // if statement: 1st time through, text is empty, 
             // at 1st click: need to know which set button was clicked, we do because it has attr of i
             // this is not right just yet!!!!!!!!!!!!!
-            // *************8
-            if (clicksOfSetButton === 0) {
-              holder.text("");
+            // *************
+            console.log("inside makeSetButtons func indexOfChosenSet = " + indexOfChosenSet);
+            console.log("inside makeSetButtons func clicksOfSetButton = " + clicksOfSetButton);
+            if (i === indexOfChosenSet) {
+              console.log("i AM IN FIRST CONDITIONAL!");
+              holder.html(data.repsOneofA - clicksOfSetButton);
             } else {
-              holder.text(data.repsOneofA);
-            } unless (indexOfChosenSet === i) {
-              holder.text(data.repsOneofA - clicksOfSetButton)
-            }
+              holder.text(" ");
+            } 
             
-
             $("#setsRepsButtons").append(holder);
           }
         }
@@ -93,11 +93,12 @@ $(document).ready(function() {
             // in the for loop counter, so make that a data attribute. - done
             //
             clicksOfSetButton = clicksOfSetButton + 1;
+            console.log("inside .startTimer onclick func - clicksOfSetButton = "+ clicksOfSetButton);
 
             // need to store the attribute 
-            indexOfChosenSet = $(this).attr("data-chosenSet");
-            console.log("indexOfChosenSet = " + indexOfChosenSet);
-            makeSetButtons(indexOfChosenSet);
+            indexOfChosenSet = parseInt($(this).attr("data-chosenSet"));
+            console.log("inside .startTimer onclick func - indexOfChosenSet = " + indexOfChosenSet);
+            makeSetButtons();
           });
 
       });
