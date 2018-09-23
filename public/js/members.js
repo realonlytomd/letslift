@@ -4,6 +4,7 @@ $(document).ready(function() {
   var startCount = 0;
   var myTimer;
   var clicksOfSetButton = 0;
+  var indexOfChosenSet = 0;
 
     // This portion does a GET request to figure out which user is logged in
   $.get("/api/user_data").then(function(data) {
@@ -31,10 +32,9 @@ $(document).ready(function() {
         $("span#setsOneofA").text(data.setsOneofA + " sets X ");
         $("span#repsOneofA").text(data.repsOneofA + " reps at ");
 
-        //empty out the div containing sets/reps buttons
-
+        //empty out the div containing sets/reps buttons inside the makeSetbuttons function
         // make the creation of the set buttons into a function
-        function makeSetButtons() {
+        function makeSetButtons(indexOfChosenSet) {
         
           $("#setsRepsButtons").empty();
       
@@ -48,14 +48,26 @@ $(document).ready(function() {
             holder.addClass("btn");
             holder.addClass("btn-success");
             holder.addClass("startTimer");
-            holder.attr("data-number",data.repsOneofA - clicksOfSetButton);
-            holder.text(data.repsOneofA - clicksOfSetButton);
+            holder.attr("data-chosenSet", i);
+
+            // if statement: 1st time through, text is empty, 
+            // at 1st click: need to know which set button was clicked, we do because it has attr of i
+            // this is not right just yet!!!!!!!!!!!!!
+            // *************8
+            if (clicksOfSetButton === 0) {
+              holder.text("");
+            } else {
+              holder.text(data.repsOneofA);
+            } unless (indexOfChosenSet === i) {
+              holder.text(data.repsOneofA - clicksOfSetButton)
+            }
+            
 
             $("#setsRepsButtons").append(holder);
           }
         }
 
-        makeSetButtons ();
+        makeSetButtons();
 
     //also, the reps number will be set to a new variable that counts down each time
     //the button is pressed AFTER the first time.  NOT the first time.
@@ -77,11 +89,15 @@ $(document).ready(function() {
             // I need code here that counts the reps down with each push of the button
             // ...and doesn't start the timer over
             // ... and changes the text of just that button, not any of the others.
-            //  ... even though right now, I'm redrawing the whole row of buttons....
-            // this resets ALL of the buttons - also, the first press should still show
-            //the desired rep number, not take it down by one.
+            //  so, at the beginning, each button's only unique property is the variable i,
+            // in the for loop counter, so make that a data attribute. - done
+            //
             clicksOfSetButton = clicksOfSetButton + 1;
-            makeSetButtons();
+
+            // need to store the attribute 
+            indexOfChosenSet = $(this).attr("data-chosenSet");
+            console.log("indexOfChosenSet = " + indexOfChosenSet);
+            makeSetButtons(indexOfChosenSet);
           });
 
       });
