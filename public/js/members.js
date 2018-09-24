@@ -5,6 +5,7 @@ $(document).ready(function() {
   var myTimer;
   var clicksOfSetButton = -1;
   var indexOfChosenSet = 20;
+ ;
 
     // This portion does a GET request to figure out which user is logged in
   $.get("/api/user_data").then(function(data) {
@@ -38,28 +39,25 @@ $(document).ready(function() {
         
           $("#setsRepsButtons").empty();
       
-              // create loop to go through the array of sets
+              // create loop to go through the "array" of sets
           
           for (var i = 0; i < data.setsOneofA; i++) {
             var holder = $("<button>");
-            console.log("i = " + i);
 
             holder.attr("type","button");
             holder.addClass("btn");
             holder.addClass("btn-success");
             holder.addClass("startTimer");
             holder.attr("data-chosenSet", i);
+            // need to add attribute to recored if the button has been clicked before
+            holder.attr("data-clicked", false);
 
-            // if statement: 1st time through, text is empty, 
-            // at 1st click: need to know which set button was clicked, we do because it has attr of i
-            // this is not right just yet!!!!!!!!!!!!!
-            // *************
-            console.log("inside makeSetButtons func indexOfChosenSet = " + indexOfChosenSet);
-            console.log("inside makeSetButtons func clicksOfSetButton = " + clicksOfSetButton);
             if (i === indexOfChosenSet) {
-              console.log("i AM IN FIRST CONDITIONAL!");
+              console.log("IN FIRST CONDITIONAL of building setButtons");
               holder.html(data.repsOneofA - clicksOfSetButton);
-            } else {
+            } elseif // add test if button has been clicked before
+                  // if not, then .text(" ")  is good, but ...
+                  // if it has been clicked before, then last entered rep number should remain.
               holder.text(" ");
             } 
             
@@ -69,8 +67,7 @@ $(document).ready(function() {
 
         makeSetButtons();
 
-    //also, the reps number will be set to a new variable that counts down each time
-    //the button is pressed AFTER the first time.  NOT the first time.
+    //the startCount number might need to be in the span as .html, not .text
           function timer() {
             $("#timerDisplay").text(startCount);
             startCount = startCount + 1;
@@ -83,21 +80,31 @@ $(document).ready(function() {
           }
     
           // when a set button is clicked, this calls the timer function
+          //HOWEVER, it should not be stopped and started with each press...(fix this) -
+          //
           $(document).on("click", ".startTimer", function() {
+            
             stopTimer();
             timer();
-            // I need code here that counts the reps down with each push of the button
-            // ...and doesn't start the timer over
-            // ... and changes the text of just that button, not any of the others.
+            // I need code here that counts the reps down with each push of the button -done
+            // ...and doesn't start the timer over (later, go around calling timer functions
+            // in this part by checking for over 1 click on each set button).
+            // ... and changes the text of just that button, not any of the others. - done
             //  so, at the beginning, each button's only unique property is the variable i,
             // in the for loop counter, so make that a data attribute. - done
+            // it's going past 0 reps, at that point it should go back to blank and start over. -done
             //
-            clicksOfSetButton = clicksOfSetButton + 1;
-            console.log("inside .startTimer onclick func - clicksOfSetButton = "+ clicksOfSetButton);
 
-            // need to store the attribute 
+            // need to store the attribute data-chosenSet
             indexOfChosenSet = parseInt($(this).attr("data-chosenSet"));
-            console.log("inside .startTimer onclick func - indexOfChosenSet = " + indexOfChosenSet);
+            clicksOfSetButton = clicksOfSetButton + 1;
+            if (clicksOfSetButton > data.repsOneofA) {
+              clicksOfSetButton = -1;
+              indexOfChosenSet = 20;
+            }
+            console.log("inside .startTimer onclick func - clicksOfSetButton = "+ clicksOfSetButton);
+            console.log("inside .startTimer onclick func - indexOfChosenSet = "+ indexOfChosenSet);
+            
             makeSetButtons();
           });
 
