@@ -4,7 +4,7 @@ $(document).ready(function() {
   var startCount = 0;
   var myTimer;
   var clicksOfSetButton = -1;
-  var indexOfChosenSet = 20;
+  var indexOfPreviousButton = 20;
   var changedNumberOfSets = [];
 
     // This portion does a GET request to figure out which user is logged in
@@ -76,15 +76,37 @@ $(document).ready(function() {
 
           stopTimer();
           timer();
+        // this is SO MUCH CLOSER, but still not exactly right
+        // very  much on right track
+          var indexOfNewButton = parseInt($(this).attr("data-chosenSet"));
+          console.log("indexOfNewButton is " + indexOfNewButton);
+          console.log("indexOfPreviousButton is " + indexOfPreviousButton);
+          if (indexOfNewButton !== indexOfPreviousButton) {
 
-          clicksOfSetButton++;
+            clicksOfSetButton = -1
+            clicksOfSetButton++;
 
-          if (clicksOfSetButton > data.repsOneofA) {
-            $(this).text("Reps");
-            clicksOfSetButton = -1;
-            indexOfChosenSet = 20;
+            if (clicksOfSetButton > data.repsOneofA) {
+              $(this).text("Reps");
+              clicksOfSetButton = -1;
+             // indexOfPreviousButton = 20;
+              indexOfPreviousButton = indexOfNewButton;
+            } else {
+              $(this).html(data.repsOneofA - clicksOfSetButton);
+              indexOfPreviousButton = indexOfNewButton;
+            }
+
           } else {
-            $(this).html(data.repsOneofA - clicksOfSetButton);
+
+            clicksOfSetButton++;
+
+            if (clicksOfSetButton > data.repsOneofA) {
+              $(this).text("Reps");
+              clicksOfSetButton = -1;
+              indexOfChosenSet = 20;
+            } else {
+              $(this).html(data.repsOneofA - clicksOfSetButton);
+            }
           }
 
         });
