@@ -49,27 +49,6 @@ $(document).ready(function() {
             holder.addClass("btn-success");
             holder.addClass("startTimer");
             holder.attr("data-chosenSet", i);
-
-            // console.log("changedNumberOfSets[i] = " + changedNumberOfSets[i]);
-            // if (changedNumberOfSets[i]) {
-            //   console.log("in first conditional: i = " + i);
-            //   console.log("changedNumberOfSets[i] = " + changedNumberOfSets[i]);
-            //   changedNumberOfSets[i] = data.repsOneofA - clicksOfSetButton;
-            //   holder.html(changedNumberOfSets[i]);
-            // } else if (i === indexOfChosenSet) {
-            //   console.log("IN SECOND CONDITIONAL of building setButtons: i = " + i);
-            //   changedNumberOfSets[i] = data.repsOneofA - clicksOfSetButton;
-            //   holder.html(changedNumberOfSets[i]);
-            // } else {
-                  // add test if button has been clicked before
-                  // if not, then .text(" ")  is good, but ...
-                  // if it has been clicked before, then last entered rep number should remain.
-                  // so, just need to check if it ISN'T " ", then don't change it.
-                  // what does that look like? if (holder.html(etc)) { then don't change it }
-                  // I need a new variable that stores it to rewrite later...
-                  // maybe look at NOT emptying out the row of buttons, just check if i is
-                  // the one I want, then changing that one, after the initial creation of buttons?
-              
             holder.text("Reps");
             
             $("#setsRepsButtons").append(holder);
@@ -88,30 +67,31 @@ $(document).ready(function() {
           clearTimeout(myTimer);
           startCount = 0;
         }
-    
-          // when a set button is clicked, this calls the timer function
-          //HOWEVER, it should not be stopped and started with each press...(fix this) -
-          //
+
+        // this function changes the .html (label) of each button
+        // as the user clicks it. It must start at required number of reps
+        // then go down by one with each press. after 0, it should go back to
+        // REPS.  then start over.
         $(document).on("click", ".startTimer", function() {
 
-          clicksOfSetButton = clicksOfSetButton + 1;
-          if (clicksOfSetButton > data.repsOneofA) {
-            clicksOfSetButton = -1;
-            indexOfChosenSet = 20;
-          }
           stopTimer();
           timer();
 
-          $(this).html(data.repsOneofA - clicksOfSetButton);
-          });
+          clicksOfSetButton++;
+
+          if (clicksOfSetButton > data.repsOneofA) {
+            $(this).text("Reps");
+            clicksOfSetButton = -1;
+            indexOfChosenSet = 20;
+          } else {
+            $(this).html(data.repsOneofA - clicksOfSetButton);
+          }
+
+        });
 
       });
 
     });
-    
-    //this function is started when the user clicks a set button after they have
-    // finished the set of reps for an exercise. It starts the timer clock in the following div
-    // so, it also has to stop the timer clock if it is currently running.
 
     // When the submit button for building a workout is clicked,
     $("form.enterWorkoutA").on("submit", function(event) {
