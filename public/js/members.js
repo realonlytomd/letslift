@@ -5,7 +5,6 @@ $(document).ready(function() {
   var myTimer;
   var clicksOfSetButton = -1;
   var indexOfPreviousButton = 20;
-  var changedNumberOfSets = [];
 
     // This portion does a GET request to figure out which user is logged in
   $.get("/api/user_data").then(function(data) {
@@ -48,6 +47,7 @@ $(document).ready(function() {
             holder.addClass("btn");
             holder.addClass("btn-success");
             holder.addClass("startTimer");
+            holder.attr("data-clicksOfSetButton", clicksOfSetButton);
             holder.attr("data-chosenSet", i);
             holder.text("Reps");
             
@@ -77,18 +77,25 @@ $(document).ready(function() {
           stopTimer();
           timer();
         // this is SO MUCH CLOSER, but still not exactly right
-        // very  much on right track
+        // Mostly correct, but when I go back to a previous button, it doesn't keep
+        // going down from where it is, but from where the last button I pressed is.
           var indexOfNewButton = parseInt($(this).attr("data-chosenSet"));
           console.log("indexOfNewButton is " + indexOfNewButton);
           console.log("indexOfPreviousButton is " + indexOfPreviousButton);
           if (indexOfNewButton !== indexOfPreviousButton) {
 
-            clicksOfSetButton = -1
+            // portion of the "if" is for when a different button is pressed from the previous
+            // ...or no button has been pressed yet. It currently works for when the button
+            // has not been pressed at all.  Needs to be fixed for when the user is going BACK to a
+            // previously clicked button.
+            clicksOfSetButton = parseInt($(this).attr("data-clicksOfSetButton"));
             clicksOfSetButton++;
+            $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
 
             if (clicksOfSetButton > data.repsOneofA) {
               $(this).text("Reps");
               clicksOfSetButton = -1;
+              $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
              // indexOfPreviousButton = 20;
               indexOfPreviousButton = indexOfNewButton;
             } else {
@@ -97,13 +104,16 @@ $(document).ready(function() {
             }
 
           } else {
-
+            // this "else" is for when the user is clicking the same button to set their reps
+            clicksOfSetButton = parseInt($(this).attr("data-clicksOfSetButton"));
             clicksOfSetButton++;
+            $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
 
             if (clicksOfSetButton > data.repsOneofA) {
               $(this).text("Reps");
               clicksOfSetButton = -1;
-              indexOfChosenSet = 20;
+              $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
+              indexOfPreviousButton = 20;
             } else {
               $(this).html(data.repsOneofA - clicksOfSetButton);
             }
