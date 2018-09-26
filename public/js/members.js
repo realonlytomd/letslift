@@ -35,7 +35,8 @@ $(document).ready(function() {
         //empty out the div containing sets/reps buttons inside the makeSetbuttons function
         // make the creation of the set buttons into a function
         function makeSetButtons() {
-        
+          clicksOfSetButton = -1;
+          indexOfPreviousButton = 20;
           $("#setsRepsButtons").empty();
       
               // create loop to go through the "array" of sets
@@ -73,52 +74,36 @@ $(document).ready(function() {
         // then go down by one with each press. after 0, it should go back to
         // REPS.  then start over.
         $(document).on("click", ".startTimer", function() {
-
+          // Still need to no stop and restart timer after each press
           stopTimer();
           timer();
-        // this is SO MUCH CLOSER, but still not exactly right
-        // Mostly correct, but when I go back to a previous button, it doesn't keep
-        // going down from where it is, but from where the last button I pressed is.
+
           var indexOfNewButton = parseInt($(this).attr("data-chosenSet"));
           console.log("indexOfNewButton is " + indexOfNewButton);
           console.log("indexOfPreviousButton is " + indexOfPreviousButton);
-          if (indexOfNewButton !== indexOfPreviousButton) {
+          
 
-            // portion of the "if" is for when a different button is pressed from the previous
-            // ...or no button has been pressed yet. It currently works for when the button
-            // has not been pressed at all.  Needs to be fixed for when the user is going BACK to a
-            // previously clicked button.
-            clicksOfSetButton = parseInt($(this).attr("data-clicksOfSetButton"));
-            clicksOfSetButton++;
+            // there's a problem with going through some sets, but then if the user
+            // clicks the named workout again, the buttons are redrawn,
+            // but the old clicksOfSetButton (and possibly other data) is not
+            // reset. Thought I changed that, but the clicksOfSetButton is increasing
+            // by more than 1.
+          clicksOfSetButton = parseInt($(this).attr("data-clicksOfSetButton"));
+          console.log("clicksOfSetButton from button: " + clicksOfSetButton);
+          clicksOfSetButton++;
+          console.log("clicksOfSetButton after adding 1: " + clicksOfSetButton);
+          $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
+
+          if (clicksOfSetButton > data.repsOneofA) {
+            $(this).text("Reps");
+            clicksOfSetButton = -1;
             $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
-
-            if (clicksOfSetButton > data.repsOneofA) {
-              $(this).text("Reps");
-              clicksOfSetButton = -1;
-              $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
              // indexOfPreviousButton = 20;
-              indexOfPreviousButton = indexOfNewButton;
-            } else {
-              $(this).html(data.repsOneofA - clicksOfSetButton);
-              indexOfPreviousButton = indexOfNewButton;
-            }
-
+            indexOfPreviousButton = indexOfNewButton;
           } else {
-            // this "else" is for when the user is clicking the same button to set their reps
-            clicksOfSetButton = parseInt($(this).attr("data-clicksOfSetButton"));
-            clicksOfSetButton++;
-            $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
-
-            if (clicksOfSetButton > data.repsOneofA) {
-              $(this).text("Reps");
-              clicksOfSetButton = -1;
-              $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
-              indexOfPreviousButton = 20;
-            } else {
-              $(this).html(data.repsOneofA - clicksOfSetButton);
-            }
+            $(this).html(data.repsOneofA - clicksOfSetButton);
+            indexOfPreviousButton = indexOfNewButton;
           }
-
         });
 
       });
