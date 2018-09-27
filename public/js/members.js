@@ -74,11 +74,17 @@ $(document).ready(function() {
         // then go down by one with each press. after 0, it should go back to
         // REPS.  then start over.
         $(document).on("click", ".startTimer", function() {
-          // Still need to no stop and restart timer after each press
-          stopTimer();
-          timer();
 
+          // Need to not stop and restart timer after each press of the same button
+          // so set the variable that picks which button was just clicked
           var indexOfNewButton = parseInt($(this).attr("data-chosenSet"));
+          
+          // check to see if it's different than the previous button
+          if (indexOfNewButton !== indexOfPreviousButton) {
+            stopTimer();
+            timer();
+          }
+          
           console.log("indexOfNewButton is " + indexOfNewButton);
           console.log("indexOfPreviousButton is " + indexOfPreviousButton);
           
@@ -90,7 +96,7 @@ $(document).ready(function() {
             // by more than 1.
           clicksOfSetButton = parseInt($(this).attr("data-clicksOfSetButton"));
           console.log("clicksOfSetButton from button: " + clicksOfSetButton);
-          clicksOfSetButton++;
+          clicksOfSetButton = clicksOfSetButton + 1;
           console.log("clicksOfSetButton after adding 1: " + clicksOfSetButton);
           $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
 
@@ -98,7 +104,7 @@ $(document).ready(function() {
             $(this).text("Reps");
             clicksOfSetButton = -1;
             $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
-             // indexOfPreviousButton = 20;
+
             indexOfPreviousButton = indexOfNewButton;
           } else {
             $(this).html(data.repsOneofA - clicksOfSetButton);
