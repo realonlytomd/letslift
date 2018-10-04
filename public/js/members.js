@@ -24,20 +24,24 @@ $(document).ready(function() {
       // and corresponding sets buttons with for loops, the weight, and reps displayed after those buttons
       // are presssed.  Also the count up clock.
       $.get("/api/specific_user_data/" + data.id).then(function(data) {
-        //console.log("data.workoutA = " + data.workoutA);
-        //console.log("data.exerciseOneofA = " + data.exerciseOneofA);
+        console.log("data.workoutA = " + data.workoutA);
+        console.log("data.exerciseOneofA = " + data.exerciseOneofA);
         $("span#workoutA").text(data.workoutA);
         $("span#exerciseOneofA").text(data.exerciseOneofA);
         $("span#weightOneofA").text(" " + data.weightOneofA + "lb");
         $("span#setsOneofA").text(data.setsOneofA + " sets X ");
         $("span#repsOneofA").text(data.repsOneofA + " reps at ");
+        $("span#exerciseTwoofA").text(data.exerciseTwoofA);
+        $("span#weightTwoofA").text(" " + data.weightTwoofA + "lb");
+        $("span#setsTwoofA").text(data.setsTwoofA + " sets X ");
+        $("span#repsTwoofA").text(data.repsTwoofA + " reps at ");
 
         //empty out the div containing sets/reps buttons inside the makeSetbuttons function
         // make the creation of the set buttons into a function
-        function makeSetButtons() {
+        function makeSetButtonsExOne() {
           clicksOfSetButton = -1;
           indexOfPreviousButton = 20;
-          $("#setsRepsButtons").empty();
+          $("#setsRepsButtonsExOne").empty();
       
               // create loop to go through the "array" of sets
           
@@ -48,19 +52,46 @@ $(document).ready(function() {
             holder.addClass("btn");
             holder.addClass("btn-success");
             holder.addClass("startTimer");
+            console.log("data-reps: " + data.repsOneofA);
+            holder.attr("data-reps", data.repsOneofA);
             holder.attr("data-clicksOfSetButton", clicksOfSetButton);
             holder.attr("data-chosenSet", i);
             holder.text("Reps");
             
-            $("#setsRepsButtons").append(holder);
+            $("#setsRepsButtonsExOne").append(holder);
           }
         }
 
-        makeSetButtons();
+        function makeSetButtonsExTwo() {
+          clicksOfSetButton = -1;
+          indexOfPreviousButton = 20;
+          $("#setsRepsButtonsExTwo").empty();
+      
+              // create loop to go through the "array" of sets
+          
+          for (var i = 0; i < data.setsTwoofA; i++) {
+            var holder = $("<button>");
+
+            holder.attr("type","button");
+            holder.addClass("btn");
+            holder.addClass("btn-success");
+            holder.addClass("startTimer");
+            holder.attr("data-reps", data.repsTwoofA);
+            holder.attr("data-clicksOfSetButton", clicksOfSetButton);
+            holder.attr("data-chosenSet", i);
+            holder.text("Reps");
+            
+            $("#setsRepsButtonsExTwo").append(holder);
+          }
+        }
+
+        makeSetButtonsExOne();
+        makeSetButtonsExTwo();
 
         function timer() {
           $("#timerDisplay").html(startCount);
           startCount = startCount + 1;
+          // set up to play a chime if startCount reaches 90, or whatever
           myTimer = setTimeout(function(){ timer() }, 1000);
         }
 
@@ -95,19 +126,20 @@ $(document).ready(function() {
             // reset. Thought I changed that, but the clicksOfSetButton is increasing
             // by more than 1.
           clicksOfSetButton = parseInt($(this).attr("data-clicksOfSetButton"));
+          reps = parseInt($(this).attr("data-reps"));
           console.log("clicksOfSetButton from button: " + clicksOfSetButton);
           clicksOfSetButton = clicksOfSetButton + 1;
           console.log("clicksOfSetButton after adding 1: " + clicksOfSetButton);
           $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
+          console.log("data-reps: " + reps);
 
-          if (clicksOfSetButton > data.repsOneofA) {
+          if (clicksOfSetButton > reps) {
             $(this).text("Reps");
             clicksOfSetButton = -1;
             $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
-
             indexOfPreviousButton = indexOfNewButton;
           } else {
-            $(this).html(data.repsOneofA - clicksOfSetButton);
+            $(this).html(reps - clicksOfSetButton);
             indexOfPreviousButton = indexOfNewButton;
           }
         });
@@ -122,10 +154,14 @@ $(document).ready(function() {
       // build the data object to be put into the database
       var workoutAInputs = {
         workoutA: $("input#workout-nameA").val().trim(),
-        exerciseOneofA: $("input#exercise-oneA").val().trim(),
-        weightOneofA:$("input#exercise-oneA-weight").val().trim(),
-        setsOneofA: $("input#exercise-oneA-sets").val().trim(),
-        repsOneofA: $("input#exercise-oneA-reps").val().trim()
+        exerciseOneofA: $("input#exercise-OneA").val().trim(),
+        weightOneofA:$("input#exercise-OneA-weight").val().trim(),
+        setsOneofA: $("input#exercise-OneA-sets").val().trim(),
+        repsOneofA: $("input#exercise-OneA-reps").val().trim(),
+        exerciseTwoofA: $("input#exercise-TwoA").val().trim(),
+        weightTwoofA:$("input#exercise-TwoA-weight").val().trim(),
+        setsTwoofA: $("input#exercise-TwoA-sets").val().trim(),
+        repsTwoofA: $("input#exercise-TwoA-reps").val().trim()
       };
       
       //make sure the workout at least has a name
@@ -149,10 +185,14 @@ $(document).ready(function() {
         
       // ...and empty out the input fields for the first exercise in the first workout
         $("input#workout-nameA").val("");
-        $("input#exercise-oneA").val("");
-        $("input#exercise-oneA-weight").val("");
-        $("input#exercise-oneA-sets").val("");
-        $("input#exercise-oneA-reps").val("");
+        $("input#exercise-OneA").val("");
+        $("input#exercise-OneA-weight").val("");
+        $("input#exercise-OneA-sets").val("");
+        $("input#exercise-OneA-reps").val("");
+        $("input#exercise-TwoA").val("");
+        $("input#exercise-TwoA-weight").val("");
+        $("input#exercise-TwoA-sets").val("");
+        $("input#exercise-TwoA-reps").val("");
       }
     });
     // this button may not be necessary since the function is already accomplished when page loads

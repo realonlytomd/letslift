@@ -95,7 +95,11 @@ module.exports = function(router) {
           exerciseOneofA: dbUser[0].dataValues.exerciseOneofA,
           weightOneofA: dbUser[0].dataValues.weightOneofA,
           setsOneofA: dbUser[0].dataValues.setsOneofA,
-          repsOneofA: dbUser[0].dataValues.repsOneofA
+          repsOneofA: dbUser[0].dataValues.repsOneofA,
+          exerciseTwoofA: dbUser[0].dataValues.exerciseTwoofA,
+          weightTwoofA: dbUser[0].dataValues.weightTwoofA,
+          setsTwoofA: dbUser[0].dataValues.setsTwoofA,
+          repsTwoofA: dbUser[0].dataValues.repsTwoofA
         });
       });
   });
