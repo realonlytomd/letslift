@@ -82,7 +82,7 @@ module.exports = function(router) {
   router.get("/api/specific_user_data/:id", function(req, res) {
       //console.log("this is req in the .get of api-routes.js", req);
       db.User.findAll({
-        // I think I need to add a WHERE here to just get the current id.
+        // add a WHERE here to just get the current id.
         where: {
           id: req.params.id
         }

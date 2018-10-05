@@ -3,8 +3,8 @@ $(document).ready(function() {
   // set up some variables
   var startCount = 0;
   var myTimer;
-  var clicksOfSetButton = -1;
-  var indexOfPreviousButton = 20;
+  var clicksofSetButton = -1;
+  var indexofPreviousButton = 20;
 
     // This portion does a GET request to figure out which user is logged in
   $.get("/api/user_data").then(function(data) {
@@ -39,8 +39,8 @@ $(document).ready(function() {
         //empty out the div containing sets/reps buttons inside the makeSetbuttons function
         // make the creation of the set buttons into a function
         function makeSetButtonsExOne() {
-          clicksOfSetButton = -1;
-          indexOfPreviousButton = 20;
+          clicksofSetButton = -1;
+          indexofPreviousButton = 20;
           $("#setsRepsButtonsExOne").empty();
       
               // create loop to go through the "array" of sets
@@ -54,7 +54,7 @@ $(document).ready(function() {
             holder.addClass("startTimer");
             console.log("data-reps: " + data.repsOneofA);
             holder.attr("data-reps", data.repsOneofA);
-            holder.attr("data-clicksOfSetButton", clicksOfSetButton);
+            holder.attr("data-clicksofSetButton", clicksofSetButton);
             holder.attr("data-chosenSet", i);
             holder.text("Reps");
             
@@ -63,8 +63,8 @@ $(document).ready(function() {
         }
 
         function makeSetButtonsExTwo() {
-          clicksOfSetButton = -1;
-          indexOfPreviousButton = 20;
+          clicksofSetButton = -1;
+          indexofPreviousButton = 20;
           $("#setsRepsButtonsExTwo").empty();
       
               // create loop to go through the "array" of sets
@@ -77,7 +77,7 @@ $(document).ready(function() {
             holder.addClass("btn-success");
             holder.addClass("startTimer");
             holder.attr("data-reps", data.repsTwoofA);
-            holder.attr("data-clicksOfSetButton", clicksOfSetButton);
+            holder.attr("data-clicksofSetButton", clicksofSetButton);
             holder.attr("data-chosenSet", i);
             holder.text("Reps");
             
@@ -89,7 +89,7 @@ $(document).ready(function() {
         makeSetButtonsExTwo();
 
         function timer() {
-          $("#timerDisplay").html(startCount);
+          $("span#timerDisplay").html(startCount);
           startCount = startCount + 1;
           // set up to play a chime if startCount reaches 90, or whatever
           myTimer = setTimeout(function(){ timer() }, 1000);
@@ -108,39 +108,39 @@ $(document).ready(function() {
 
           // Need to not stop and restart timer after each press of the same button
           // so set the variable that picks which button was just clicked
-          var indexOfNewButton = parseInt($(this).attr("data-chosenSet"));
+          var indexofNewButton = parseInt($(this).attr("data-chosenSet"));
           
           // check to see if it's different than the previous button
-          if (indexOfNewButton !== indexOfPreviousButton) {
+          if (indexofNewButton !== indexofPreviousButton) {
             stopTimer();
             timer();
           }
           
-          console.log("indexOfNewButton is " + indexOfNewButton);
-          console.log("indexOfPreviousButton is " + indexOfPreviousButton);
+          console.log("indexofNewButton is " + indexofNewButton);
+          console.log("indexofPreviousButton is " + indexofPreviousButton);
           
 
             // there's a problem with going through some sets, but then if the user
             // clicks the named workout again, the buttons are redrawn,
-            // but the old clicksOfSetButton (and possibly other data) is not
-            // reset. Thought I changed that, but the clicksOfSetButton is increasing
+            // but the old clicksofSetButton (and possibly other data) is not
+            // reset. Thought I changed that, but the clicksofSetButton is increasing
             // by more than 1.
-          clicksOfSetButton = parseInt($(this).attr("data-clicksOfSetButton"));
+          clicksofSetButton = parseInt($(this).attr("data-clicksofSetButton"));
           reps = parseInt($(this).attr("data-reps"));
-          console.log("clicksOfSetButton from button: " + clicksOfSetButton);
-          clicksOfSetButton = clicksOfSetButton + 1;
-          console.log("clicksOfSetButton after adding 1: " + clicksOfSetButton);
-          $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
+          console.log("clicksofSetButton from button: " + clicksofSetButton);
+          clicksofSetButton = clicksofSetButton + 1;
+          console.log("clicksofSetButton after adding 1: " + clicksofSetButton);
+          $(this).attr("data-clicksofSetButton", clicksofSetButton);
           console.log("data-reps: " + reps);
 
-          if (clicksOfSetButton > reps) {
+          if (clicksofSetButton > reps) {
             $(this).text("Reps");
-            clicksOfSetButton = -1;
-            $(this).attr("data-clicksOfSetButton", clicksOfSetButton);
-            indexOfPreviousButton = indexOfNewButton;
+            clicksofSetButton = -1;
+            $(this).attr("data-clicksofSetButton", clicksofSetButton);
+            indexofPreviousButton = indexofNewButton;
           } else {
-            $(this).html(reps - clicksOfSetButton);
-            indexOfPreviousButton = indexOfNewButton;
+            $(this).html(reps - clicksofSetButton);
+            indexofPreviousButton = indexofNewButton;
           }
         });
 
