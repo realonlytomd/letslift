@@ -21,26 +21,22 @@ $(document).ready(function() {
       $("span#workoutC").text(data.workoutC);
       $("span#workoutD").text(data.workoutD);
       $("span#workoutE").text(data.workoutE);
-    });
+    
 
-      // This function happens when the user clicks the chosen workout.
-    $(".selectedWorkout").on("click", function(event) {
-      // What happens? Hide previous divs. Show new actual workout div.
-      // Build the workout page  -  where the user sees the title of workout, the exercises,
-      // the weight, and corresponding sets buttons, and reps displayed after those buttons
-      // are presssed.  Also the count up clock.
-      var selectedWorkout = $(this).text();
+          // This function happens when the user clicks the chosen workout.
+      $(".selectedWorkout").on("click", function(event) {
+          // What happens? Hide previous divs. Show new actual workout div.
+          // Build the workout page  -  where the user sees the title of workout, the exercises,
+          // the weight, and corresponding sets buttons, and reps displayed after those buttons
+          // are presssed.  Also the count up clock.
+        var selectedWorkout = $(this).text();
         console.log("the variable selectedWorkout: " + selectedWorkout);
-      
-      $.get("/api/specific_user_data/" + data.id).then(function(data) {
-        console.log("first data.workoutA = " + data.workoutA);
-        console.log("data.exerciseOneofA = " + data.exerciseOneofA);
 
         // new few lines are a test
-        console.log(" 2nd data.workoutA: " + data.workoutA);
+        console.log("data.workoutA: " + data.workoutA);
         
         switch (selectedWorkout) {
-         case data.workoutA:
+          case data.workoutA:
             console.log("inside case workoutA of switch");
             break;
           case data.workoutB:
