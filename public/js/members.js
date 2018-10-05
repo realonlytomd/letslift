@@ -17,6 +17,10 @@ $(document).ready(function() {
     // that are available to the user
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
       $("span#workoutA").text(data.workoutA);
+      $("span#workoutB").text(data.workoutB);
+      $("span#workoutC").text(data.workoutC);
+      $("span#workoutD").text(data.workoutD);
+      $("span#workoutE").text(data.workoutE);
     });
 
       // This function happens when the user clicks the chosen workout.
