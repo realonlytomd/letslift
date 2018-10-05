@@ -13,15 +13,17 @@ $(document).ready(function() {
     $(".member-name").text(data.email);
 
     //putting all of the below inside this get so as to have the correct id (user)
+    // this .get brings in all the data but assigns only the names of the workouts 
+    // that are available to the user
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
       $("span#workoutA").text(data.workoutA);
     });
 
       // This function happens when the user clicks the chosen workout.
     $(".selectedWorkout").on("click", function(event) {
-      //what do I want to happen? Hide previous divs. Show new actual workout div.
-      // Build the workout page  -  where the user sees the exercises
-      // and corresponding sets buttons with for loops, the weight, and reps displayed after those buttons
+      // What happens? Hide previous divs. Show new actual workout div.
+      // Build the workout page  -  where the user sees the title of workout, the exercises,
+      // the weight, and corresponding sets buttons, and reps displayed after those buttons
       // are presssed.  Also the count up clock.
       $.get("/api/specific_user_data/" + data.id).then(function(data) {
         console.log("data.workoutA = " + data.workoutA);
@@ -52,7 +54,6 @@ $(document).ready(function() {
             holder.addClass("btn");
             holder.addClass("btn-success");
             holder.addClass("startTimer");
-            console.log("data-reps: " + data.repsOneofA);
             holder.attr("data-reps", data.repsOneofA);
             holder.attr("data-clicksofSetButton", clicksofSetButton);
             holder.attr("data-chosenSet", i);
@@ -89,6 +90,9 @@ $(document).ready(function() {
         makeSetButtonsExTwo();
 
         function timer() {
+          //this span needs to be put in a fixed footer so user sees it on page while the
+          //timer clock is running. Add a stop when workout is finished? (or somewhere before?)
+          //So, there is no need for a different timer span for each exercise.
           $("span#timerDisplay").html(startCount);
           startCount = startCount + 1;
           // set up to play a chime if startCount reaches 90, or whatever
@@ -111,6 +115,7 @@ $(document).ready(function() {
           var indexofNewButton = parseInt($(this).attr("data-chosenSet"));
           
           // check to see if it's different than the previous button
+          // so as to not start the timer over while user pics the number of reps completed.
           if (indexofNewButton !== indexofPreviousButton) {
             stopTimer();
             timer();
