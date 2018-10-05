@@ -29,9 +29,27 @@ $(document).ready(function() {
       // Build the workout page  -  where the user sees the title of workout, the exercises,
       // the weight, and corresponding sets buttons, and reps displayed after those buttons
       // are presssed.  Also the count up clock.
+      var selectedWorkout = $(this).text();
+        console.log("the variable selectedWorkout: " + selectedWorkout);
+      
       $.get("/api/specific_user_data/" + data.id).then(function(data) {
-        console.log("data.workoutA = " + data.workoutA);
+        console.log("first data.workoutA = " + data.workoutA);
         console.log("data.exerciseOneofA = " + data.exerciseOneofA);
+
+        // new few lines are a test
+        console.log(" 2nd data.workoutA: " + data.workoutA);
+        
+        switch (selectedWorkout) {
+         case data.workoutA:
+            console.log("inside case workoutA of switch");
+            break;
+          case data.workoutB:
+            console.log("inside case workoutB of switch");
+            break;
+          default:
+            console.log("not in case A or B");
+        }
+
         $("span#workoutA").text(data.workoutA);
         $("span#exerciseOneofA").text(data.exerciseOneofA);
         $("span#weightOneofA").text(" " + data.weightOneofA + "lb");
