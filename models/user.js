@@ -189,7 +189,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     // The Weight in pounds to be used during the exercise
-    weightNineeofA: {
+    weightNineofA: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
@@ -394,7 +394,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     // The Weight in pounds to be used during the exercise
-    weightNineeofB: {
+    weightNineofB: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
@@ -599,7 +599,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     // The Weight in pounds to be used during the exercise
-    weightNineeofC: {
+    weightNineofC: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
@@ -804,7 +804,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     // The Weight in pounds to be used during the exercise
-    weightNineeofD: {
+    weightNineofD: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
@@ -1009,7 +1009,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     // The Weight in pounds to be used during the exercise
-    weightNineeofE: {
+    weightNineofE: {
       type: DataTypes.INTEGER,
       allowNull: true
     },

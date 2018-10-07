@@ -5,22 +5,36 @@ $(document).ready(function() {
   var myTimer;
   var clicksofSetButton = -1;
   var indexofPreviousButton = 20;
+  var exercise = [];
+  var weight = [];
+  var sets = [];
+  var reps = [];
 
-    // This portion does a GET request to figure out which user is logged in
+    // This portion does a GET request to get which user logged in
   $.get("/api/user_data").then(function(data) {
     //console.log("object 'data' inside of the first .get is ", data);
     $(".member-id").text(data.id);
     $(".member-name").text(data.email);
 
     //putting all of the below inside this get so as to have the correct id (user)
-    // this .get brings in all the data but assigns only the names of the workouts 
-    // that are available to the user
+    // this .get brings in all the data
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
       $("span#workoutA").text(data.workoutA);
       $("span#workoutB").text(data.workoutB);
       $("span#workoutC").text(data.workoutC);
       $("span#workoutD").text(data.workoutD);
       $("span#workoutE").text(data.workoutE);
+
+      // I think here I need for loops for taking data.variables and putting them
+      // into the created arrays.
+      
+
+      exerciseA[1] = data.exerciseOneofA;
+      exerciseA[2] = data.exerciseTwoofA;
+      // etc.
+      weight[1] = data.weightOneofA;
+      weight[2] = data.weightTwoofA;
+      //etc.
     
 
           // This function happens when the user clicks the chosen workout.
@@ -31,13 +45,13 @@ $(document).ready(function() {
           // are presssed.  Also the count up clock.
         var selectedWorkout = $(this).text();
         console.log("the variable selectedWorkout: " + selectedWorkout);
-
-        // new few lines are a test
-        console.log("data.workoutA: " + data.workoutA);
         
         switch (selectedWorkout) {
           case data.workoutA:
             console.log("inside case workoutA of switch");
+            // this worked. so call a function that needs to be created around the code below
+            // and will probably include code to rewrite DOM instead of hardcoding in members.html
+            createWorkout();
             break;
           case data.workoutB:
             console.log("inside case workoutB of switch");
@@ -45,12 +59,25 @@ $(document).ready(function() {
           default:
             console.log("not in case A or B");
         }
-
+        // don't need this next line - already done above
         $("span#workoutA").text(data.workoutA);
+
+        function createWorkout() {
+          $("span#workout").text(selectedWorkout);
+          for (var j = 1; j = exercise.length; j++) {
+            $("span#exercise[j]").text(exercise[j]);
+            $("span#weight[j]").text(" " + weight[j] + "lb");
+            // etc.
+
+          }
+        }
+        // assignments for 1st exercise
         $("span#exerciseOneofA").text(data.exerciseOneofA);
         $("span#weightOneofA").text(" " + data.weightOneofA + "lb");
         $("span#setsOneofA").text(data.setsOneofA + " sets X ");
         $("span#repsOneofA").text(data.repsOneofA + " reps at ");
+
+        // assignments for 2nd exercise
         $("span#exerciseTwoofA").text(data.exerciseTwoofA);
         $("span#weightTwoofA").text(" " + data.weightTwoofA + "lb");
         $("span#setsTwoofA").text(data.setsTwoofA + " sets X ");
@@ -103,7 +130,8 @@ $(document).ready(function() {
             $("#setsRepsButtonsExTwo").append(holder);
           }
         }
-
+            //..these lines wouild be included at end of code where generic names of db variables
+            // have been assigned.  They are repeated as the for loop continues.
         makeSetButtonsExOne();
         makeSetButtonsExTwo();
 
@@ -147,7 +175,7 @@ $(document).ready(function() {
             // clicks the named workout again, the buttons are redrawn,
             // but the old clicksofSetButton (and possibly other data) is not
             // reset. Thought I changed that, but the clicksofSetButton is increasing
-            // by more than 1.
+            // by more than 1. - i don't think this does it anymore...
           clicksofSetButton = parseInt($(this).attr("data-clicksofSetButton"));
           reps = parseInt($(this).attr("data-reps"));
           console.log("clicksofSetButton from button: " + clicksofSetButton);
