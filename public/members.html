@@ -34,182 +34,38 @@
       </div>
       <div class="col-md-6">
         <h2>Pick a workout</h2>
-          <h3><span class="selectedWorkout" id="workoutA"></span></h3>
-          <h3><span class="selectedWorkout" id="workoutB"></span></h3>
-          <h3><span class="selectedWorkout" id="workoutC"></span></h3>
-          <h3><span class="selectedWorkout" id="workoutD"></span></h3>
-          <h3><span class="selectedWorkout" id="workoutE"></span></h3>
+          <div id="workouts"></div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6">
         <h2>Enter Workout A (Maximum of 5 Different Workouts)</h2>
+        <!-- this input form needs to be put in the .js so it can be rewritten as the user
+        needs more exercises and workouts. Each individual for and id should be the same
+        and in an array that will be added in in a for loop-->
           <form class="enterWorkoutA">
             <div class="form-group">
-              <label for="workoutNameA">Name of Workout A</label>
+              <label for="workout-nameA">Name of Workout A</label>
               <input type="text" class="form-control" id="workout-nameA" placeholder="">
             </div>
             <div class="form-group">
-              <label for="exerciseOne">Name of First Exercise</label>
+              <label for="exercise-OneA">Name of First Exercise</label>
               <input type="text" class="form-control" id="exercise-OneA" placeholder="">
             </div>
             <div class="form-group">
-              <label for="exerciseOneWeight">Weight</label>
+              <label for="exercise-OneA-weight">Weight</label>
               <input type="number" class="form-control" id="exercise-OneA-weight" placeholder="pounds">
             </div>
             <div class="form-group">
-              <label for="exerciseOneSets">Number of Sets</label>
+              <label for="exercise-OneA-sets">Number of Sets</label>
               <input type="number" class="form-control" id="exercise-OneA-sets" placeholder="">
             </div>
             <div class="form-group">
-              <label for="exerciseOneReps">Number of Reps</label>
+              <label for="exercise-OneA-reps">Number of Reps</label>
               <input type="number" class="form-control" id="exercise-OneA-reps" placeholder="">
             </div>
-            <div class="form-group">
-              <label for="exerciseTwo">Name of Second Exercise</label>
-              <input type="text" class="form-control" id="exercise-TwoA" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseTwoWeight">Weight</label>
-              <input type="number" class="form-control" id="exercise-TwoA-weight" placeholder="pounds">
-            </div>
-            <div class="form-group">
-              <label for="exerciseTwoSets">Number of Sets</label>
-              <input type="number" class="form-control" id="exercise-TwoA-sets" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseTwoReps">Number of Reps</label>
-              <input type="number" class="form-control" id="exercise-TwoA-reps" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseThree">Name of Third Exercise</label>
-              <input type="text" class="form-control" id="exercise-ThreeA" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseThreeWeight">Weight</label>
-              <input type="number" class="form-control" id="exercise-ThreeA-weight" placeholder="pounds">
-            </div>
-            <div class="form-group">
-              <label for="exerciseThreeSets">Number of Sets</label>
-              <input type="number" class="form-control" id="exercise-ThreeA-sets" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseThreeReps">Number of Reps</label>
-              <input type="number" class="form-control" id="exercise-ThreeA-reps" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseFour">Name of Fourth Exercise</label>
-              <input type="text" class="form-control" id="exercise-FourA" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseFourWeight">Weight</label>
-              <input type="number" class="form-control" id="exercise-FourA-weight" placeholder="pounds">
-            </div>
-            <div class="form-group">
-              <label for="exerciseFourSets">Number of Sets</label>
-              <input type="number" class="form-control" id="exercise-FourA-sets" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseFourReps">Number of Reps</label>
-              <input type="number" class="form-control" id="exercise-FourA-reps" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseFive">Name of First Exercise</label>
-              <input type="text" class="form-control" id="exercise-FiveA" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseFiveWeight">Weight</label>
-              <input type="number" class="form-control" id="exercise-FiveA-weight" placeholder="pounds">
-            </div>
-            <div class="form-group">
-              <label for="exerciseFiveSets">Number of Sets</label>
-              <input type="number" class="form-control" id="exercise-FiveA-sets" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseFiveReps">Number of Reps</label>
-              <input type="number" class="form-control" id="exercise-FiveA-reps" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseSix">Name of Second Exercise</label>
-              <input type="text" class="form-control" id="exercise-SixA" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseSixWeight">Weight</label>
-              <input type="number" class="form-control" id="exercise-SixA-weight" placeholder="pounds">
-            </div>
-            <div class="form-group">
-              <label for="exerciseSixSets">Number of Sets</label>
-              <input type="number" class="form-control" id="exercise-SixA-sets" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseSixReps">Number of Reps</label>
-              <input type="number" class="form-control" id="exercise-SixA-reps" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseSeven">Name of Third Exercise</label>
-              <input type="text" class="form-control" id="exercise-SevenA" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseSevenWeight">Weight</label>
-              <input type="number" class="form-control" id="exercise-SevenA-weight" placeholder="pounds">
-            </div>
-            <div class="form-group">
-              <label for="exerciseSevenSets">Number of Sets</label>
-              <input type="number" class="form-control" id="exercise-SevenA-sets" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseSevenReps">Number of Reps</label>
-              <input type="number" class="form-control" id="exercise-SevenA-reps" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseEight">Name of Eighth Exercise</label>
-              <input type="text" class="form-control" id="exercise-EightA" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseEightWeight">Weight</label>
-              <input type="number" class="form-control" id="exercise-EightA-weight" placeholder="pounds">
-            </div>
-            <div class="form-group">
-              <label for="exerciseEightSets">Number of Sets</label>
-              <input type="number" class="form-control" id="exercise-EightA-sets" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseEightReps">Number of Reps</label>
-              <input type="number" class="form-control" id="exercise-EightA-reps" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseNine">Name of Third Exercise</label>
-              <input type="text" class="form-control" id="exercise-NineA" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseNineWeight">Weight</label>
-              <input type="number" class="form-control" id="exercise-NineA-weight" placeholder="pounds">
-            </div>
-            <div class="form-group">
-              <label for="exerciseNineSets">Number of Sets</label>
-              <input type="number" class="form-control" id="exercise-NineA-sets" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseNineReps">Number of Reps</label>
-              <input type="number" class="form-control" id="exercise-NineA-reps" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseTen">Name of Tenth Exercise</label>
-              <input type="text" class="form-control" id="exercise-TenA" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseTenWeight">Weight</label>
-              <input type="number" class="form-control" id="exercise-TenA-weight" placeholder="pounds">
-            </div>
-            <div class="form-group">
-              <label for="exerciseTenSets">Number of Sets</label>
-              <input type="number" class="form-control" id="exercise-TenA-sets" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="exerciseTenReps">Number of Reps</label>
-              <input type="number" class="form-control" id="exercise-TenA-reps" placeholder="">
-            </div>
+            
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
       </div>
@@ -220,7 +76,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <h3>Title of Current Workout: <span id="workout"></span></h3> <!-- Title of workout, specific now, but needs to 
+          <h3>Title of Current Workout: <span id="workoutA"></span></h3> <!-- Title of workout, specific now, but needs to 
           be made general when more than one workout is available-->
         </div>
       </div>

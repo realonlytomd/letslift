@@ -5,6 +5,9 @@ $(document).ready(function() {
   var myTimer;
   var clicksofSetButton = -1;
   var indexofPreviousButton = 20;
+  var selectedWorkout;
+  // in progress: not sure what arrays I need:
+  var workout = [];
   var exercise = [];
   var weight = [];
   var sets = [];
@@ -19,22 +22,76 @@ $(document).ready(function() {
     //putting all of the below inside this get so as to have the correct id (user)
     // this .get brings in all the data
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
-      $("span#workoutA").text(data.workoutA);
-      $("span#workoutB").text(data.workoutB);
-      $("span#workoutC").text(data.workoutC);
-      $("span#workoutD").text(data.workoutD);
-      $("span#workoutE").text(data.workoutE);
+      workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
 
-      // I think here I need for loops for taking data.variables and putting them
-      // into the created arrays.
+      for (var i = 0; i < workout.length; i++) {
+        $("#workouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+      }
       
 
-      exerciseA[1] = data.exerciseOneofA;
-      exerciseA[2] = data.exerciseTwoofA;
+      exercise = [data.exerciseOneofA, data.exerciseTwoofA, data.exerciseThreeofA, 
+        data.exerciseFourofA, data.exerciseFiveofA, data.exerciseSixofA, data.exerciseSevenofA, 
+        data.exerciseEightofA, data.exerciseNineofA, data.exerciseTenofA,
+        data.exerciseOneofB, data.exerciseTwoofB, data.exerciseThreeofB, 
+        data.exerciseFourofB, data.exerciseFiveofB, data.exerciseSixofB, data.exerciseSevenofB, 
+        data.exerciseEightofB, data.exerciseNineofB, data.exerciseTenofB,
+        data.exerciseOneofC, data.exerciseTwoofC, data.exerciseThreeofC, 
+        data.exerciseFourofC, data.exerciseFiveofC, data.exerciseSixofC, data.exerciseSevenofC, 
+        data.exerciseEightofC, data.exerciseNineofC, data.exerciseTenofC,
+        data.exerciseOneofD, data.exerciseTwoofD, data.exerciseThreeofD, 
+        data.exerciseFourofD, data.exerciseFiveofD, data.exerciseSixofD, data.exerciseSevenofD, 
+        data.exerciseEightofD, data.exerciseNineofD, data.exerciseTenofD,
+        data.exerciseOneofE, data.exerciseTwoofE, data.exerciseThreeofE, 
+        data.exerciseFourofE, data.exerciseFiveofE, data.exerciseSixofE, data.exerciseSevenofE, 
+        data.exerciseEightofE, data.exerciseNineofE, data.exerciseTenofE];
       // etc.
-      weight[1] = data.weightOneofA;
-      weight[2] = data.weightTwoofA;
-      //etc.
+      weight = [data.weightOneofA, data.weightTwoofA, data.weightThreeofA, 
+        data.weightFourofA, data.weightFiveofA, data.weightSixofA, data.weightSevenofA, 
+        data.weightEightofA, data.weightNineofA, data.weightTenofA,
+        data.weightOneofB, data.weightTwoofB, data.weightThreeofB, 
+        data.weightFourofB, data.weightFiveofB, data.weightSixofB, data.weightSevenofB, 
+        data.weightEightofB, data.weightNineofB, data.weightTenofB,
+        data.weightOneofC, data.weightTwoofC, data.weightThreeofC, 
+        data.weightFourofC, data.weightFiveofC, data.weightSixofC, data.weightSevenofC, 
+        data.weightEightofC, data.weightNineofC, data.weightTenofC,
+        data.weightOneofD, data.weightTwoofD, data.weightThreeofD, 
+        data.weightFourofD, data.weightFiveofD, data.weightSixofD, data.weightSevenofD, 
+        data.weightEightofD, data.weightNineofD, data.weightTenofD,
+        data.weightOneofE, data.weightTwoofE, data.weightThreeofE, 
+        data.weightFourofE, data.weightFiveofE, data.weightSixofE, data.weightSevenofE, 
+        data.weightEightofE, data.weightNineofE, data.weightTenofE];
+
+      sets = [data.setsOneofA, data.setsTwoofA, data.setsThreeofA, 
+        data.setsFourofA, data.setsFiveofA, data.setsSixofA, data.setsSevenofA, 
+        data.setsEightofA, data.setsNineofA, data.setsTenofA,
+        data.setsOneofB, data.setsTwoofB, data.setsThreeofB, 
+        data.setsFourofB, data.setsFiveofB, data.setsSixofB, data.setsSevenofB, 
+        data.setsEightofB, data.setsNineofB, data.setsTenofB,
+        data.setsOneofC, data.setsTwoofC, data.setsThreeofC, 
+        data.setsFourofC, data.setsFiveofC, data.setsSixofC, data.setsSevenofC, 
+        data.setsEightofC, data.setsNineofC, data.setsTenofC,
+        data.setsOneofD, data.setsTwoofD, data.setsThreeofD, 
+        data.setsFourofD, data.setsFiveofD, data.setsSixofD, data.setsSevenofD, 
+        data.setsEightofD, data.setsNineofD, data.setsTenofD,
+        data.setsOneofE, data.setsTwoofE, data.setsThreeofE, 
+        data.setsFourofE, data.setsFiveofE, data.setsSixofE, data.setsSevenofE, 
+        data.setsEightofE, data.setsNineofE, data.setsTenofE];
+
+      reps = [data.repsOneofA, data.repsTwoofA, data.repsThreeofA, 
+        data.repsFourofA, data.repsFiveofA, data.repsSixofA, data.repsSevenofA, 
+        data.repsEightofA, data.repsNineofA, data.repsTenofA,
+        data.repsOneofB, data.repsTwoofB, data.repsThreeofB, 
+        data.repsFourofB, data.repsFiveofB, data.repsSixofB, data.repsSevenofB, 
+        data.repsEightofB, data.repsNineofB, data.repsTenofB,
+        data.repsOneofC, data.repsTwoofC, data.repsThreeofC, 
+        data.repsFourofC, data.repsFiveofC, data.repsSixofC, data.repsSevenofC, 
+        data.repsEightofC, data.repsNineofC, data.repsTenofC,
+        data.repsOneofD, data.repsTwoofD, data.repsThreeofD, 
+        data.repsFourofD, data.repsFiveofD, data.repsSixofD, data.repsSevenofD, 
+        data.repsEightofD, data.repsNineofD, data.repsTenofD,
+        data.repsOneofE, data.repsTwoofE, data.repsThreeofE, 
+        data.repsFourofE, data.repsFiveofE, data.repsSixofE, data.repsSevenofE, 
+        data.repsEightofE, data.repsNineofE, data.repsTenofE];
     
 
           // This function happens when the user clicks the chosen workout.
@@ -43,7 +100,7 @@ $(document).ready(function() {
           // Build the workout page  -  where the user sees the title of workout, the exercises,
           // the weight, and corresponding sets buttons, and reps displayed after those buttons
           // are presssed.  Also the count up clock.
-        var selectedWorkout = $(this).text();
+        selectedWorkout = $(this).text();
         console.log("the variable selectedWorkout: " + selectedWorkout);
         
         switch (selectedWorkout) {
@@ -59,7 +116,7 @@ $(document).ready(function() {
           default:
             console.log("not in case A or B");
         }
-        // don't need this next line - already done above
+
         $("span#workoutA").text(data.workoutA);
 
         function createWorkout() {
@@ -203,16 +260,18 @@ $(document).ready(function() {
     $("form.enterWorkoutA").on("submit", function(event) {
       event.preventDefault();
       // build the data object to be put into the database
+      // but it only works if there is data, so need to only put in the values
+      // that have data
       var workoutAInputs = {
         workoutA: $("input#workout-nameA").val().trim(),
         exerciseOneofA: $("input#exercise-OneA").val().trim(),
         weightOneofA:$("input#exercise-OneA-weight").val().trim(),
         setsOneofA: $("input#exercise-OneA-sets").val().trim(),
-        repsOneofA: $("input#exercise-OneA-reps").val().trim(),
-        exerciseTwoofA: $("input#exercise-TwoA").val().trim(),
-        weightTwoofA:$("input#exercise-TwoA-weight").val().trim(),
-        setsTwoofA: $("input#exercise-TwoA-sets").val().trim(),
-        repsTwoofA: $("input#exercise-TwoA-reps").val().trim()
+        repsOneofA: $("input#exercise-OneA-reps").val().trim()
+        // exerciseTwoofA: $("input#exercise-TwoA").val().trim(),
+        // weightTwoofA:$("input#exercise-TwoA-weight").val().trim(),
+        // setsTwoofA: $("input#exercise-TwoA-sets").val().trim(),
+        // repsTwoofA: $("input#exercise-TwoA-reps").val().trim()
       };
       
       //make sure the workout at least has a name
