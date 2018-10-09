@@ -23,9 +23,13 @@ $(document).ready(function() {
     // this .get brings in all the data
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
       workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
+      console.log("workout: " + workout);
 
       for (var i = 0; i < workout.length; i++) {
+        if (workout[i] === null) {
+        } else {
         $("#workouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+        }
       }
       
 
