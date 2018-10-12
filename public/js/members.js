@@ -28,7 +28,7 @@ $(document).ready(function() {
       for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null) {
         } else {
-        $("#workouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+        $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
         }
       }
       
@@ -258,6 +258,27 @@ $(document).ready(function() {
 
       });
 
+    });
+
+    $(document).on("click", "#pickWorkout", function() {
+      $("#workoutEnterform").empty;
+      $("#workoutEnterForm").append("<h2>Enter Workout A (Maximum of 5 Different Workouts)</h2>" +
+      //this input form needs to be put in the .js so it can be rewritten as the user
+      //needs more exercises and workouts. Each individual for and id should be the same
+      //and in an array that will be added in in a for loop
+        "<form class='enterWorkoutA'><div class='form-group'>" +
+        "<label for='workout-nameA'>Name of Workout A</label><input type='text' class='form-control' id='workout-nameA' placeholder=''>" +
+        "</div><div class='form-group'><label for='exercise-OneA'>Name of First Exercise</label>" +
+        "<input type='text' class='form-control' id='exercise-OneA' placeholder=''>" +
+        "</div><div class='form-group'><label for='exercise-OneA-weight'>Weight</label>" +
+        "<input type='number' class='form-control' id='exercise-OneA-weight' placeholder='pounds'>" +
+        "</div><div class='form-group'><label for='exercise-OneA-sets'>Number of Sets</label>" +
+        "<input type='number' class='form-control' id='exercise-OneA-sets' placeholder=''>" +
+        "</div><div class='form-group'><label for='exercise-OneA-reps'>Number of Reps</label>" +
+        "<input type='number' class='form-control' id='exercise-OneA-reps' placeholder=''>" +
+        "</div>" +
+        "<button type='submit' class='btn btn-default'>Submit</button></form>");
+      $("#workoutEnterform").show;
     });
 
     // When the submit button for building a workout is clicked,
