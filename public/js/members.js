@@ -1,5 +1,7 @@
 $(document).ready(function() {
-    
+    //start with the footer showing the timer hidden. It appears when the timer is counting
+    $("#currentWorkout").hide();
+    $(".footer").hide();
   // set up some variables
   var startCount = 0;
   var myTimer;
@@ -23,7 +25,7 @@ $(document).ready(function() {
     // this .get brings in all the data
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
       workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
-      console.log("workout: " + workout);
+      console.log("workout array: " + workout);
 
       for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null) {
@@ -112,20 +114,27 @@ $(document).ready(function() {
             console.log("inside case workoutA of switch");
             // this worked. so call a function that needs to be created around the code below
             // and will probably include code to rewrite DOM instead of hardcoding in members.html
+            //jay is a counter, it corresponds 0-9 for A, 10-19 for B, etc.
+            var jay = 0;
             createWorkout();
             break;
           case data.workoutB:
             console.log("inside case workoutB of switch");
+            var jay = 10;
+            createWorkout();
             break;
           default:
             console.log("not in case A or B");
         }
-
-        $("span#workoutA").text(data.workoutA);
+        // I don't think I need this line
+        //$("span#workoutA").text(data.workoutA);
 
         function createWorkout() {
-          $("span#workout").text(selectedWorkout);
-          for (var j = 1; j = exercise.length; j++) {
+          $("span#workout").empty;
+          console.log("selectedWorkout = " + selectedWorkout);
+          $("span#workout").text(selectedWorkout); // but not sure what to do with exercise.length...check for null
+           console.log("jay = " + jay);
+          for (var j = jay; j = exercise.length; j++) {
             $("span#exercise[j]").text(exercise[j]);
             $("span#weight[j]").text(" " + weight[j] + "lb");
             // etc.
@@ -200,6 +209,7 @@ $(document).ready(function() {
           //this span needs to be put in a fixed footer so user sees it on page while the
           //timer clock is running. Add a stop when workout is finished? (or somewhere before?)
           //So, there is no need for a different timer span for each exercise.
+          $(".footer").show();
           $("span#timerDisplay").html(startCount);
           startCount = startCount + 1;
           // set up to play a chime if startCount reaches 90, or whatever
@@ -207,6 +217,7 @@ $(document).ready(function() {
         }
 
         function stopTimer() {
+          $(".footer").hide;
           clearTimeout(myTimer);
           startCount = 0;
         }
@@ -260,29 +271,41 @@ $(document).ready(function() {
 
     });
 
-    $(document).on("click", "#pickWorkout", function() {
+    // This click event takes place when user decides to enter a new workout.
+    // Need to check if there are already other workouts, and add this with labels 
+    // that denote the NEXT workout - this is inputting brand new data, not updating.
+    $(document).on("click", "#enterWorkout", function() {
+      $("#enterRowHeading").hide();
       $("#workoutEnterform").empty;
-      $("#workoutEnterForm").append("<h2>Enter Workout A (Maximum of 5 Different Workouts)</h2>" +
+      console.log("workout array: "+ workout);
+      //what is the earliest workout that is currently null?
+      for (var i = 0; i < workout.length; i++) {
+        if (workout[i] === null) {
+          // workout-nameA ...  the "A" should be generic, but A=0, B=1, C=2, etc.
+        } else {
+        }
+      }
+      $("#workoutEnterForm").append("<h2>Maximum of 5 Different Workouts</h2>" +
       //this input form needs to be put in the .js so it can be rewritten as the user
       //needs more exercises and workouts. Each individual for and id should be the same
       //and in an array that will be added in in a for loop
-        "<form class='enterWorkoutA'><div class='form-group'>" +
-        "<label for='workout-nameA'>Name of Workout A</label><input type='text' class='form-control' id='workout-nameA' placeholder=''>" +
-        "</div><div class='form-group'><label for='exercise-OneA'>Name of First Exercise</label>" +
-        "<input type='text' class='form-control' id='exercise-OneA' placeholder=''>" +
-        "</div><div class='form-group'><label for='exercise-OneA-weight'>Weight</label>" +
-        "<input type='number' class='form-control' id='exercise-OneA-weight' placeholder='pounds'>" +
-        "</div><div class='form-group'><label for='exercise-OneA-sets'>Number of Sets</label>" +
-        "<input type='number' class='form-control' id='exercise-OneA-sets' placeholder=''>" +
-        "</div><div class='form-group'><label for='exercise-OneA-reps'>Number of Reps</label>" +
-        "<input type='number' class='form-control' id='exercise-OneA-reps' placeholder=''>" +
-        "</div>" +
-        "<button type='submit' class='btn btn-default'>Submit</button></form>");
-      $("#workoutEnterform").show;
+        "<form class='enterWorkout'><fieldset><legend>Enter Workout</legend>" +
+        "<div class='form-group'><label for='workout-nameA'>Name of Workout</label>" +
+        "<input type='text' class='form-control' id='workout-nameA' placeholder=''></div>" +
+        // above is the workout name, below if an exercise name, weight, sets, reps
+        "<div class='form-group'><label for='exercise-OneA'>Name of First Exercise</label>" +
+        "<input type='text' class='form-control' id='exercise-OneA' placeholder=''></div>" +
+        "<div class='form-group'><label for='exercise-OneA-weight'>Weight</label>" +
+        "<input type='number' class='form-control' id='exercise-OneA-weight' placeholder='pounds'></div>" +
+        "<div class='form-group'><label for='exercise-OneA-sets'>Number of Sets</label>" +
+        "<input type='number' class='form-control' id='exercise-OneA-sets' placeholder=''></div>" +
+        "<div class='form-group'><label for='exercise-OneA-reps'>Number of Reps</label>" +
+        "<input type='number' class='form-control' id='exercise-OneA-reps' placeholder=''></div>" +
+        "<button type='submit' class='btn btn-default'>Submit</button></fieldset></form>");
     });
 
     // When the submit button for building a workout is clicked,
-    $("form.enterWorkoutA").on("submit", function(event) {
+    $("form.enterWorkout").on("submit", function(event) {
       event.preventDefault();
       // build the data object to be put into the database
       // but it only works if there is data, so need to only put in the values
@@ -298,6 +321,7 @@ $(document).ready(function() {
         // setsTwoofA: $("input#exercise-TwoA-sets").val().trim(),
         // repsTwoofA: $("input#exercise-TwoA-reps").val().trim()
       };
+      console.log("workoutAInputs: " + workoutAInputs);
       
       //make sure the workout at least has a name
       if (!workoutAInputs.workoutA) {

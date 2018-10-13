@@ -17,6 +17,30 @@ h1 {
   margin-bottom: 40px;
 }
 
+fieldset 
+	{
+		border: 1px solid black;
+		margin: 0;
+		xmin-width: 0;
+		padding: 10px;       
+		position: relative;
+		border-radius:4px;
+		background-color:white;
+		padding-left:10px;
+	}	
+	
+legend
+	{
+		font-size:14px;
+		font-weight:bold;
+		margin-bottom: 0px; 
+		width: 35%; 
+		border: 1px solid #ddd;
+		border-radius: 4px; 
+		padding: 5px 5px 5px 10px; 
+		background-color: #ffffff;
+	}
+
 .footer {
   position: fixed;
   left: 0;
