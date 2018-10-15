@@ -44,24 +44,28 @@
       </div>
     </div>
 
-    <div class="row" id="enterRow">
-      <div class="col-md-6" id="workoutEnterForm">
+    <div class="row" id="enterWorkoutNameRow">
+      <div class="col-md-6" id="workoutNameEnterForm">
+        <h2>Maximum of 5 Different Workouts</h2>
+        <form class='enterWorkoutName'>
+          <div class='form-group'>
+              <label for='workout-nameA'>Name of Workout</label>
+              <input type='text' class='form-control' id='workout-nameA' placeholder=''>
+          </div>
+          <button type='submit' class='btn btn-default'>Submit</button>
+        </form>
       </div>
     </div>
 <!-- Be ready to delete this following form, it must be put in the members.js file, so
 can be written in the DOM as needed. Want to get it in there, BEFORE I start changing variables
 names to more generic.  Right now it only can put in the first exercise of the first workout, A.-->
     <div class="row">
-      <div class="col-md-6">
-        <h2>Maximum of 5 Different Workouts</h2>
-     
-        <form class='enterWorkout'>
+      <div class="col-md-6" id="exerciseEnterForm">
+        
+        <form class='enterWorkoutExercises'>
           <fieldset>
-            <legend>Enter Workout</legend>
-              <div class='form-group'>
-                <label for='workout-nameA'>Name of Workout</label>
-                    <input type='text' class='form-control' id='workout-nameA' placeholder=''>
-              </div>
+            <legend>Enter Exercises in  Workout</legend>
+              
               <div class='form-group'>
                 <label for='exercise-OneA'>Name of First Exercise</label>
                   <input type='text' class='form-control' id='exercise-OneA' placeholder=''>
