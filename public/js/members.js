@@ -14,6 +14,7 @@ $(document).ready(function() {
   var weight = [];
   var sets = [];
   var reps = [];
+  var jay = 0;
 
     // This portion does a GET request to get which user logged in
   $.get("/api/user_data").then(function(data) {
@@ -50,6 +51,7 @@ $(document).ready(function() {
         data.exerciseOneofE, data.exerciseTwoofE, data.exerciseThreeofE, 
         data.exerciseFourofE, data.exerciseFiveofE, data.exerciseSixofE, data.exerciseSevenofE, 
         data.exerciseEightofE, data.exerciseNineofE, data.exerciseTenofE];
+        console.log("exercise: " + exercise);
       // etc.
       weight = [data.weightOneofA, data.weightTwoofA, data.weightThreeofA, 
         data.weightFourofA, data.weightFiveofA, data.weightSixofA, data.weightSevenofA, 
@@ -66,7 +68,7 @@ $(document).ready(function() {
         data.weightOneofE, data.weightTwoofE, data.weightThreeofE, 
         data.weightFourofE, data.weightFiveofE, data.weightSixofE, data.weightSevenofE, 
         data.weightEightofE, data.weightNineofE, data.weightTenofE];
-
+        console.log("weight: " + weight);
       sets = [data.setsOneofA, data.setsTwoofA, data.setsThreeofA, 
         data.setsFourofA, data.setsFiveofA, data.setsSixofA, data.setsSevenofA, 
         data.setsEightofA, data.setsNineofA, data.setsTenofA,
@@ -82,7 +84,7 @@ $(document).ready(function() {
         data.setsOneofE, data.setsTwoofE, data.setsThreeofE, 
         data.setsFourofE, data.setsFiveofE, data.setsSixofE, data.setsSevenofE, 
         data.setsEightofE, data.setsNineofE, data.setsTenofE];
-
+        console.log("sets: " + sets);
       reps = [data.repsOneofA, data.repsTwoofA, data.repsThreeofA, 
         data.repsFourofA, data.repsFiveofA, data.repsSixofA, data.repsSevenofA, 
         data.repsEightofA, data.repsNineofA, data.repsTenofA,
@@ -98,7 +100,7 @@ $(document).ready(function() {
         data.repsOneofE, data.repsTwoofE, data.repsThreeofE, 
         data.repsFourofE, data.repsFiveofE, data.repsSixofE, data.repsSevenofE, 
         data.repsEightofE, data.repsNineofE, data.repsTenofE];
-    
+        console.log("reps: " + reps);
 
           // This function happens when the user clicks the chosen workout.
       $(".selectedWorkout").on("click", function(event) {
@@ -115,12 +117,12 @@ $(document).ready(function() {
             // this worked. so call a function that needs to be created around the code below
             // and will probably include code to rewrite DOM instead of hardcoding in members.html
             //jay is a counter, it corresponds 0-9 for A, 10-19 for B, etc.
-            var jay = 0;
+            jay = 0;
             createWorkout();
             break;
           case data.workoutB:
             console.log("inside case workoutB of switch");
-            var jay = 10;
+            jay = 10;
             createWorkout();
             break;
           default:
@@ -134,9 +136,12 @@ $(document).ready(function() {
           console.log("selectedWorkout = " + selectedWorkout);
           $("span#workout").text(selectedWorkout); // but not sure what to do with exercise.length...check for null
            console.log("jay = " + jay);
-          for (var j = jay; j = exercise.length; j++) {
-            $("span#exercise[j]").text(exercise[j]);
-            $("span#weight[j]").text(" " + weight[j] + "lb");
+           console.log("exercise.length: " + exercise.length);
+           for (var j = jay; j < 10; j++) {
+             console.log("j: " + j);
+             console.log("exercise[j]: " + exercise[j]);
+            // $("span#exercise[j]").text(exercise[j]);
+            // $("span#weight[j]").text(" " + weight[j] + "lb");
             // etc.
 
           }
