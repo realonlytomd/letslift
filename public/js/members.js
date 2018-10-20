@@ -16,6 +16,8 @@ $(document).ready(function() {
   var reps = [];
   var jay = 0;
 
+  
+
     // This portion does a GET request to get which user logged in
   $.get("/api/user_data").then(function(data) {
     //console.log("object 'data' inside of the first .get is ", data);
@@ -29,16 +31,14 @@ $(document).ready(function() {
     // that denote the NEXT workout - although, the user shouldn't care which workout
     // is A or B, or whatever.  Same with which exercise is what.
     // $(document).on("click", "#enterWorkout", function() {
-    //   //$("#enterRowHeading").hide();
-    //   $("#workoutEnterForm").empty;
-    //   //console.log("workout array: "+ workout);
-    //   //what is the earliest workout that is currently null?
-    //   // for (var i = 0; i < workout.length; i++) {
-    //   //   if (workout[i] === null) {
-    //   //     // workout-nameA ...  the "A" should be generic, but A=0, B=1, C=2, etc.
-    //   //   } else {
-    //   //   }
-    //   // }
+    //   console.log("is this working?");
+    //   $("#workoutNameEnterForm").empty();
+    //   $("#workoutNameEnterForm").append("<h2>Maximum of 5 Different Workouts</h2>" +
+    //     "<form class='enterWorkoutName'>" +
+    //     "<div class='form-group'><label for='workout-nameA'>Name of Workout</label>" +
+    //     "<input type='text' class='form-control' id='workout-nameA' placeholder=''></div>" +
+    //     "<button type='submit' class='btn btn-default'>Submit</button></form>");
+    //   });
     //   $("#workoutEnterForm").append("<h2>Maximum of 5 Different Workouts</h2>" +
     //   //this input form needs to be put in the .js so it can be rewritten as the user
     //   //needs more exercises and workouts. Each individual for and id should be the same
@@ -57,32 +57,38 @@ $(document).ready(function() {
     //     "<input type='number' class='form-control' id='exercise-OneA-reps' placeholder=''></div>" +
     //     "<button type='submit' class='btn btn-default'>Submit</button></fieldset></form>");
     // });
+    
+    $(document).on("click", "#enterWorkout", function() {
+      console.log("is this working?");
+      $("#entryForm").empty();
+      $("#entryForm").append("<h2>INSIDE DOM</h2>" +
+        "<form class='enterWorkoutName'>" +
+        "<div class='form-group'><label for='workout-nameA'>Name of Workout</label>" +
+        "<input type='text' class='form-control' id='workout-nameA' placeholder='text'></div>" +
+        "<button type='submit' class='btn btn-default' id='subbutton'>Submit</button></form>");
+    });
 
-    // when the submit button for stating the name of the workout is clicked,
-    $("form.enterWorkoutName").on("submit", function(event) {
+    // when the submit button for inputing or changing the name of a workout is clicked,
+    $(document).on("click", "#subbutton", function(event) {
       event.preventDefault();
       // build the data object to be put into the database
-      // but it only works if there is data, so need to only put in the values
-      // that have data
+      // but it only works if there is data, so need to only put in the values that have data
       var workoutANameInputs = {
-        workoutA: $("input#workout-nameA").val().trim()
+        workoutA: $("#workout-nameA").val().trim()
       };
-      console.log("workoutANameInputs after submitting just the workout name: ", workoutANameInputs);
-      console.log("data.id: " + data.id);
-      //make sure the workout at least has a name
-      // if (!workoutAInputs.workoutA) {
-      //   //maybe add an alert here?
-      //   return;
-      // } else {
-        var currentURL = window.location.origin;
-        $.ajax(currentURL + "/api/createWorkoutA/" + data.id, {
-          type: "PUT",
-          data: workoutANameInputs
-        }).then(function() {
-        });
-          // If there's an error, handle it by throwing up a boostrap alert
+      var currentURL = window.location.origin;
+      $.ajax(currentURL + "/api/createWorkoutA/" + data.id, {
+        type: "PUT",
+        data: workoutANameInputs
+      }).then(
+        function() {
+          console.log("in the .then of updating name of workout");
+          //location.reload();
+        }
+      );
+      // If there's an error, handle it by throwing up a boostrap alert
       // ...and empty out the input fields for the form
-        $("input#workout-nameA").val("");
+        $("#workout-nameA").val("");
     });
 
     // When the submit button for building the exercises of a workout is clicked,
@@ -126,10 +132,10 @@ $(document).ready(function() {
         $("input#exercise-OneA-weight").val("");
         $("input#exercise-OneA-sets").val("");
         $("input#exercise-OneA-reps").val("");
-        $("input#exercise-TwoA").val("");
-        $("input#exercise-TwoA-weight").val("");
-        $("input#exercise-TwoA-sets").val("");
-        $("input#exercise-TwoA-reps").val("");
+        // $("input#exercise-TwoA").val("");
+        // $("input#exercise-TwoA-weight").val("");
+        // $("input#exercise-TwoA-sets").val("");
+        // $("input#exercise-TwoA-reps").val("");
     });
 
     //putting all of the below inside this get so as to have the correct id (user)
@@ -333,7 +339,7 @@ $(document).ready(function() {
         }
 
         function stopTimer() {
-          //$(".footer").hide;
+          //$(".footer").hide();
           clearTimeout(myTimer);
           startCount = 0;
         }
