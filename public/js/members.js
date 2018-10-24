@@ -30,46 +30,19 @@ $(document).ready(function() {
     // Need to check if there are already other workouts, and add this with labels 
     // that denote the NEXT workout - although, the user shouldn't care which workout
     // is A or B, or whatever.  Same with which exercise is what.
-    // $(document).on("click", "#enterWorkout", function() {
-    //   console.log("is this working?");
-    //   $("#workoutNameEnterForm").empty();
-    //   $("#workoutNameEnterForm").append("<h2>Maximum of 5 Different Workouts</h2>" +
-    //     "<form class='enterWorkoutName'>" +
-    //     "<div class='form-group'><label for='workout-nameA'>Name of Workout</label>" +
-    //     "<input type='text' class='form-control' id='workout-nameA' placeholder=''></div>" +
-    //     "<button type='submit' class='btn btn-default'>Submit</button></form>");
-    //   });
-    //   $("#workoutEnterForm").append("<h2>Maximum of 5 Different Workouts</h2>" +
-    //   //this input form needs to be put in the .js so it can be rewritten as the user
-    //   //needs more exercises and workouts. Each individual for and id should be the same
-    //   //and in an array that will be added in in a for loop
-    //     "<form class='enterWorkout'><fieldset><legend>Enter Workout</legend>" +
-    //     "<div class='form-group'><label for='workout-nameA'>Name of Workout</label>" +
-    //     "<input type='text' class='form-control' id='workout-nameA' placeholder=''></div>" +
-    //     // above is the workout name, below if an exercise name, weight, sets, reps
-    //     "<div class='form-group'><label for='exercise-OneA'>Name of First Exercise</label>" +
-    //     "<input type='text' class='form-control' id='exercise-OneA' placeholder=''></div>" +
-    //     "<div class='form-group'><label for='exercise-OneA-weight'>Weight</label>" +
-    //     "<input type='number' class='form-control' id='exercise-OneA-weight' placeholder='pounds'></div>" +
-    //     "<div class='form-group'><label for='exercise-OneA-sets'>Number of Sets</label>" +
-    //     "<input type='number' class='form-control' id='exercise-OneA-sets' placeholder=''></div>" +
-    //     "<div class='form-group'><label for='exercise-OneA-reps'>Number of Reps</label>" +
-    //     "<input type='number' class='form-control' id='exercise-OneA-reps' placeholder=''></div>" +
-    //     "<button type='submit' class='btn btn-default'>Submit</button></fieldset></form>");
-    // });
-    
+
     $(document).on("click", "#enterWorkout", function() {
-      console.log("is this working?");
+      //console.log("is this working?");
       $("#entryForm").empty();
-      $("#entryForm").append("<h2>INSIDE DOM</h2>" +
+      $("#entryForm").append("<h2>Enter Name of New Workout</h2>" +
         "<form class='enterWorkoutName'>" +
         "<div class='form-group'><label for='workout-nameA'>Name of Workout</label>" +
-        "<input type='text' class='form-control' id='workout-nameA' placeholder='text'></div>" +
-        "<button type='submit' class='btn btn-default' id='subbutton'>Submit</button></form>");
+        "<input type='text' class='form-control' id='workout-nameA' placeholder='enter name'></div>" +
+        "<button type='submit' class='btn btn-default' id='nameSubButton'>Submit</button></form>");
     });
 
     // when the submit button for inputing or changing the name of a workout is clicked,
-    $(document).on("click", "#subbutton", function(event) {
+    $(document).on("click", "#nameSubButton", function(event) {
       event.preventDefault();
       // build the data object to be put into the database
       // but it only works if there is data, so need to only put in the values that have data
@@ -82,17 +55,31 @@ $(document).ready(function() {
         data: workoutANameInputs
       }).then(
         function() {
-          console.log("in the .then of updating name of workout");
+          console.log("a new name for the workout has been updated");
           //location.reload();
         }
       );
-      // If there's an error, handle it by throwing up a boostrap alert
-      // ...and empty out the input fields for the form
+      // If there's an error, handle it by throwing up a boostrap alert.
+      // empty out the input fields for the form
         $("#workout-nameA").val("");
     });
-
+    $(document).on("click", "#enterExercises", function() {
+      $("#exerciseEntryForm").empty();
+      $("#exerciseEntryForm").append("<h2>Enter data for exercise 1 of workout above</h2>" +
+        "<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercises in  Workout</legend>" +
+        "<div class='form-group'><label for='exercise-OneA'>Name of First Exercise</label>" +
+        "<input type='text' class='form-control' id='exercise-OneA' placeholder=''></div>" +
+        "<div class='form-group'><label for='exercise-OneA-weight'>Weight</label>" +
+        "<input type='number' class='form-control' id='exercise-OneA-weight' placeholder='pounds'></div>" +
+        "<div class='form-group'><label for='exercise-OneA-sets'>Number of Sets</label>" +
+        "<input type='number' class='form-control' id='exercise-OneA-sets' placeholder=''></div>" +
+        "<div class='form-group'><label for='exercise-OneA-reps'>Number of Reps</label>" +
+        "<input type='number' class='form-control' id='exercise-OneA-reps' placeholder=''></div>" +
+        "<button type='submit' class='btn btn-default' id='exSubButton'>Submit</button></fieldset></form>");
+    });
+    
     // When the submit button for building the exercises of a workout is clicked,
-    $("form.enterWorkoutExercises").on("submit", function(event) {
+    $(document).on("click", "#exSubButton", function(event) {
       event.preventDefault();
       // build the data object to be put into the database
       // but it only works if there is data, so need to only put in the values
