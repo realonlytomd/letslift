@@ -1,7 +1,10 @@
 $(document).ready(function() {
+  console.log("Hello World!");
     //start with the footer showing the timer hidden. It appears when the timer is counting
-    // $("#currentWorkout").hide();
-    // $(".footer").hide();
+  // $("#currentWorkout").hide();
+  // $(".footer").hide();
+  // $("#enterExercises").hide();
+  //$("#enterRowHeading").hide();
   // set up some variables
   var startCount = 0;
   var myTimer;
@@ -20,7 +23,7 @@ $(document).ready(function() {
 
     // This portion does a GET request to get which user logged in
   $.get("/api/user_data").then(function(data) {
-    //console.log("object 'data' inside of the first .get is ", data);
+    console.log("object 'data' inside of the first .get is ", data);
     $(".member-id").text(data.id);
     $(".member-name").text(data.email);
 
@@ -42,6 +45,7 @@ $(document).ready(function() {
     });
 
     // when the submit button for inputing or changing the name of a workout is clicked,
+    // the data is stored in the db
     $(document).on("click", "#nameSubButton", function(event) {
       event.preventDefault();
       // build the data object to be put into the database
@@ -62,6 +66,7 @@ $(document).ready(function() {
       // If there's an error, handle it by throwing up a boostrap alert.
       // empty out the input fields for the form
         $("#workout-nameA").val("");
+        $("#enterExercises").show();
     });
     $(document).on("click", "#enterExercises", function() {
       $("#exerciseEntryForm").empty();
