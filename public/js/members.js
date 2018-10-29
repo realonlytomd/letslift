@@ -20,10 +20,10 @@ $(document).ready(function() {
   var jay = 0;
 
     // This portion does a GET request to get which user logged in
-  $.get("/api/user_data").then(function(data) {
-    console.log("object 'data' inside of the first .get is ", data);
-    $(".member-id").text(data.id);
-    $(".member-name").text(data.email);
+  $.get("/api/user_data").then(function(userdata) {
+    console.log("object 'userdata' inside of the first .get is ", userdata);
+    $(".member-id").text(userdata.id);
+    $(".member-name").text(userdata.email);
 
     // These functions build the entry form when the user wants to enter new data,
     // or update an existing workout.
@@ -52,7 +52,7 @@ $(document).ready(function() {
         workoutA: $("#workout-nameA").val().trim()
       };
       var currentURL = window.location.origin;
-      $.ajax(currentURL + "/api/createWorkoutA/" + data.id, {
+      $.ajax(currentURL + "/api/createWorkoutA/" + userdata.id, {
         type: "PUT",
         data: workoutANameInputs
       }).then(
@@ -104,11 +104,11 @@ $(document).ready(function() {
       //   return;
       // } else {
         var currentURL = window.location.origin;
-        $.ajax(currentURL + "/api/createWorkoutA/" + data.id, {
+        $.ajax(currentURL + "/api/createWorkoutA/" + userdata.id, {
           type: "PUT",
           data: workoutAExerciseInputs
         }).then(function() {
-          $.get("/api/specific_user_data/" + data.id).then(function(data) {
+          $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
             console.log("object 'data' inside of .get after submit of new exerise data: ", data);
             //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
             // changed idea somewhat, I think I need to delete line below
@@ -130,7 +130,7 @@ $(document).ready(function() {
 
     //putting all of the below inside the first get so as to have the correct id (user)
     // this .get brings in all the data from the db
-    $.get("/api/specific_user_data/" + data.id).then(function(data) {
+    $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
       workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
       console.log("workout array: " + workout);
 
@@ -387,7 +387,7 @@ $(document).ready(function() {
     // this button may not be necessary since the function is already accomplished when page loads
     // and after a new workout is added in the form.
     $("#showWorkouts").on("click", function(event) {
-      $.get("/api/specific_user_data/" + data.id).then(function(data) {
+      $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
         console.log("object 'data' inside of the show workouts button .get is ", data);
         //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
         $("#workoutA").text(data.workoutA);
