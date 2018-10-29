@@ -5,7 +5,7 @@ $(document).ready(function() {
   // $(".footer").hide();
   // $("#enterExercises").hide();
   //$("#enterRowHeading").hide();
-  // set up some variables
+  // set up the variables
   var startCount = 0;
   var myTimer;
   var clicksofSetButton = -1;
@@ -18,8 +18,6 @@ $(document).ready(function() {
   var sets = [];
   var reps = [];
   var jay = 0;
-
-  
 
     // This portion does a GET request to get which user logged in
   $.get("/api/user_data").then(function(data) {
@@ -66,8 +64,8 @@ $(document).ready(function() {
       // If there's an error, handle it by throwing up a boostrap alert.
       // empty out the input fields for the form
         $("#workout-nameA").val("");
-        $("#enterExercises").show();
     });
+
     $(document).on("click", "#enterExercises", function() {
       $("#exerciseEntryForm").empty();
       $("#exerciseEntryForm").append("<h2>Enter data for exercise 1 of workout above</h2>" +
@@ -130,8 +128,8 @@ $(document).ready(function() {
         // $("input#exercise-TwoA-reps").val("");
     });
 
-    //putting all of the below inside this get so as to have the correct id (user)
-    // this .get brings in all the data
+    //putting all of the below inside the first get so as to have the correct id (user)
+    // this .get brings in all the data from the db
     $.get("/api/specific_user_data/" + data.id).then(function(data) {
       workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
       console.log("workout array: " + workout);
@@ -158,7 +156,7 @@ $(document).ready(function() {
         data.exerciseOneofE, data.exerciseTwoofE, data.exerciseThreeofE, 
         data.exerciseFourofE, data.exerciseFiveofE, data.exerciseSixofE, data.exerciseSevenofE, 
         data.exerciseEightofE, data.exerciseNineofE, data.exerciseTenofE];
-        console.log("exercise: " + exercise);
+        console.log("exercise array: " + exercise);
         // for info: exercise.slice(0,10) would be the exercises for workoutA
       weight = [data.weightOneofA, data.weightTwoofA, data.weightThreeofA, 
         data.weightFourofA, data.weightFiveofA, data.weightSixofA, data.weightSevenofA, 
@@ -175,7 +173,7 @@ $(document).ready(function() {
         data.weightOneofE, data.weightTwoofE, data.weightThreeofE, 
         data.weightFourofE, data.weightFiveofE, data.weightSixofE, data.weightSevenofE, 
         data.weightEightofE, data.weightNineofE, data.weightTenofE];
-        console.log("weight: " + weight);
+        console.log("weights array: " + weight);
       sets = [data.setsOneofA, data.setsTwoofA, data.setsThreeofA, 
         data.setsFourofA, data.setsFiveofA, data.setsSixofA, data.setsSevenofA, 
         data.setsEightofA, data.setsNineofA, data.setsTenofA,
@@ -191,7 +189,7 @@ $(document).ready(function() {
         data.setsOneofE, data.setsTwoofE, data.setsThreeofE, 
         data.setsFourofE, data.setsFiveofE, data.setsSixofE, data.setsSevenofE, 
         data.setsEightofE, data.setsNineofE, data.setsTenofE];
-        console.log("sets: " + sets);
+        console.log("sets array: " + sets);
       reps = [data.repsOneofA, data.repsTwoofA, data.repsThreeofA, 
         data.repsFourofA, data.repsFiveofA, data.repsSixofA, data.repsSevenofA, 
         data.repsEightofA, data.repsNineofA, data.repsTenofA,
@@ -207,7 +205,7 @@ $(document).ready(function() {
         data.repsOneofE, data.repsTwoofE, data.repsThreeofE, 
         data.repsFourofE, data.repsFiveofE, data.repsSixofE, data.repsSevenofE, 
         data.repsEightofE, data.repsNineofE, data.repsTenofE];
-        console.log("reps: " + reps);
+        console.log("reps array: " + reps);
 
         
 
