@@ -25,32 +25,22 @@ $(document).ready(function() {
     $(".member-id").text(userdata.id);
     $(".member-name").text(userdata.email);
 
-    
-
-    
-
-   
-
-    
-
     //putting all of the below inside the first get so as to have the correct id (user)
     // this .get brings in all the data from the db
     $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
       // change this block to a function called create list of workouts, and call it after
       // a new workout name has been entered (with new exercises), and when the workout button
       // is pressed
-      function listWorkouts() {
-        workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
-        console.log("workout array: " + workout);
-        $("#availableWorkouts").empty();
-        for (var i = 0; i < workout.length; i++) {
-          if (workout[i] === null) {
-          } else {
-          $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
-          }
+      workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
+      console.log("workout array: " + workout);
+      $("#availableWorkouts").empty();
+      for (var i = 0; i < workout.length; i++) {
+        if (workout[i] === null) {
+        } else {
+        $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
         }
       }
-      listWorkouts();
+      
       
       exercise = [data.exerciseOneofA, data.exerciseTwoofA, data.exerciseThreeofA, 
         data.exerciseFourofA, data.exerciseFiveofA, data.exerciseSixofA, data.exerciseSevenofA, 
@@ -155,7 +145,24 @@ $(document).ready(function() {
         );
         // If there's an error, handle it by throwing up a boostrap alert.
         // empty out the input fields for the form
-          $("#workout-nameA").val("");
+        $("#workout-nameA").val("");
+
+        //reload the list of named workouts after the most recent creation
+        //must redo .get as data rewritten here won't be seen above outside this function
+        // below isn't loading everytime - not sure why - latency? it does seem to work for the button below
+        // $.get("/api/specific_user_data/" + userdata.id).then(function(newdata) {
+        //   console.log("object 'newdata' after input of new workout name ", newdata);
+        //   workout = [newdata.workoutA, newdata.workoutB, newdata.workoutC, newdata.workoutD, newdata.workoutE];
+        //   console.log("workout array after input of new workout name: " + workout);
+        //   $("#availableWorkouts").empty();
+        //   for (var i = 0; i < workout.length; i++) {
+        //     if (workout[i] === null) {
+        //     } else {
+        //       $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+        //     }
+        //   }
+        // });
+        $("#entryForm").empty();
       });
 
       // this click even makes the input form for creating an exercise
@@ -393,20 +400,24 @@ $(document).ready(function() {
 
       });
 
-      $("#showWorkouts").on("click", function(event) {
-        event.preventDefault();
+      $("#showWorkouts").on("click", function() {
+        //reload the list of named workouts after the most recent creation
+        //must redo .get as data rewritten here won't be seen above outside this function
         $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
-          console.log("object 'data' inside of the show workouts button .get is ", data);
-          //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
-          listWorkouts();
+          console.log("object 'data' after click of show workouts button ", data);
+          workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
+          console.log("workout array after click of show workouts button: " + workout);
+          $("#availableWorkouts").empty();
+          for (var i = 0; i < workout.length; i++) {
+            if (workout[i] === null) {
+            } else {
+              $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+            }
+          }
         });
       });
 
     });
 
-    
-    // this button may not be necessary since the function is already accomplished when page loads
-    // and after a new workout is added in the form.
-    
   });
 });
