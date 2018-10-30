@@ -50,8 +50,8 @@ module.exports = function(router) {
       req.body,{
       where: {
       id: req.params.id
-    }
-  })
+      }
+    })
     .then(function(result) {
       res.json(result);
     });
