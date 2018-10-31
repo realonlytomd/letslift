@@ -18,6 +18,7 @@ $(document).ready(function() {
   var sets = [];
   var reps = [];
   var jay = 0;
+  var numWorkouts = 0;
 
     // This portion does a GET request to get which user logged in
   $.get("/api/user_data").then(function(userdata) {
@@ -34,10 +35,13 @@ $(document).ready(function() {
       workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
       console.log("workout array: " + workout);
       $("#availableWorkouts").empty();
+      numWorkouts = 0;
       for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null) {
         } else {
         $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+        numWorkouts = numWorkouts + 1;
+        console.log("inside first .get of info: numWorkouts = " + numWorkouts);
         }
       }
       
@@ -115,13 +119,25 @@ $(document).ready(function() {
       // that denote the NEXT workout - although, the user shouldn't care which workout
       // is A or B, or whatever.  Same with which exercise is what.
       $(document).on("click", "#enterWorkout", function() {
-        //console.log("is this working?");
+        console.log("Inside onclick function to build the form to enter a workout name-is this working?");
         $("#entryForm").empty();
-        $("#entryForm").append("<h2>Enter Name of New Workout</h2>" +
-          "<form class='enterWorkoutName'>" +
-          "<div class='form-group'><label for='workout-nameA'>Name of Workout</label>" +
-          "<input type='text' class='form-control' id='workout-nameA' placeholder='enter name'></div>" +
-          "<button type='submit' class='btn btn-default' id='nameSubButton'>Submit</button></form>");
+        //test for next open workout by checking if workout[i] is null
+        // not saved to git - still testing
+        for (var i = 0; i < workout.length; i++) {
+          if (workout[i] === null) {
+            console.log("inside function to build form to name workouts, 1st if, numWorkouts = " + numWorkouts);
+            $("#entryForm").append("<h2>Enter Name of New Workout</h2>" +
+              "<form class='enterWorkoutName'>" +
+              "<div class='form-group'><label for='workout-nameA'>Name of New Workout</label>" +
+              "<input type='text' class='form-control' id='workout-nameA' placeholder='enter name'></div>" +
+              "<button type='submit' class='btn btn-default' id='nameSubButton'>Submit</button></form>");
+              return;
+            } else if (numWorkouts === 5) {
+              console.log("inside function to build form to name workouts, 2nd if, numWorkouts = " + numWorkouts);
+              console.log("this needs to be displayed to user, but .... already have 5 workouts!");
+              return;
+            }
+        }
       });
 
       // when the submit button for inputing or changing the name of a workout is clicked,
@@ -408,10 +424,13 @@ $(document).ready(function() {
           workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
           console.log("workout array after click of show workouts button: " + workout);
           $("#availableWorkouts").empty();
+          numWorkouts = 0;
           for (var i = 0; i < workout.length; i++) {
             if (workout[i] === null) {
             } else {
               $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+              numWorkouts = numWorkouts + 1;
+              console.log("inside .get of info in show workouts button: numWorkouts = " + numWorkouts);
             }
           }
         });
