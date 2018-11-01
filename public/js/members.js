@@ -12,6 +12,7 @@ $(document).ready(function() {
   var indexofPreviousButton = 20;
   var selectedWorkout;
   // in progress: not sure what arrays I need:
+  var workoutInput = [];
   var workout = [];
   var exercise = [];
   var weight = [];
@@ -29,9 +30,6 @@ $(document).ready(function() {
     //putting all of the below inside the first get so as to have the correct id (user)
     // this .get brings in all the data from the db
     $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
-      // change this block to a function called create list of workouts, and call it after
-      // a new workout name has been entered (with new exercises), and when the workout button
-      // is pressed
       workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
       console.log("workout array: " + workout);
       $("#availableWorkouts").empty();
@@ -44,8 +42,6 @@ $(document).ready(function() {
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
         }
       }
-      
-      
       exercise = [data.exerciseOneofA, data.exerciseTwoofA, data.exerciseThreeofA, 
         data.exerciseFourofA, data.exerciseFiveofA, data.exerciseSixofA, data.exerciseSevenofA, 
         data.exerciseEightofA, data.exerciseNineofA, data.exerciseTenofA,
@@ -114,16 +110,13 @@ $(document).ready(function() {
 
       // These functions build the entry form when the user wants to enter new data,
       // or update an existing workout.
-      // This click event takes place when user decides to enter a new workout.
-      // Need to check if there are already other workouts, and add this with labels 
-      // that denote the NEXT workout - although, the user shouldn't care which workout
-      // is A or B, or whatever.  Same with which exercise is what.
+      // Need to check where there is a "null", and put the new workout there.
       $(document).on("click", "#enterWorkout", function() {
         console.log("Inside onclick function to build the form to enter a workout name-is this working?");
         $("#entryForm").empty();
         //test for next open workout by checking if workout[i] is null
-        // not saved to git - still testing
         for (var i = 0; i < workout.length; i++) {
+          console.log("i = " + i + ",   workout[i] = " + workout[i]);
           if (workout[i] === null) {
             console.log("inside function to build form to name workouts, 1st if, numWorkouts = " + numWorkouts);
             $("#entryForm").append("<h2>Enter Name of New Workout</h2>" +
@@ -139,7 +132,6 @@ $(document).ready(function() {
             }
         }
       });
-
       // when the submit button for inputing or changing the name of a workout is clicked,
       // the data is stored in the db
       $(document).on("click", "#nameSubButton", function(event) {
@@ -147,6 +139,7 @@ $(document).ready(function() {
         // build the data object to be put into the database
         // but it only works if there is data, so need to only put in the values that have data
         var workoutANameInputs = {
+          //make these generic, so data is input into correct location
           workoutA: $("#workout-nameA").val().trim()
         };
         var currentURL = window.location.origin;
@@ -156,28 +149,15 @@ $(document).ready(function() {
         }).then(
           function() {
             console.log("a new name for the workout has been updated");
-            //location.reload();
+            //this reloads the page to more simply get the data in the db,
+            //since it originally loads getting the data
+            location.reload();
           }
         );
         // If there's an error, handle it by throwing up a boostrap alert.
         // empty out the input fields for the form
         $("#workout-nameA").val("");
-
-        //reload the list of named workouts after the most recent creation
-        //must redo .get as data rewritten here won't be seen above outside this function
-        // below isn't loading everytime - not sure why - latency? it does seem to work for the button below
-        // $.get("/api/specific_user_data/" + userdata.id).then(function(newdata) {
-        //   console.log("object 'newdata' after input of new workout name ", newdata);
-        //   workout = [newdata.workoutA, newdata.workoutB, newdata.workoutC, newdata.workoutD, newdata.workoutE];
-        //   console.log("workout array after input of new workout name: " + workout);
-        //   $("#availableWorkouts").empty();
-        //   for (var i = 0; i < workout.length; i++) {
-        //     if (workout[i] === null) {
-        //     } else {
-        //       $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
-        //     }
-        //   }
-        // });
+        // take away the entry form for naming a new workout
         $("#entryForm").empty();
       });
 
