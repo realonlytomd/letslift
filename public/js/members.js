@@ -12,14 +12,60 @@ $(document).ready(function() {
   var indexofPreviousButton = 20;
   var selectedWorkout;
   // in progress: not sure what arrays I need:
-  var workoutInput = [];
   var workout = [];
   var exercise = [];
   var weight = [];
   var sets = [];
   var reps = [];
-  var jay = 0;
-  var numWorkouts = 0;
+  var jay; //counts workouts
+  var kay; // counts exercises within a workout
+  var numWorkouts;
+  // build arrays for input of new data
+  var workoutInput = ["workoutA", "workoutB", "workoutC", "workoutD", "workoutE"];
+
+  var exerciseInput = ["exerciseOneofA", "exerciseTwoofA","exerciseThreeofA", "exerciseFourofA", "exerciseFiveofA",
+   "exerciseSixofA", "exerciseSevenofA", "exerciseEightofA", "exerciseNineofA", "exerciseTenofA",
+   "exerciseOneofB", "exerciseTwoofB","exerciseThreeofB", "exerciseFourofB", "exerciseFiveofB",
+   "exerciseSixofB", "exerciseSevenofB", "exerciseEightofB", "exerciseNineofB", "exerciseTenofB",
+   "exerciseOneofC", "exerciseTwoofC","exerciseThreeofC", "exerciseFourofC", "exerciseFiveofC",
+   "exerciseSixofC", "exerciseSevenofC", "exerciseEightofC", "exerciseNineofC", "exerciseTenofC",
+   "exerciseOneofD", "exerciseTwoofD","exerciseThreeofD", "exerciseFourofD", "exerciseFiveofD",
+   "exerciseSixofD", "exerciseSevenofD", "exerciseEightofD", "exerciseNineofD", "exerciseTenofD",
+   "exerciseOneofE", "exerciseTwoofE","exerciseThreeofE", "exerciseFourofE", "exerciseFiveofE",
+   "exerciseSixofE", "exerciseSevenofE", "exerciseEightofE", "exerciseNineofE", "exerciseTenofE"];
+
+  var weightInput = ["weightOneofA", "weightTwoofA","weightThreeofA", "weightFourofA", "weightFiveofA",
+   "weightSixofA", "weightSevenofA", "weightEightofA", "weightNineofA", "weightTenofA",
+   "weightOneofB", "weightTwoofB","weightThreeofB", "weightFourofB", "weightFiveofB",
+   "weightSixofB", "weightSevenofB", "weightEightofB", "weightNineofB", "weightTenofB",
+   "weightOneofC", "weightTwoofC","weightThreeofC", "weightFourofC", "weightFiveofC",
+   "weightSixofC", "weightSevenofC", "weightEightofC", "weightNineofC", "weightTenofC",
+   "weightOneofD", "weightTwoofD","weightThreeofD", "weightFourofD", "weightFiveofD",
+   "weightSixofD", "weightSevenofD", "weightEightofD", "weightNineofD", "weightTenofD",
+   "weightOneofE", "weightTwoofE","weightThreeofE", "weightFourofE", "weightFiveofE",
+   "weightSixofE", "weightSevenofE", "weightEightofE", "weightNineofE", "weightTenofE"];
+
+  var setsInput = ["setsOneofA", "setsTwoofA","setsThreeofA", "setsFourofA", "setsFiveofA",
+   "setsSixofA", "setsSevenofA", "setsEightofA", "setsNineofA", "setsTenofA",
+   "setsOneofB", "setsTwoofB","setsThreeofB", "setsFourofB", "setsFiveofB",
+   "setsSixofB", "setsSevenofB", "setsEightofB", "setsNineofB", "setsTenofB",
+   "setsOneofC", "setsTwoofC","setsThreeofC", "setsFourofC", "setsFiveofC",
+   "setsSixofC", "setsSevenofC", "setsEightofC", "setsNineofC", "setsTenofC",
+   "setsOneofD", "setsTwoofD","setsThreeofD", "setsFourofD", "setsFiveofD",
+   "setsSixofD", "setsSevenofD", "setsEightofD", "setsNineofD", "setsTenofD",
+   "setsOneofE", "setsTwoofE","setsThreeofE", "setsFourofE", "setsFiveofE",
+   "setsSixofE", "setsSevenofE", "setsEightofE", "setsNineofE", "setsTenofE"];
+
+   var repsInput = ["repsOneofA", "repsTwoofA","repsThreeofA", "repsFourofA", "repsFiveofA",
+   "repsSixofA", "repsSevenofA", "repsEightofA", "repsNineofA", "repsTenofA",
+   "repsOneofB", "repsTwoofB","repsThreeofB", "repsFourofB", "repsFiveofB",
+   "repsSixofB", "repsSevenofB", "repsEightofB", "repsNineofB", "repsTenofB",
+   "repsOneofC", "repsTwoofC","repsThreeofC", "repsFourofC", "repsFiveofC",
+   "repsSixofC", "repsSevenofC", "repsEightofC", "repsNineofC", "repsTenofC",
+   "repsOneofD", "repsTwoofD","repsThreeofD", "repsFourofD", "repsFiveofD",
+   "repsSixofD", "repsSevenofD", "repsEightofD", "repsNineofD", "repsTenofD",
+   "repsOneofE", "repsTwoofE","repsThreeofE", "repsFourofE", "repsFiveofE",
+   "repsSixofE", "repsSevenofE", "repsEightofE", "repsNineofE", "repsTenofE"];
 
     // This portion does a GET request to get which user logged in
   $.get("/api/user_data").then(function(userdata) {
@@ -30,15 +76,17 @@ $(document).ready(function() {
     //putting all of the below inside the first get so as to have the correct id (user)
     // this .get brings in all the data from the db
     $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
+      // build array of named workouts - new for each data retrieval
       workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
       console.log("workout array: " + workout);
+      //this merely creates a list of workouts available, but the class "selectedWorkout" is assigned
       $("#availableWorkouts").empty();
       numWorkouts = 0;
       for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null) {
         } else {
         $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
-        numWorkouts = numWorkouts + 1;
+        numWorkouts++;
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
         }
       }
@@ -109,21 +157,22 @@ $(document).ready(function() {
         console.log("reps array: " + reps);
 
       // These functions build the entry form when the user wants to enter new data,
-      // or update an existing workout.
+      // Update an existing workout still needs to be added.
       // Need to check where there is a "null", and put the new workout there.
       $(document).on("click", "#enterWorkout", function() {
         console.log("Inside onclick function to build the form to enter a workout name-is this working?");
         $("#entryForm").empty();
         //test for next open workout by checking if workout[i] is null
-        for (var i = 0; i < workout.length; i++) {
-          console.log("i = " + i + ",   workout[i] = " + workout[i]);
-          if (workout[i] === null) {
+        for (jay = 0; jay < workout.length; jay++) {
+          console.log("jay = " + jay + ",   workout[jay] = " + workout[jay]);
+          if (workout[jay] === null) {
             console.log("inside function to build form to name workouts, 1st if, numWorkouts = " + numWorkouts);
             $("#entryForm").append("<h2>Enter Name of New Workout</h2>" +
               "<form class='enterWorkoutName'>" +
-              "<div class='form-group'><label for='workout-nameA'>Name of New Workout</label>" +
-              "<input type='text' class='form-control' id='workout-nameA' placeholder='enter name'></div>" +
+              "<div class='form-group'><label for=" + workoutInput[jay] + ">Name of New Workout</label>" +
+              "<input type='text' class='form-control' id=" + workoutInput[jay] + " placeholder='enter new name'></div>" +
               "<button type='submit' class='btn btn-default' id='nameSubButton'>Submit</button></form>");
+              console.log("jay inside creation of workout name form = " + jay);
               return;
             } else if (numWorkouts === 5) {
               console.log("inside function to build form to name workouts, 2nd if, numWorkouts = " + numWorkouts);
@@ -138,14 +187,40 @@ $(document).ready(function() {
         event.preventDefault();
         // build the data object to be put into the database
         // but it only works if there is data, so need to only put in the values that have data
-        var workoutANameInputs = {
-          //make these generic, so data is input into correct location
-          workoutA: $("#workout-nameA").val().trim()
-        };
+        //put the switchcase code here - not sure if putting the array name after $("#" + ) will work...
+        switch (jay) {
+          case 0:
+            var workoutNameInputs = {
+              workoutA: $("#" + workoutInput[jay]).val().trim()
+            };
+            break;
+          case 1:
+            var workoutNameInputs = {
+              workoutB: $("#" + workoutInput[jay]).val().trim()
+            };
+            break;
+          case 2:
+            var workoutNameInputs = {
+              workoutC: $("#" + workoutInput[jay]).val().trim()
+            };
+            break;
+          case 3:
+            var workoutNameInputs = {
+              workoutD: $("#" + workoutInput[jay]).val().trim()
+            };
+            break;
+          case 4:
+            var workoutNameInputs = {
+              workoutE: $("#" + workoutInput[jay]).val().trim()
+            };
+            break;
+          default:
+            console.log("default in switch case code of assigning a name to a workout, something wrong");
+        }
         var currentURL = window.location.origin;
-        $.ajax(currentURL + "/api/createWorkoutA/" + userdata.id, {
+        $.ajax(currentURL + "/api/createWorkout/" + userdata.id, {
           type: "PUT",
-          data: workoutANameInputs
+          data: workoutNameInputs
         }).then(
           function() {
             console.log("a new name for the workout has been updated");
@@ -156,7 +231,7 @@ $(document).ready(function() {
         );
         // If there's an error, handle it by throwing up a boostrap alert.
         // empty out the input fields for the form
-        $("#workout-nameA").val("");
+        $("#" + workoutInput[jay]).val("");
         // take away the entry form for naming a new workout
         $("#entryForm").empty();
       });
@@ -239,12 +314,12 @@ $(document).ready(function() {
             // this worked. so call a function that needs to be created around the code below
             // and will probably include code to rewrite DOM instead of hardcoding in members.html
             //jay is a counter, it corresponds 0-9 for A, 10-19 for B, etc.
-            jay = 0;
+            kay = 0;
             createWorkout();
             break;
           case data.workoutB:
             console.log("inside case workoutB of switch");
-            jay = 10;
+            kay = 10;
             createWorkout();
             break;
           default:

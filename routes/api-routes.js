@@ -31,7 +31,7 @@ module.exports = function(router) {
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
   router.post("/api/signup", function(req, res) {
-    console.log(req.body);
+    console.log("in post route /api/signup: ", req.body);
     db.User.create({
       email: req.body.email,
       password: req.body.password
@@ -45,7 +45,8 @@ module.exports = function(router) {
   });
 
   // PUT route for updating name and inputs for workout
-  router.put("/api/createWorkoutA/:id", function(req, res) {
+  router.put("/api/createWorkout/:id", function(req, res) {
+    console.log("inside put route /api/createWorkoutA/:id - req.body: ", req.body);
     db.User.update(
       req.body,{
       where: {
@@ -88,8 +89,8 @@ module.exports = function(router) {
         }
       })
       .then(function(dbUser) {
-        console.log("dbUser from inside the .get for a specific user", dbUser);
-        console.log("dbUser[0].dataValues.workoutA = " + dbUser[0].dataValues.workoutA);
+        //console.log("dbUser from inside the .get for a specific user", dbUser);
+        console.log("after get route - dbUser[0].dataValues.workoutA = " + dbUser[0].dataValues.workoutA);
         res.json({
           workoutA: dbUser[0].dataValues.workoutA,
           exerciseOneofA: dbUser[0].dataValues.exerciseOneofA,
