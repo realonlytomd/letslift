@@ -80,12 +80,17 @@ $(document).ready(function() {
       workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
       console.log("workout array: " + workout);
       //this merely creates a list of workouts available, but the class "selectedWorkout" is assigned
+      //need to add buttons: edit workout or delete workout. Edit workout button will bring up
+      //form to change the name of the workout if user wants to, and to add exercises...
+      //need to figure out adding or deleting or changing exercises... ugh
+      //maybe do delete first...Basically need to figure out UI of app!
       $("#availableWorkouts").empty();
       numWorkouts = 0;
       for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null) {
         } else {
-        $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+        $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>" +
+          "<button id='editWorkout'>Edit</button><button id='deleteWorkout'>Delete</button>");
         numWorkouts++;
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
         }
@@ -300,7 +305,7 @@ $(document).ready(function() {
       });
 
           // This function happens when the user clicks the chosen workout.
-      $(".selectedWorkout").on("click", function(event) {
+      $(document).on("click", ".selectedWorkout", function() {
           // What happens? Hide previous divs. Show new actual workout div.
           // Build the workout page  -  where the user sees the title of workout, the exercises,
           // the weight, and corresponding sets buttons, and reps displayed after those buttons
