@@ -231,7 +231,7 @@ $(document).ready(function() {
             console.log("a new name for the workout has been updated");
             //this reloads the page to more simply get the data in the db,
             //since it originally loads getting the data
-            location.reload();
+            //location.reload();
           }
         );
         // If there's an error, handle it by throwing up a boostrap alert.
@@ -239,10 +239,13 @@ $(document).ready(function() {
         $("#" + workoutInput[jay]).val("");
         // take away the entry form for naming a new workout
         $("#entryForm").empty();
+        // I think here, I need the following code as a function - to build exercises in the newly
+        // named workout. 
+        enterExercises();
       });
 
       // this click even makes the input form for creating an exercise
-      $(document).on("click", "#enterExercises", function() {
+      function enterExercises() {
         $("#exerciseEntryForm").empty();
         $("#exerciseEntryForm").append("<h2>Enter data for exercise 1 of workout above</h2>" +
           "<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercises in  Workout</legend>" +
@@ -255,7 +258,7 @@ $(document).ready(function() {
           "<div class='form-group'><label for='exercise-OneA-reps'>Number of Reps</label>" +
           "<input type='number' class='form-control' id='exercise-OneA-reps' placeholder=''></div>" +
           "<button type='submit' class='btn btn-default' id='exSubButton'>Submit</button></fieldset></form>");
-      });
+      }
       
       // When the submit button for building the exercises of a workout is clicked,
       $(document).on("click", "#exSubButton", function(event) {
