@@ -80,18 +80,19 @@ $(document).ready(function() {
       workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
       console.log("workout array: " + workout);
       //this merely creates a list of workouts available, but the class "selectedWorkout" is assigned
-      //need to add buttons: edit workout or delete workout. Edit workout button will bring up
-      //form to change the name of the workout if user wants to, and to add exercises...
-      //need to figure out adding or deleting or changing exercises... ugh
-      //maybe do delete first...Basically need to figure out UI of app!
+     
       $("#availableWorkouts").empty();
       numWorkouts = 0;
       for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null) {
         } else {
         $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>" +
-          "<button id='editWorkout'>Edit</button><button id='deleteWorkout'>Delete</button>");
-        numWorkouts++;
+          "<button id='editWorkout'>List out workout for editing</button><button id='deleteWorkout'>Delete</button>");
+        // the List out workout button will show the entire workout, and then
+        // show a button to add more exercises, or Finish
+        // maybe a button beside each exercise for editing THAT exercise??
+        // need to make a detaile UI drawing.
+          numWorkouts++;
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
         }
       }
@@ -239,12 +240,17 @@ $(document).ready(function() {
         $("#" + workoutInput[jay]).val("");
         // take away the entry form for naming a new workout
         $("#entryForm").empty();
-        // I think here, I need the following code as a function - to build exercises in the newly
-        // named workout. 
+        // Now call the function that builds the input form for exercises.
+        // what are the variables I know before this is called?:
+        // jay (which is the number of the workout: 0-4)
+        // need to set kay, (which is the number the the exercise), and loop this as the counter
+        // then just need to put in the apprpriate variable: exercise, weight, sets, reps
+        //  and add buttons to either add more exercises, or a button to stop
+        // maybe at THAT point, add the location.reload that rewrites the available workouts?
         enterExercises();
       });
 
-      // this click even makes the input form for creating an exercise
+      // this function creates the form for inputting exercises
       function enterExercises() {
         $("#exerciseEntryForm").empty();
         $("#exerciseEntryForm").append("<h2>Enter data for exercise 1 of workout above</h2>" +
@@ -283,15 +289,13 @@ $(document).ready(function() {
         //   return;
         // } else {
           var currentURL = window.location.origin;
-          $.ajax(currentURL + "/api/createWorkoutA/" + userdata.id, {
+          $.ajax(currentURL + "/api/createWorkout/" + userdata.id, {
             type: "PUT",
             data: workoutAExerciseInputs
           }).then(function() {
             $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
               console.log("object 'data' inside of .get after submit of new exerise data: ", data);
               //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
-              // changed idea somewhat, I think I need to delete line below
-              //$("#workoutA").text(data.workoutA);
             });
           });
             //location.reload(true);
@@ -305,6 +309,8 @@ $(document).ready(function() {
           // $("input#exercise-TwoA-weight").val("");
           // $("input#exercise-TwoA-sets").val("");
           // $("input#exercise-TwoA-reps").val("");
+          //  maybe here: count variable kay?? to reload empty form to input more exercise??
+          // but where do I ask the user if they want another exercise??
       });
 
           // This function happens when the user clicks the chosen workout.
