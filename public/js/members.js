@@ -18,7 +18,7 @@ $(document).ready(function() {
   var sets = [];
   var reps = [];
   var jay; //counts workouts
-  var kay; // counts exercises within a workout
+  var kay; // counts all exercises/weight/sets/reps available 0-49
   var numWorkouts;
   // build arrays for input of new data
   var workoutInput = ["workoutA", "workoutB", "workoutC", "workoutD", "workoutE"];
@@ -87,11 +87,11 @@ $(document).ready(function() {
         if (workout[i] === null) {
         } else {
         $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>" +
-          "<button id='editWorkout'>List out workout for editing</button><button id='deleteWorkout'>Delete</button>");
-        // the List out workout button will show the entire workout, and then
-        // show a button to add more exercises, or Finish
-        // maybe a button beside each exercise for editing THAT exercise??
-        // need to make a detaile UI drawing.
+          "<button id='editWorkout'>Edit</button><button id='deleteWorkout'>Delete</button>");
+        // the Edit workout button will show the entire workout, and then
+        // under each exercise, weight, sets, and reps show an edit or delete button!
+        // at the bottom of the list of exercises: show a button to add more exercises, or Finish
+        // This is where the number of workouts for that user is counted. Available throughout.
           numWorkouts++;
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
         }
@@ -245,7 +245,9 @@ $(document).ready(function() {
         // jay (which is the number of the workout: 0-4)
         // need to set kay, (which is the number the the exercise), and loop this as the counter
         // then just need to put in the apprpriate variable: exercise, weight, sets, reps
-        //  and add buttons to either add more exercises, or a button to stop
+        //  and add buttons to either add more exercises, or a button to stop at the end
+        // but each exercise needs to have a button to edit that exercise info... - maybe 
+        // only when the whole exercise is listed out...???
         // maybe at THAT point, add the location.reload that rewrites the available workouts?
         enterExercises();
       });
@@ -253,17 +255,23 @@ $(document).ready(function() {
       // this function creates the form for inputting exercises
       function enterExercises() {
         $("#exerciseEntryForm").empty();
-        $("#exerciseEntryForm").append("<h2>Enter data for exercise 1 of workout above</h2>" +
-          "<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercises in  Workout</legend>" +
-          "<div class='form-group'><label for='exercise-OneA'>Name of First Exercise</label>" +
-          "<input type='text' class='form-control' id='exercise-OneA' placeholder=''></div>" +
-          "<div class='form-group'><label for='exercise-OneA-weight'>Weight</label>" +
-          "<input type='number' class='form-control' id='exercise-OneA-weight' placeholder='pounds'></div>" +
-          "<div class='form-group'><label for='exercise-OneA-sets'>Number of Sets</label>" +
-          "<input type='number' class='form-control' id='exercise-OneA-sets' placeholder=''></div>" +
-          "<div class='form-group'><label for='exercise-OneA-reps'>Number of Reps</label>" +
-          "<input type='number' class='form-control' id='exercise-OneA-reps' placeholder=''></div>" +
-          "<button type='submit' class='btn btn-default' id='exSubButton'>Submit</button></fieldset></form>");
+        for (kay = 0; kay < exercise.length; kay++) {
+          console.log("kay = " + kay + ",   exercise[kay] = " + exercise[kay]);
+          if (exercise[kay] === null) {
+            $("#exerciseEntryForm").append("<h2>Enter data for exercise" + (kay+1) + " of workout</h2>" +
+              "<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercises in  Workout</legend>" +
+              "<div class='form-group'><label for=" + exerciseInput[kay] + ">Name of Exercise</label>" +
+              "<input type='text' class='form-control' id=" + exerciseInput[kay] + " placeholder=''></div>" +
+              "<div class='form-group'><label for=" + weightInput[kay] + ">Weight</label>" +
+              "<input type='number' class='form-control' id=" + weightInput[kay] + " placeholder='pounds'></div>" +
+              "<div class='form-group'><label for=" + setsInput[kay] + ">Number of Sets</label>" +
+              "<input type='number' class='form-control' id=" + setsInput[kay] + " placeholder=''></div>" +
+              "<div class='form-group'><label for=" + repsInput[kay] + ">Number of Reps</label>" +
+              "<input type='number' class='form-control' id=" + repsInput[kay] + " placeholder=''></div>" +
+              "<button type='submit' class='btn btn-default' id='exSubButton'>Submit</button></fieldset></form>");
+              return;
+          }
+        }
       }
       
       // When the submit button for building the exercises of a workout is clicked,
@@ -272,17 +280,412 @@ $(document).ready(function() {
         // build the data object to be put into the database
         // but it only works if there is data, so need to only put in the values
         // that have data
-        var workoutAExerciseInputs = {
-          exerciseOneofA: $("input#exercise-OneA").val().trim(),
-          weightOneofA:$("input#exercise-OneA-weight").val().trim(),
-          setsOneofA: $("input#exercise-OneA-sets").val().trim(),
-          repsOneofA: $("input#exercise-OneA-reps").val().trim()
-          // exerciseTwoofA: $("input#exercise-TwoA").val().trim(),
-          // weightTwoofA:$("input#exercise-TwoA-weight").val().trim(),
-          // setsTwoofA: $("input#exercise-TwoA-sets").val().trim(),
-          // repsTwoofA: $("input#exercise-TwoA-reps").val().trim()
-        };
-        console.log("workoutAExerciseInputs after submitting the first exercise: ", workoutAExerciseInputs);
+        switch (kay) {
+          case 0:
+            var workoutExerciseInputs = {
+              exerciseOneofA: $("#" + exerciseInput[kay]).val().trim(),
+              weightOneofA:$("#" + weightInput[kay]).val().trim(),
+              setsOneofA: $("#" + setsInput[kay]).val().trim(),
+              repsOneofA: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 1:
+            var workoutExerciseInputs = {
+              exerciseTwoofA: $("#" + exerciseInput[kay]).val().trim(),
+              weightTwoofA:$("#" + weightInput[kay]).val().trim(),
+              setsTwoofA: $("#" + setsInput[kay]).val().trim(),
+              repsTwoofA: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 2:
+            var workoutExerciseInputs = {
+              exerciseThreeofA: $("#" + exerciseInput[kay]).val().trim(),
+              weightThreeofA:$("#" + weightInput[kay]).val().trim(),
+              setsThreeofA: $("#" + setsInput[kay]).val().trim(),
+              repsThreeofA: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 3:
+            var workoutExerciseInputs = {
+              exerciseFourofA: $("#" + exerciseInput[kay]).val().trim(),
+              weightFourofA:$("#" + weightInput[kay]).val().trim(),
+              setsFourofA: $("#" + setsInput[kay]).val().trim(),
+              repsFourofA: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 4:
+            var workoutExerciseInputs = {
+              exerciseFiveofA: $("#" + exerciseInput[kay]).val().trim(),
+              weightFiveofA:$("#" + weightInput[kay]).val().trim(),
+              setsFiveofA: $("#" + setsInput[kay]).val().trim(),
+              repsFiveofA: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 5:
+            var workoutExerciseInputs = {
+              exerciseSixofA: $("#" + exerciseInput[kay]).val().trim(),
+              weightSixofA:$("#" + weightInput[kay]).val().trim(),
+              setsSixofA: $("#" + setsInput[kay]).val().trim(),
+              repsSixofA: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 6:
+            var workoutExerciseInputs = {
+              exerciseSevenofA: $("#" + exerciseInput[kay]).val().trim(),
+              weightSevenofA:$("#" + weightInput[kay]).val().trim(),
+              setsSevenofA: $("#" + setsInput[kay]).val().trim(),
+              repsSevenofA: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 7:
+            var workoutExerciseInputs = {
+              exerciseEightofA: $("#" + exerciseInput[kay]).val().trim(),
+              weightEightofA:$("#" + weightInput[kay]).val().trim(),
+              setsEightofA: $("#" + setsInput[kay]).val().trim(),
+              repsEightofA: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 8:
+            var workoutExerciseInputs = {
+              exerciseNineofA: $("#" + exerciseInput[kay]).val().trim(),
+              weightNineofA:$("#" + weightInput[kay]).val().trim(),
+              setsNineofA: $("#" + setsInput[kay]).val().trim(),
+              repsNineofA: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 9:
+            var workoutExerciseInputs = {
+              exerciseTenofA: $("#" + exerciseInput[kay]).val().trim(),
+              weightTenofA:$("#" + weightInput[kay]).val().trim(),
+              setsTenofA: $("#" + setsInput[kay]).val().trim(),
+              repsTenofA: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 10:
+            var workoutExerciseInputs = {
+              exerciseOneofB: $("#" + exerciseInput[kay]).val().trim(),
+              weightOneofB:$("#" + weightInput[kay]).val().trim(),
+              setsOneofB: $("#" + setsInput[kay]).val().trim(),
+              repsOneofB: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 11:
+            var workoutExerciseInputs = {
+              exerciseTwoofB: $("#" + exerciseInput[kay]).val().trim(),
+              weightTwoofB:$("#" + weightInput[kay]).val().trim(),
+              setsTwoofB: $("#" + setsInput[kay]).val().trim(),
+              repsTwoofB: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 12:
+            var workoutExerciseInputs = {
+              exerciseThreeofB: $("#" + exerciseInput[kay]).val().trim(),
+              weightThreeofB:$("#" + weightInput[kay]).val().trim(),
+              setsThreeofB: $("#" + setsInput[kay]).val().trim(),
+              repsThreeofB: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 13:
+            var workoutExerciseInputs = {
+              exerciseFourofB: $("#" + exerciseInput[kay]).val().trim(),
+              weightFourofB:$("#" + weightInput[kay]).val().trim(),
+              setsFourofB: $("#" + setsInput[kay]).val().trim(),
+              repsFourofB: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 14:
+            var workoutExerciseInputs = {
+              exerciseFiveofB: $("#" + exerciseInput[kay]).val().trim(),
+              weightFiveofB:$("#" + weightInput[kay]).val().trim(),
+              setsFiveofB: $("#" + setsInput[kay]).val().trim(),
+              repsFiveofB: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 15:
+            var workoutExerciseInputs = {
+              exerciseSixofB: $("#" + exerciseInput[kay]).val().trim(),
+              weightSixofB:$("#" + weightInput[kay]).val().trim(),
+              setsSixofB: $("#" + setsInput[kay]).val().trim(),
+              repsSixofB: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 16:
+            var workoutExerciseInputs = {
+              exerciseSevenofB: $("#" + exerciseInput[kay]).val().trim(),
+              weightSevenofB:$("#" + weightInput[kay]).val().trim(),
+              setsSevenofB: $("#" + setsInput[kay]).val().trim(),
+              repsSevenofB: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 17:
+            var workoutExerciseInputs = {
+              exerciseEightofB: $("#" + exerciseInput[kay]).val().trim(),
+              weightEightofB:$("#" + weightInput[kay]).val().trim(),
+              setsEightofB: $("#" + setsInput[kay]).val().trim(),
+              repsEightofB: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 18:
+            var workoutExerciseInputs = {
+              exerciseNineofB: $("#" + exerciseInput[kay]).val().trim(),
+              weightNineofB:$("#" + weightInput[kay]).val().trim(),
+              setsNineofB: $("#" + setsInput[kay]).val().trim(),
+              repsNineofB: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 19:
+            var workoutExerciseInputs = {
+              exerciseTenofB: $("#" + exerciseInput[kay]).val().trim(),
+              weightTenofB:$("#" + weightInput[kay]).val().trim(),
+              setsTenofB: $("#" + setsInput[kay]).val().trim(),
+              repsTenofB: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 20:
+            var workoutExerciseInputs = {
+              exerciseOneofC: $("#" + exerciseInput[kay]).val().trim(),
+              weightOneofC:$("#" + weightInput[kay]).val().trim(),
+              setsOneofC: $("#" + setsInput[kay]).val().trim(),
+              repsOneofC: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 21:
+            var workoutExerciseInputs = {
+              exerciseTwoofC: $("#" + exerciseInput[kay]).val().trim(),
+              weightTwoofC:$("#" + weightInput[kay]).val().trim(),
+              setsTwoofC: $("#" + setsInput[kay]).val().trim(),
+              repsTwoofC: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 22:
+            var workoutExerciseInputs = {
+              exerciseThreeofC: $("#" + exerciseInput[kay]).val().trim(),
+              weightThreeofC:$("#" + weightInput[kay]).val().trim(),
+              setsThreeofC: $("#" + setsInput[kay]).val().trim(),
+              repsThreeofC: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 23:
+            var workoutExerciseInputs = {
+              exerciseFourofC: $("#" + exerciseInput[kay]).val().trim(),
+              weightFourofC:$("#" + weightInput[kay]).val().trim(),
+              setsFourofC: $("#" + setsInput[kay]).val().trim(),
+              repsFourofC: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 24:
+            var workoutExerciseInputs = {
+              exerciseFiveofC: $("#" + exerciseInput[kay]).val().trim(),
+              weightFiveofC:$("#" + weightInput[kay]).val().trim(),
+              setsFiveofC: $("#" + setsInput[kay]).val().trim(),
+              repsFiveofC: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 25:
+            var workoutExerciseInputs = {
+              exerciseSixofC: $("#" + exerciseInput[kay]).val().trim(),
+              weightSixofC:$("#" + weightInput[kay]).val().trim(),
+              setsSixofC: $("#" + setsInput[kay]).val().trim(),
+              repsSixofC: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 26:
+            var workoutExerciseInputs = {
+              exerciseSevenofC: $("#" + exerciseInput[kay]).val().trim(),
+              weightSevenofC:$("#" + weightInput[kay]).val().trim(),
+              setsSevenofC: $("#" + setsInput[kay]).val().trim(),
+              repsSevenofC: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 27:
+            var workoutExerciseInputs = {
+              exerciseEightofC: $("#" + exerciseInput[kay]).val().trim(),
+              weightEightofC:$("#" + weightInput[kay]).val().trim(),
+              setsEightofC: $("#" + setsInput[kay]).val().trim(),
+              repsEightofC: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 28:
+            var workoutExerciseInputs = {
+              exerciseNineofC: $("#" + exerciseInput[kay]).val().trim(),
+              weightNineofC:$("#" + weightInput[kay]).val().trim(),
+              setsNineofC: $("#" + setsInput[kay]).val().trim(),
+              repsNineofC: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 29:
+            var workoutExerciseInputs = {
+              exerciseTenofC: $("#" + exerciseInput[kay]).val().trim(),
+              weightTenofC:$("#" + weightInput[kay]).val().trim(),
+              setsTenofC: $("#" + setsInput[kay]).val().trim(),
+              repsTenofC: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 30:
+            var workoutExerciseInputs = {
+              exerciseOneofD: $("#" + exerciseInput[kay]).val().trim(),
+              weightOneofD:$("#" + weightInput[kay]).val().trim(),
+              setsOneofD: $("#" + setsInput[kay]).val().trim(),
+              repsOneofD: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 31:
+            var workoutExerciseInputs = {
+              exerciseTwoofD: $("#" + exerciseInput[kay]).val().trim(),
+              weightTwoofD:$("#" + weightInput[kay]).val().trim(),
+              setsTwoofD: $("#" + setsInput[kay]).val().trim(),
+              repsTwoofD: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 32:
+            var workoutExerciseInputs = {
+              exerciseThreeofD: $("#" + exerciseInput[kay]).val().trim(),
+              weightThreeofD:$("#" + weightInput[kay]).val().trim(),
+              setsThreeofD: $("#" + setsInput[kay]).val().trim(),
+              repsThreeofD: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 33:
+            var workoutExerciseInputs = {
+              exerciseFourofD: $("#" + exerciseInput[kay]).val().trim(),
+              weightFourofD:$("#" + weightInput[kay]).val().trim(),
+              setsFourofD: $("#" + setsInput[kay]).val().trim(),
+              repsFourofD: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 34:
+            var workoutExerciseInputs = {
+              exerciseFiveofD: $("#" + exerciseInput[kay]).val().trim(),
+              weightFiveofD:$("#" + weightInput[kay]).val().trim(),
+              setsFiveofD: $("#" + setsInput[kay]).val().trim(),
+              repsFiveofD: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 35:
+            var workoutExerciseInputs = {
+              exerciseSixofD: $("#" + exerciseInput[kay]).val().trim(),
+              weightSixofD:$("#" + weightInput[kay]).val().trim(),
+              setsSixofD: $("#" + setsInput[kay]).val().trim(),
+              repsSixofD: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 36:
+            var workoutExerciseInputs = {
+              exerciseSevenofD: $("#" + exerciseInput[kay]).val().trim(),
+              weightSevenofD:$("#" + weightInput[kay]).val().trim(),
+              setsSevenofD: $("#" + setsInput[kay]).val().trim(),
+              repsSevenofD: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 37:
+            var workoutExerciseInputs = {
+              exerciseEightofD: $("#" + exerciseInput[kay]).val().trim(),
+              weightEightofD:$("#" + weightInput[kay]).val().trim(),
+              setsEightofD: $("#" + setsInput[kay]).val().trim(),
+              repsEightofD: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 38:
+            var workoutExerciseInputs = {
+              exerciseNineofD: $("#" + exerciseInput[kay]).val().trim(),
+              weightNineofD:$("#" + weightInput[kay]).val().trim(),
+              setsNineofD: $("#" + setsInput[kay]).val().trim(),
+              repsNineofD: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 39:
+            var workoutExerciseInputs = {
+              exerciseTenofD: $("#" + exerciseInput[kay]).val().trim(),
+              weightTenofD:$("#" + weightInput[kay]).val().trim(),
+              setsTenofD: $("#" + setsInput[kay]).val().trim(),
+              repsTenofD: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 40:
+            var workoutExerciseInputs = {
+              exerciseOneofE: $("#" + exerciseInput[kay]).val().trim(),
+              weightOneofE:$("#" + weightInput[kay]).val().trim(),
+              setsOneofE: $("#" + setsInput[kay]).val().trim(),
+              repsOneofE: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 41:
+            var workoutExerciseInputs = {
+              exerciseTwoofE: $("#" + exerciseInput[kay]).val().trim(),
+              weightTwoofE:$("#" + weightInput[kay]).val().trim(),
+              setsTwoofE: $("#" + setsInput[kay]).val().trim(),
+              repsTwoofE: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 42:
+            var workoutExerciseInputs = {
+              exerciseThreeofE: $("#" + exerciseInput[kay]).val().trim(),
+              weightThreeofE:$("#" + weightInput[kay]).val().trim(),
+              setsThreeofE: $("#" + setsInput[kay]).val().trim(),
+              repsThreeofE: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 43:
+            var workoutExerciseInputs = {
+              exerciseFourofE: $("#" + exerciseInput[kay]).val().trim(),
+              weightFourofE:$("#" + weightInput[kay]).val().trim(),
+              setsFourofE: $("#" + setsInput[kay]).val().trim(),
+              repsFourofE: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 44:
+            var workoutExerciseInputs = {
+              exerciseFiveofE: $("#" + exerciseInput[kay]).val().trim(),
+              weightFiveofE:$("#" + weightInput[kay]).val().trim(),
+              setsFiveofE: $("#" + setsInput[kay]).val().trim(),
+              repsFiveofE: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 45:
+            var workoutExerciseInputs = {
+              exerciseSixofE: $("#" + exerciseInput[kay]).val().trim(),
+              weightSixofE:$("#" + weightInput[kay]).val().trim(),
+              setsSixofE: $("#" + setsInput[kay]).val().trim(),
+              repsSixofE: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 46:
+            var workoutExerciseInputs = {
+              exerciseSevenofE: $("#" + exerciseInput[kay]).val().trim(),
+              weightSevenofE:$("#" + weightInput[kay]).val().trim(),
+              setsSevenofE: $("#" + setsInput[kay]).val().trim(),
+              repsSevenofE: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 47:
+            var workoutExerciseInputs = {
+              exerciseEightofE: $("#" + exerciseInput[kay]).val().trim(),
+              weightEightofE:$("#" + weightInput[kay]).val().trim(),
+              setsEightofE: $("#" + setsInput[kay]).val().trim(),
+              repsEightofE: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 48:
+            var workoutExerciseInputs = {
+              exerciseNineofE: $("#" + exerciseInput[kay]).val().trim(),
+              weightNineofE:$("#" + weightInput[kay]).val().trim(),
+              setsNineofE: $("#" + setsInput[kay]).val().trim(),
+              repsNineofE: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          case 49:
+            var workoutExerciseInputs = {
+              exerciseTenofE: $("#" + exerciseInput[kay]).val().trim(),
+              weightTenofE:$("#" + weightInput[kay]).val().trim(),
+              setsTenofE: $("#" + setsInput[kay]).val().trim(),
+              repsTenofE: $("#" + repsInput[kay]).val().trim()
+            };
+            break;
+          default:
+            console.log("default in switch case code of assigning an exercise, something wrong");
+        }
+        
+        console.log("workoutExerciseInputs after submitting the first exercise: ", workoutExerciseInputs);
         //make sure the workout at least has a name
         // if (!workoutAInputs.workoutA) {
         //   //maybe add an alert here?
@@ -291,8 +694,9 @@ $(document).ready(function() {
           var currentURL = window.location.origin;
           $.ajax(currentURL + "/api/createWorkout/" + userdata.id, {
             type: "PUT",
-            data: workoutAExerciseInputs
+            data: workoutExerciseInputs
           }).then(function() {
+            // ask for more exercises here?
             $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
               console.log("object 'data' inside of .get after submit of new exerise data: ", data);
               //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
@@ -301,16 +705,12 @@ $(document).ready(function() {
             //location.reload(true);
             // If there's an error, handle it by throwing up a boostrap alert
         // ...and empty out the input fields for the form
-          $("input#exercise-OneA").val("");
-          $("input#exercise-OneA-weight").val("");
-          $("input#exercise-OneA-sets").val("");
-          $("input#exercise-OneA-reps").val("");
-          // $("input#exercise-TwoA").val("");
-          // $("input#exercise-TwoA-weight").val("");
-          // $("input#exercise-TwoA-sets").val("");
-          // $("input#exercise-TwoA-reps").val("");
+          $("#" + exerciseInput[kay]).val("");
+          $("#" + weightInput[kay]).val("");
+          $("#" + setsInput[kay]).val("");
+          $("#" + repsInput[kay]).val("");
           //  maybe here: count variable kay?? to reload empty form to input more exercise??
-          // but where do I ask the user if they want another exercise??
+          // or ask the user if they want another exercise here??
       });
 
           // This function happens when the user clicks the chosen workout.
