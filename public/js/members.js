@@ -17,8 +17,11 @@ $(document).ready(function() {
   var weight = [];
   var sets = [];
   var reps = [];
-  var jay; //counts workouts
-  var kay; // counts all exercises/weight/sets/reps available 0-49
+  var jay; //indeces of workouts array
+  // indeces for exercise/weight/sets/reps arrays corresponding to
+  var kay; //  j=0: kay=0-9; j=1:kay=10-19; j=2:kay=20-29; etc.
+  // e is the count of exercises within each workout
+  var e;
   var numWorkouts;
   // build arrays for input of new data
   var workoutInput = ["workoutA", "workoutB", "workoutC", "workoutD", "workoutE"];
@@ -173,6 +176,8 @@ $(document).ready(function() {
           console.log("jay = " + jay + ",   workout[jay] = " + workout[jay]);
           if (workout[jay] === null) {
             console.log("inside function to build form to name workouts, 1st if, numWorkouts = " + numWorkouts);
+            // be open to putting this in it's own function to be called from here, for editing workout names later...
+            //HERE: I think i'm counting kay wrong, if jay is 1, kay should be 0-9
             $("#entryForm").append("<h2>Enter Name of New Workout</h2>" +
               "<form class='enterWorkoutName'>" +
               "<div class='form-group'><label for=" + workoutInput[jay] + ">Name of New Workout</label>" +
@@ -199,26 +204,31 @@ $(document).ready(function() {
             var workoutNameInputs = {
               workoutA: $("#" + workoutInput[jay]).val().trim()
             };
+            kay = 0;
             break;
           case 1:
             var workoutNameInputs = {
               workoutB: $("#" + workoutInput[jay]).val().trim()
             };
+            kay = 10;
             break;
           case 2:
             var workoutNameInputs = {
               workoutC: $("#" + workoutInput[jay]).val().trim()
             };
+            kay = 20;
             break;
           case 3:
             var workoutNameInputs = {
               workoutD: $("#" + workoutInput[jay]).val().trim()
             };
+            kay = 30;
             break;
           case 4:
             var workoutNameInputs = {
               workoutE: $("#" + workoutInput[jay]).val().trim()
             };
+            kay = 40;
             break;
           default:
             console.log("default in switch case code of assigning a name to a workout, something wrong");
@@ -229,7 +239,7 @@ $(document).ready(function() {
           data: workoutNameInputs
         }).then(
           function() {
-            console.log("a new name for the workout has been updated");
+            console.log("a new workout name is stored, jay = " + jay + ". kay = " + kay + ".");
             //this reloads the page to more simply get the data in the db,
             //since it originally loads getting the data
             //location.reload();
@@ -243,35 +253,33 @@ $(document).ready(function() {
         // Now call the function that builds the input form for exercises.
         // what are the variables I know before this is called?:
         // jay (which is the number of the workout: 0-4)
-        // need to set kay, (which is the number the the exercise), and loop this as the counter
+        // need to set kay, (which is the number the the exercise), and increase it as need more exercises
         // then just need to put in the apprpriate variable: exercise, weight, sets, reps
         //  and add buttons to either add more exercises, or a button to stop at the end
         // but each exercise needs to have a button to edit that exercise info... - maybe 
         // only when the whole exercise is listed out...???
         // maybe at THAT point, add the location.reload that rewrites the available workouts?
+        e = 1;
         enterExercises();
       });
 
       // this function creates the form for inputting exercises
       function enterExercises() {
         $("#exerciseEntryForm").empty();
-        for (kay = 0; kay < exercise.length; kay++) {
-          console.log("kay = " + kay + ",   exercise[kay] = " + exercise[kay]);
-          if (exercise[kay] === null) {
-            $("#exerciseEntryForm").append("<h2>Enter data for exercise" + (kay+1) + " of workout</h2>" +
-              "<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercises in  Workout</legend>" +
-              "<div class='form-group'><label for=" + exerciseInput[kay] + ">Name of Exercise</label>" +
-              "<input type='text' class='form-control' id=" + exerciseInput[kay] + " placeholder=''></div>" +
-              "<div class='form-group'><label for=" + weightInput[kay] + ">Weight</label>" +
-              "<input type='number' class='form-control' id=" + weightInput[kay] + " placeholder='pounds'></div>" +
-              "<div class='form-group'><label for=" + setsInput[kay] + ">Number of Sets</label>" +
-              "<input type='number' class='form-control' id=" + setsInput[kay] + " placeholder=''></div>" +
-              "<div class='form-group'><label for=" + repsInput[kay] + ">Number of Reps</label>" +
-              "<input type='number' class='form-control' id=" + repsInput[kay] + " placeholder=''></div>" +
-              "<button type='submit' class='btn btn-default' id='exSubButton'>Submit</button></fieldset></form>");
-              return;
-          }
-        }
+        console.log("Inside creating of exercise form functin: kay = " + kay + ",   e = " + e);
+        // but here, kay should be only counting 1-10 for each particular workout!
+        
+        $("#exerciseEntryForm").append("<h2>Enter data for exercise " + e + " of workout</h2>" +
+          "<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercise " + e + " in  Workout</legend>" +
+          "<div class='form-group'><label for=" + exerciseInput[kay] + ">Name of Exercise</label>" +
+          "<input type='text' class='form-control' id=" + exerciseInput[kay] + " placeholder=''></div>" +
+          "<div class='form-group'><label for=" + weightInput[kay] + ">Weight</label>" +
+          "<input type='number' class='form-control' id=" + weightInput[kay] + " placeholder='pounds'></div>" +
+          "<div class='form-group'><label for=" + setsInput[kay] + ">Number of Sets</label>" +
+          "<input type='number' class='form-control' id=" + setsInput[kay] + " placeholder=''></div>" +
+          "<div class='form-group'><label for=" + repsInput[kay] + ">Number of Reps</label>" +
+          "<input type='number' class='form-control' id=" + repsInput[kay] + " placeholder=''></div>" +
+          "<button type='submit' class='btn btn-default' id='exSubButton'>Submit</button></fieldset></form>");
       }
       
       // When the submit button for building the exercises of a workout is clicked,
@@ -709,9 +717,23 @@ $(document).ready(function() {
           $("#" + weightInput[kay]).val("");
           $("#" + setsInput[kay]).val("");
           $("#" + repsInput[kay]).val("");
-          //  maybe here: count variable kay?? to reload empty form to input more exercise??
-          // or ask the user if they want another exercise here??
+          //  
+          // Load button in section to ask the user if they want another exercise here
+          // If clicked, increase kay by 1, go back to function enterExercises().
+          $("#exerciseEntryForm").empty();
+          $("#exerciseEntryForm").append("<button id='moreExercises'>Add More Exercises</button>" +
+            "<button id='noMoreExercises'>Finish</button>");
       });
+
+      $(document).on("click", "#moreExercises", function() {
+        e++;  // add test so that e can't go above 10
+        //need to test kay, if kay greater than 9, or 19, or 29, etc., too many exercises
+        // only 10 allowed per workout.  I can use e (below) for this (?) User won't be allowed
+        // to add over 10 exercises, so kay wont be counted out of that particular workout's range.
+        kay++;
+        enterExercises();
+      });
+
 
           // This function happens when the user clicks the chosen workout.
       $(document).on("click", ".selectedWorkout", function() {
