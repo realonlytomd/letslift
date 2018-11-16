@@ -198,7 +198,9 @@ $(document).ready(function() {
         event.preventDefault();
         // build the data object to be put into the database
         // but it only works if there is data, so need to only put in the values that have data
-        //put the switchcase code here - not sure if putting the array name after $("#" + ) will work...
+        //put the switchcase code here. 
+        // The varible kay (the index for the arrays) is stair stepped by 10 
+        // because there are a maximum of 10 exercises for each workout
         switch (jay) {
           case 0:
             var workoutNameInputs = {
@@ -240,9 +242,6 @@ $(document).ready(function() {
         }).then(
           function() {
             console.log("a new workout name is stored, jay = " + jay + ". kay = " + kay + ".");
-            //this reloads the page to more simply get the data in the db,
-            //since it originally loads getting the data
-            //location.reload();
           }
         );
         // If there's an error, handle it by throwing up a boostrap alert.
@@ -253,12 +252,14 @@ $(document).ready(function() {
         // Now call the function that builds the input form for exercises.
         // what are the variables I know before this is called?:
         // jay (which is the number of the workout: 0-4)
-        // need to set kay, (which is the number the the exercise), and increase it as need more exercises
+        // need to set kay, (which is the index of the exercise/weight/sets/reps array), 
+        // and increase it as needed for more exercises
         // then just need to put in the apprpriate variable: exercise, weight, sets, reps
-        //  and add buttons to either add more exercises, or a button to stop at the end
+        // and add buttons to either add more exercises, or a button to finish at the end
         // but each exercise needs to have a button to edit that exercise info... - maybe 
         // only when the whole exercise is listed out...???
-        // maybe at THAT point, add the location.reload that rewrites the available workouts?
+        // the variable, e - the count of the exercise is set to 1 here because the user
+        // had just created the new workout.
         e = 1;
         enterExercises();
       });
@@ -269,7 +270,7 @@ $(document).ready(function() {
         console.log("Inside creating of exercise form functin: kay = " + kay + ",   e = " + e);
         // but here, kay should be only counting 1-10 for each particular workout!
         
-        $("#exerciseEntryForm").append("<h2>Enter data for exercise " + e + " of workout</h2>" +
+        $("#exerciseEntryForm").append("<h2>Enter exercise " + e + " of workout</h2>" +
           "<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercise " + e + " in  Workout</legend>" +
           "<div class='form-group'><label for=" + exerciseInput[kay] + ">Name of Exercise</label>" +
           "<input type='text' class='form-control' id=" + exerciseInput[kay] + " placeholder=''></div>" +
@@ -692,7 +693,6 @@ $(document).ready(function() {
           default:
             console.log("default in switch case code of assigning an exercise, something wrong");
         }
-        
         console.log("workoutExerciseInputs after submitting the first exercise: ", workoutExerciseInputs);
         //make sure the workout at least has a name
         // if (!workoutAInputs.workoutA) {
@@ -706,7 +706,7 @@ $(document).ready(function() {
           }).then(function() {
             // ask for more exercises here?
             $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
-              console.log("object 'data' inside of .get after submit of new exerise data: ", data);
+              console.log("object 'data' inside of .get AFTER submit of new exerise data: ", data);
               //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
             });
           });
@@ -721,17 +721,26 @@ $(document).ready(function() {
           // Load button in section to ask the user if they want another exercise here
           // If clicked, increase kay by 1, go back to function enterExercises().
           $("#exerciseEntryForm").empty();
-          $("#exerciseEntryForm").append("<button id='moreExercises'>Add More Exercises</button>" +
+          if (e === 10) {
+            console.log("user has exceeded 10 exercises!");
+            $("#exerciseEntryForm").append("<h2>User has 10 exercises</h2><button id='noMoreExercises'>Finish</button>");
+          } else {
+            $("#exerciseEntryForm").append("<button id='moreExercises'>Add More Exercises</button>" +
             "<button id='noMoreExercises'>Finish</button>");
+          }
       });
 
       $(document).on("click", "#moreExercises", function() {
-        e++;  // add test so that e can't go above 10
-        //need to test kay, if kay greater than 9, or 19, or 29, etc., too many exercises
-        // only 10 allowed per workout.  I can use e (below) for this (?) User won't be allowed
-        // to add over 10 exercises, so kay wont be counted out of that particular workout's range.
+        e++;
         kay++;
         enterExercises();
+      });
+
+      $(document).on("click", "#noMoreExercises", function() {
+        console.log("User has finished inputting exercises for the particular workout!")
+        //this reloads the page to more simply get the data in the db,
+        // since it originally loads getting the data
+        location.reload();
       });
 
 
