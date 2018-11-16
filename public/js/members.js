@@ -89,8 +89,23 @@ $(document).ready(function() {
       for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null) {
         } else {
-        $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>" +
-          "<button id='editWorkout'>Edit</button><button id='deleteWorkout'>Delete</button>");
+          // take this out later - just for reference
+      //     var holder = $("<button>");
+			
+			// holder.addClass("show");
+			// holder.attr("data-name", tvshows[i]);
+			// holder.text(tvshows[i]);
+      // $("#button-section").append(holder);
+      //
+      //
+        var holder = $("<h3>");
+        holder.addClass("selectedWorkout");
+        holder.attr("workout-name", workout[i]);
+        holder.attr("index", i);
+        holder.text(workout[i]);
+        //$("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>" +
+        $("#availableWorkouts").append(holder);
+        $("#availableWorkouts").append("<button id='editWorkout'>Edit</button><button id='deleteWorkout'>Delete</button>");
         // the Edit workout button will show the entire workout, and then
         // under each exercise, weight, sets, and reps show an edit or delete button!
         // at the bottom of the list of exercises: show a button to add more exercises, or Finish
@@ -164,6 +179,14 @@ $(document).ready(function() {
         data.repsFourofE, data.repsFiveofE, data.repsSixofE, data.repsSevenofE, 
         data.repsEightofE, data.repsNineofE, data.repsTenofE];
         console.log("reps array: " + reps);
+
+      // function to delete a workout
+      // Only the name of the workout needs to be deleted.  A User sees
+      // only the list of available workouts, and new ones are put in any space
+      // that is currently null. New exercises will be written over any current info.
+      $(document).on("click", "#deleteWorkout", function() {
+
+      });
 
       // These functions build the entry form when the user wants to enter new data,
       // Update an existing workout still needs to be added.
