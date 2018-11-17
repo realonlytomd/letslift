@@ -86,31 +86,23 @@ $(document).ready(function() {
      
       $("#availableWorkouts").empty();
       numWorkouts = 0;
-      for (var i = 0; i < workout.length; i++) {
-        if (workout[i] === null) {
+      for (i = 0; i < workout.length; i++) {
+        if (workout[i] === null || workout[i] === "null") {
         } else {
-          // take this out later - just for reference
-      //     var holder = $("<button>");
-			
-			// holder.addClass("show");
-			// holder.attr("data-name", tvshows[i]);
-			// holder.text(tvshows[i]);
-      // $("#button-section").append(holder);
-      //
-      //
-        var holder = $("<h3>");
-        holder.addClass("selectedWorkout");
-        holder.attr("workout-name", workout[i]);
+        var holder = $("<button>");
         holder.attr("index", i);
-        holder.text(workout[i]);
-        //$("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>" +
+        holder.addClass("deleteWorkout");
+        holder.text("Delete");
+        // from before
+        ////$("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>" +
+        $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+        $("#availableWorkouts").append("<button class='editWorkout'>Edit</button>");
         $("#availableWorkouts").append(holder);
-        $("#availableWorkouts").append("<button id='editWorkout'>Edit</button><button id='deleteWorkout'>Delete</button>");
         // the Edit workout button will show the entire workout, and then
         // under each exercise, weight, sets, and reps show an edit or delete button!
         // at the bottom of the list of exercises: show a button to add more exercises, or Finish
         // This is where the number of workouts for that user is counted. Available throughout.
-          numWorkouts++;
+        numWorkouts++;
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
         }
       }
@@ -184,8 +176,47 @@ $(document).ready(function() {
       // Only the name of the workout needs to be deleted.  A User sees
       // only the list of available workouts, and new ones are put in any space
       // that is currently null. New exercises will be written over any current info.
-      $(document).on("click", "#deleteWorkout", function() {
-
+      $(document).on("click", ".deleteWorkout", function(event) {
+        event.preventDefault();
+        var indexWorkout = parseInt($(this).attr("index"));
+        switch (indexWorkout) {
+          case 0:
+            var workoutNameInputs = {
+              workoutA: "null"
+            };
+            break;
+          case 1:
+            var workoutNameInputs = {
+              workoutB: "null"
+            };
+            break;
+          case 2:
+            var workoutNameInputs = {
+              workoutC: "null"
+            };
+            break;
+          case 3:
+            var workoutNameInputs = {
+              workoutD: "null"
+            };
+            break;
+          case 4:
+            var workoutNameInputs = {
+              workoutE: "null"
+            };
+            break;
+          default:
+            console.log("default in switch case code of assigning a name to a workout, something wrong");
+        }
+        var currentURL = window.location.origin;
+        $.ajax(currentURL + "/api/createWorkout/" + userdata.id, {
+          type: "PUT",
+          data: workoutNameInputs
+        }).then(
+          function() {
+            console.log("The workout name has been made null");
+          }
+        );
       });
 
       // These functions build the entry form when the user wants to enter new data,
@@ -197,7 +228,7 @@ $(document).ready(function() {
         //test for next open workout by checking if workout[i] is null
         for (jay = 0; jay < workout.length; jay++) {
           console.log("jay = " + jay + ",   workout[jay] = " + workout[jay]);
-          if (workout[jay] === null) {
+          if (workout[jay] === null || workout[jay] === "null") {
             console.log("inside function to build form to name workouts, 1st if, numWorkouts = " + numWorkouts);
             // be open to putting this in it's own function to be called from here, for editing workout names later...
             //HERE: I think i'm counting kay wrong, if jay is 1, kay should be 0-9
@@ -949,7 +980,7 @@ $(document).ready(function() {
           $("#availableWorkouts").empty();
           numWorkouts = 0;
           for (var i = 0; i < workout.length; i++) {
-            if (workout[i] === null) {
+            if (workout[i] === null || workout[i] === "null") {
             } else {
               $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
               numWorkouts = numWorkouts + 1;

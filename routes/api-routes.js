@@ -44,7 +44,7 @@ module.exports = function(router) {
     });
   });
 
-  // PUT route for updating name and inputs for workout
+  // PUT route for updating name for workout
   router.put("/api/createWorkout/:id", function(req, res) {
     console.log("inside put route /api/createWorkoutA/:id - req.body: ", req.body);
     db.User.update(
