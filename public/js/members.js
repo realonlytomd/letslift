@@ -76,6 +76,41 @@ $(document).ready(function() {
     $(".member-id").text(userdata.id);
     $(".member-name").text(userdata.email);
 
+    // this function creates the delete user button in the navbar with the data of the user's id
+    var holder = $("<button>");
+    // not sure if I should use .data or .attr - study later
+    holder.data("userId", userdata.id);
+    holder.addClass("deleteUser");
+    holder.text("Delete User");
+    $(".navbar-header").append(holder);
+
+    // This function deletes an entire user.
+    // need to log out user after they click the delete user button, and direct back to home page.
+    $(document).on("click", ".deleteUser", function(event) {
+      event.preventDefault();
+      // cut from class example
+      var id = $(this).data("userId");
+      console.log("id: " + id);
+      $.ajax({
+        method: "DELETE",
+        url: "/api/deleteUser/" + id
+      }).then(
+        function(getDeletedUsers) {
+          console.log("User has been deleted, deletedUsers: ", getDeletedUsers);
+        }
+      )
+      });
+    // from below, as an example  -  slightly different format
+    // var currentURL = window.location.origin;
+    //     $.ajax(currentURL + "/api/createWorkout/" + userdata.id, {
+    //       type: "PUT",
+    //       data: workoutNameInputs
+    //     }).then(
+    //       function() {
+    //         console.log("The workout name has been made null");
+    //       }
+    //     );
+
     //putting all of the below inside the first get so as to have the correct id (user)
     // this .get brings in all the data from the db
     $.get("/api/specific_user_data/" + userdata.id).then(function(data) {

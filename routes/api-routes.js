@@ -44,9 +44,25 @@ module.exports = function(router) {
     });
   });
 
+  // DELETE route for deleting users. We get the id of the user to be deleted from
+  // req.params.id
+  router.delete("/api/deleteUser/:id", function(req, res) {
+    // We have to specify which user to destroy with "where"
+    console.log("req.params.id:", req.params.id);
+    db.User.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(dbUser) {
+      res.json(dbUser);
+      console.log("dbuser: ", dbUser);
+    });
+
+  });
+
   // PUT route for updating name for workout
   router.put("/api/createWorkout/:id", function(req, res) {
-    console.log("inside put route /api/createWorkoutA/:id - req.body: ", req.body);
+    console.log("inside put route /api/createWorkout/:id - req.body: ", req.body);
     db.User.update(
       req.body,{
       where: {
@@ -55,6 +71,7 @@ module.exports = function(router) {
     })
     .then(function(result) {
       res.json(result);
+      console.log("inside .then route /api/createWorkout/:id - result: ", result);
     });
   });
 
