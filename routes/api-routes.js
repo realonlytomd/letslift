@@ -47,17 +47,16 @@ module.exports = function(router) {
   // DELETE route for deleting users. We get the id of the user to be deleted from
   // req.params.id
   router.delete("/api/deleteUser/:id", function(req, res) {
-    // We have to specify which user to destroy with "where"
-    console.log("req.params.id:", req.params.id);
+    // Specify which user to destroy with "where"
+    // now continue with original delete request
     db.User.destroy({
       where: {
         id: req.params.id
       }
     }).then(function(dbUser) {
       res.json(dbUser);
-      console.log("dbuser: ", dbUser);
+      console.log("number of deleted users (should be 1): ", dbUser);
     });
-
   });
 
   // PUT route for updating name for workout
@@ -77,8 +76,11 @@ module.exports = function(router) {
 
   // Route for logging user out
   router.get("/logout", function(req, res) {
+    console.log("I'm inside /logout function");
     req.logout();
+    console.log("I've req.logout");
     res.redirect("/");
+    console.log("I've redirected");
   });
 
   // Route for getting some data about the user

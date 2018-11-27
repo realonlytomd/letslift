@@ -83,7 +83,6 @@ $(document).ready(function() {
     holder.addClass("deleteUser");
     holder.text("Delete User");
     $(".navbar-header").append(holder);
-
     // This function deletes an entire user.
     // need to log out user after they click the delete user button, and direct back to home page.
     $(document).on("click", ".deleteUser", function(event) {
@@ -91,27 +90,26 @@ $(document).ready(function() {
       // cut from class example
       var id = $(this).data("userId");
       console.log("id: " + id);
+      // ADD a warning alert that the current user and ALL THE DATA will be deleted
       $.ajax({
         method: "DELETE",
         url: "/api/deleteUser/" + id
       }).then(
         function(getDeletedUsers) {
-          console.log("User has been deleted, deletedUsers: ", getDeletedUsers);
-        }
+          if (getDeletedUsers === 1) {
+            console.log("User has been deleted, deletedUsers: ", getDeletedUsers);
+            // redirects to the /logout page so the logout api .get is called.
+            // so, the user deletes himself, and the page reloads at the sign up page, "/"
+            window.location.href = "/logout";
+          }
+        }, {
+            function(err) {
+              console.log(err);
+            }
+          }
       )
-      });
-    // from below, as an example  -  slightly different format
-    // var currentURL = window.location.origin;
-    //     $.ajax(currentURL + "/api/createWorkout/" + userdata.id, {
-    //       type: "PUT",
-    //       data: workoutNameInputs
-    //     }).then(
-    //       function() {
-    //         console.log("The workout name has been made null");
-    //       }
-    //     );
-
-    //putting all of the below inside the first get so as to have the correct id (user)
+    });
+      //putting all of the below inside the first get so as to have the correct id (user)
     // this .get brings in all the data from the db
     $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
       // build array of named workouts - new for each data retrieval
@@ -780,7 +778,7 @@ $(document).ready(function() {
             };
             break;
           default:
-            console.log("default in switch case code of assigning an exercise, something wrong");
+          console.log("default in switch case code of assigning an exercise, something wrong");
         }
         console.log("workoutExerciseInputs after submitting the first exercise: ", workoutExerciseInputs);
         //make sure the workout at least has a name
