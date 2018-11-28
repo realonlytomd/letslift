@@ -315,7 +315,7 @@ module.exports = function(router) {
           exerciseTenofE: dbUser[0].dataValues.exerciseTenofE,
           weightTenofE: dbUser[0].dataValues.weightTenofE,
           setsTenofE: dbUser[0].dataValues.setsTenofE,
-          repsTenofE: dbUser[0].dataValues.repsTenofE,
+          repsTenofE: dbUser[0].dataValues.repsTenofE
         });
       });
   });

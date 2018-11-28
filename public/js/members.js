@@ -250,6 +250,7 @@ $(document).ready(function() {
             console.log("The workout name has been made null");
           }
         );
+        window.location.reload();
       });
 
       // These functions build the entry form when the user wants to enter new data,
@@ -797,7 +798,7 @@ $(document).ready(function() {
               //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
             });
           });
-            //location.reload(true);
+            //window.location.reload(true);
             // If there's an error, handle it by throwing up a boostrap alert
         // ...and empty out the input fields for the form
           $("#" + exerciseInput[kay]).val("");
@@ -827,7 +828,7 @@ $(document).ready(function() {
         console.log("User has finished inputting exercises for the particular workout!")
         //this reloads the page to more simply get the data in the db,
         // since it originally loads getting the data
-        location.reload();
+        window.location.reload();
       });
 
 
