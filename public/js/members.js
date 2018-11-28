@@ -22,7 +22,7 @@ $(document).ready(function() {
   var kay; //  j=0: kay=0-9; j=1:kay=10-19; j=2:kay=20-29; etc.
   // e is the count of exercises within each workout
   var e;
-  var numWorkouts;
+  var numWorkouts; // numWorkouts is count of workouts for listing purposes
   // build arrays for input of new data
   var workoutInput = ["workoutA", "workoutB", "workoutC", "workoutD", "workoutE"];
 
@@ -83,11 +83,12 @@ $(document).ready(function() {
     holder.addClass("deleteUser");
     holder.text("Delete User");
     $(".navbar-header").append(holder);
+
     // This function deletes an entire user.
     // need to log out user after they click the delete user button, and direct back to home page.
     $(document).on("click", ".deleteUser", function(event) {
       event.preventDefault();
-      // cut from class example
+      // copied from class example
       var id = $(this).data("userId");
       console.log("id: " + id);
       // ADD a warning alert that the current user and ALL THE DATA will be deleted
@@ -126,9 +127,8 @@ $(document).ready(function() {
         holder.attr("index", i);
         holder.addClass("deleteWorkout");
         holder.text("Delete");
-        // from before
-        ////$("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>" +
         $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+        // need to add data and attributes to the edit button to do edits of workouts - later
         $("#availableWorkouts").append("<button class='editWorkout'>Edit</button>");
         $("#availableWorkouts").append(holder);
         // the Edit workout button will show the entire workout, and then

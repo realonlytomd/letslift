@@ -53,11 +53,15 @@ module.exports = function(router) {
       where: {
         id: req.params.id
       }
-    }).then(function(dbUser) {
-      res.json(dbUser);
-      console.log("number of deleted users (should be 1): ", dbUser);
+    }).then(function(numUser) {
+      res.json(numUser);
+      console.log("number of deleted users (should be 1): ", numUser);
     });
   });
+
+  // create a route for deleting a workout name for now
+  // add in deleting all the exercises later
+  router.delete("/api/deleteWorkout")
 
   // PUT route for updating name for workout
   router.put("/api/createWorkout/:id", function(req, res) {
@@ -83,7 +87,7 @@ module.exports = function(router) {
     console.log("I've redirected");
   });
 
-  // Route for getting some data about the user
+  // Route for getting data about the user
   router.get("/api/user_data", function(req, res) {
     if (!req.user) {
       // The user is not logged in, send back an empty object
