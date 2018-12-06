@@ -121,12 +121,12 @@ $(document).ready(function() {
       $("#availableWorkouts").empty();
       numWorkouts = 0;
       for (i = 0; i < workout.length; i++) {
-        if (workout[i] === null || workout[i] === "null") {
+        if (workout[i] === null || workout[i] === "") {
         } else {
         var holder = $("<button>");
         holder.attr("index", i);
-        holder.addClass("deleteWorkout");
-        holder.text("Delete");
+        holder.addClass("renameWorkoutNull");
+        holder.text("renameNull");
         $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
         // need to add data and attributes to the edit button to do edits of workouts - later
         $("#availableWorkouts").append("<button class='editWorkout'>Edit</button>");
@@ -205,37 +205,241 @@ $(document).ready(function() {
         data.repsEightofE, data.repsNineofE, data.repsTenofE];
         console.log("reps array: " + reps);
 
-      // function to delete a workout
-      // Only the name of the workout needs to be deleted.  A User sees
+      // function to delete a workout - 1st method, renames the name of the workout to "null"
+      // A User sees
       // only the list of available workouts, and new ones are put in any space
       // that is currently null. New exercises will be written over any current info.
-      $(document).on("click", ".deleteWorkout", function(event) {
+      $(document).on("click", ".renameWorkoutNull", function(event) {
         event.preventDefault();
         var indexWorkout = parseInt($(this).attr("index"));
+        console.log("inside function to rename workout data to null, index: " + indexWorkout);
         switch (indexWorkout) {
           case 0:
             var workoutNameInputs = {
-              workoutA: "null"
+              // Big problem: the workout and exercises can be null, but the others 
+              // have to be integers, as they are defined as that in the user.js file!
+              //i've got to figure out how to return that cell back to null, not "", or "null"
+              workoutA: null,
+              exerciseOneofA: null,
+              exerciseTwoofA: null,
+              exerciseThreeofA: null,
+              exerciseFourofA: null,
+              exerciseFiveofA: null,
+              exerciseSixofA: null,
+              exerciseSevenofA: null,
+              exerciseEightofA: null,
+              exerciseNineofA: null,
+              exerciseTenofA: null,
+              weightOneofA: null,
+              weightTwoofA: null,
+              weightThreeofA: null,
+              weightFourofA: null,
+              weightFiveofA: null,
+              weightSixofA: null,
+              weightSevenofA: null,
+              weightEightofA: null,
+              weightNineofA: null,
+              weightTenofA: null,
+              setsOneofA: null,
+              setsTwoofA: null,
+              setsThreeofA: null,
+              setsFourofA: null,
+              setsFiveofA: null,
+              setsSixofA: null,
+              setsSevenofA: null,
+              setsEightofA: null,
+              setsNineofA: null,
+              setsTenofA: null,
+              repsOneofA: null,
+              repsTwoofA: null,
+              repsThreeofA: null,
+              repsFourofA: null,
+              repsFiveofA: null,
+              repsSixofA: null,
+              repsSevenofA: null,
+              repsEightofA: null,
+              repsNineofA: null,
+              repsTenofA: null
             };
             break;
           case 1:
             var workoutNameInputs = {
-              workoutB: "null"
+              workoutB: null,
+              exerciseOneofB: null,
+              exerciseTwoofB: null,
+              exerciseThreeofB: null,
+              exerciseFourofB: null,
+              exerciseFiveofB: null,
+              exerciseSixofB: null,
+              exerciseSevenofB: null,
+              exerciseEightofB: null,
+              exerciseNineofB: null,
+              exerciseTenofB: null,
+              weightOneofB: null,
+              weightTwoofB: null,
+              weightThreeofB: null,
+              weightFourofB: null,
+              weightFiveofB: null,
+              weightSixofB: null,
+              weightSevenofB: null,
+              weightEightofB: null,
+              weightNineofB: null,
+              weightTenofB: null,
+              setsOneofB: null,
+              setsTwoofB: null,
+              setsThreeofB: null,
+              setsFourofB: null,
+              setsFiveofB: null,
+              setsSixofB: null,
+              setsSevenofB: null,
+              setsEightofB: null,
+              setsNineofB: null,
+              setsTenofB: null,
+              repsOneofB: null,
+              repsTwoofB: null,
+              repsThreeofB: null,
+              repsFourofB: null,
+              repsFiveofB: null,
+              repsSixofB: null,
+              repsSevenofB: null,
+              repsEightofB: null,
+              repsNineofB: null,
+              repsTenofB: null
             };
             break;
           case 2:
             var workoutNameInputs = {
-              workoutC: "null"
+              workoutC: null,
+              exerciseOneofC: null,
+              exerciseTwoofC: null,
+              exerciseThreeofC: null,
+              exerciseFourofC: null,
+              exerciseFiveofC: null,
+              exerciseSixofC: null,
+              exerciseSevenofC: null,
+              exerciseEightofC: null,
+              exerciseNineofC: null,
+              exerciseTenofC: null,
+              weightOneofC: null,
+              weightTwoofC: null,
+              weightThreeofC: null,
+              weightFourofC: null,
+              weightFiveofC: null,
+              weightSixofC: null,
+              weightSevenofC: null,
+              weightEightofC: null,
+              weightNineofC: null,
+              weightTenofC: null,
+              setsOneofC: null,
+              setsTwoofC: null,
+              setsThreeofC: null,
+              setsFourofC: null,
+              setsFiveofC: null,
+              setsSixofC: null,
+              setsSevenofC: null,
+              setsEightofC: null,
+              setsNineofC: null,
+              setsTenofC: null,
+              repsOneofC: null,
+              repsTwoofC: null,
+              repsThreeofC: null,
+              repsFourofC: null,
+              repsFiveofC: null,
+              repsSixofC: null,
+              repsSevenofC: null,
+              repsEightofC: null,
+              repsNineofC: null,
+              repsTenofC: null
             };
             break;
           case 3:
             var workoutNameInputs = {
-              workoutD: "null"
+              workoutD: null,
+              exerciseOneofD: null,
+              exerciseTwoofD: null,
+              exerciseThreeofD: null,
+              exerciseFourofD: null,
+              exerciseFiveofD: null,
+              exerciseSixofD: null,
+              exerciseSevenofD: null,
+              exerciseEightofD: null,
+              exerciseNineofD: null,
+              exerciseTenofD: null,
+              weightOneofD: null,
+              weightTwoofD: null,
+              weightThreeofD: null,
+              weightFourofD: null,
+              weightFiveofD: null,
+              weightSixofD: null,
+              weightSevenofD: null,
+              weightEightofD: null,
+              weightNineofD: null,
+              weightTenofD: null,
+              setsOneofD: null,
+              setsTwoofD: null,
+              setsThreeofD: null,
+              setsFourofD: null,
+              setsFiveofD: null,
+              setsSixofD: null,
+              setsSevenofD: null,
+              setsEightofD: null,
+              setsNineofD: null,
+              setsTenofD: null,
+              repsOneofD: null,
+              repsTwoofD: null,
+              repsThreeofD: null,
+              repsFourofD: null,
+              repsFiveofD: null,
+              repsSixofD: null,
+              repsSevenofD: null,
+              repsEightofD: null,
+              repsNineofD: null,
+              repsTenofD: null
             };
             break;
           case 4:
             var workoutNameInputs = {
-              workoutE: "null"
+              workoutE: null,
+              exerciseOneofE: null,
+              exerciseTwoofE: null,
+              exerciseThreeofE: null,
+              exerciseFourofE: null,
+              exerciseFiveofE: null,
+              exerciseSixofE: null,
+              exerciseSevenofE: null,
+              exerciseEightofE: null,
+              exerciseNineofE: null,
+              exerciseTenofE: null,
+              weightOneofE: null,
+              weightTwoofE: null,
+              weightThreeofE: null,
+              weightFourofE: null,
+              weightFiveofE: null,
+              weightSixofE: null,
+              weightSevenofE: null,
+              weightEightofE: null,
+              weightNineofE: null,
+              weightTenofE: null,
+              setsOneofE: null,
+              setsTwoofE: null,
+              setsThreeofE: null,
+              setsFourofE: null,
+              setsFiveofE: null,
+              setsSixofE: null,
+              setsSevenofE: null,
+              setsEightofE: null,
+              setsNineofE: null,
+              setsTenofE: null,
+              repsOneofE: null,
+              repsTwoofE: null,
+              repsThreeofE: null,
+              repsFourofE: null,
+              repsFiveofE: null,
+              repsSixofE: null,
+              repsSevenofE: null,
+              repsEightofE: null,
+              repsNineofE: null,
+              repsTenofE: null
             };
             break;
           default:
@@ -262,7 +466,7 @@ $(document).ready(function() {
         //test for next open workout by checking if workout[i] is null
         for (jay = 0; jay < workout.length; jay++) {
           console.log("jay = " + jay + ",   workout[jay] = " + workout[jay]);
-          if (workout[jay] === null || workout[jay] === "null") {
+          if (workout[jay] === null || workout[jay] === "") {
             console.log("inside function to build form to name workouts, 1st if, numWorkouts = " + numWorkouts);
             // be open to putting this in it's own function to be called from here, for editing workout names later...
             //HERE: I think i'm counting kay wrong, if jay is 1, kay should be 0-9

@@ -59,10 +59,6 @@ module.exports = function(router) {
     });
   });
 
-  // create a route for deleting a workout name for now
-  // add in deleting all the exercises later
-  router.delete("/api/deleteWorkout")
-
   // PUT route for updating name for workout
   router.put("/api/createWorkout/:id", function(req, res) {
     console.log("inside put route /api/createWorkout/:id - req.body: ", req.body);
