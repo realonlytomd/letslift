@@ -127,13 +127,19 @@ $(document).ready(function() {
         holder.attr("index", i);
         holder.addClass("renameWorkoutNull");
         holder.text("renameNull");
+        //adding a 3rd button to actually delete the data in the db, not just update it to null
+        var holder2 = $("<button>");
+        holder2.attr("index", i);
+        holder2.addClass("deleteWorkout");
+        holder2.text("Really Delete");
         $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
         // need to add data and attributes to the edit button to do edits of workouts - later
         $("#availableWorkouts").append("<button class='editWorkout'>Edit</button>");
         $("#availableWorkouts").append(holder);
+        $("#availableWorkouts").append(holder2);
         // the Edit workout button will show the entire workout, and then
         // under each exercise, weight, sets, and reps show an edit or delete button!
-        // at the bottom of the list of exercises: show a button to add more exercises, or Finish
+        // at the bottom of the list of exercises: show a button to add more exercises, or Finish - done
         // This is where the number of workouts for that user is counted. Available throughout.
         numWorkouts++;
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
@@ -205,7 +211,7 @@ $(document).ready(function() {
         data.repsEightofE, data.repsNineofE, data.repsTenofE];
         console.log("reps array: " + reps);
 
-      // function to delete a workout - 1st method, renames the name of the workout to "null"
+      // function to delete a workout - 1st method, renames the name of the workout to null
       // A User sees
       // only the list of available workouts, and new ones are put in any space
       // that is currently null. New exercises will be written over any current info.
@@ -219,7 +225,7 @@ $(document).ready(function() {
               // Big problem: the workout and exercises can be null, but the others 
               // have to be integers, as they are defined as that in the user.js file!
               //i've got to figure out how to return that cell back to null, not "", or "null"
-              // for now, I've set them to 0, or zero.
+              // for now, I've set them to 0 (zero).
               workoutA: null,
               exerciseOneofA: null,
               exerciseTwoofA: null,
@@ -470,7 +476,7 @@ $(document).ready(function() {
           if (workout[jay] === null || workout[jay] === "") {
             console.log("inside function to build form to name workouts, 1st if, numWorkouts = " + numWorkouts);
             // be open to putting this in it's own function to be called from here, for editing workout names later...
-            //HERE: I think i'm counting kay wrong, if jay is 1, kay should be 0-9
+            //HERE: I think i'm counting kay wrong, if jay is 0, kay should be 0-9
             $("#entryForm").append("<h2>Enter Name of New Workout</h2>" +
               "<form class='enterWorkoutName'>" +
               "<div class='form-group'><label for=" + workoutInput[jay] + ">Name of New Workout</label>" +
@@ -561,7 +567,6 @@ $(document).ready(function() {
       function enterExercises() {
         $("#exerciseEntryForm").empty();
         console.log("Inside creating of exercise form functin: kay = " + kay + ",   e = " + e);
-        // but here, kay should be only counting 1-10 for each particular workout!
         
         $("#exerciseEntryForm").append("<h2>Enter exercise " + e + " of workout</h2>" +
           "<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercise " + e + " in  Workout</legend>" +
@@ -997,7 +1002,7 @@ $(document).ready(function() {
             type: "PUT",
             data: workoutExerciseInputs
           }).then(function() {
-            // ask for more exercises here?
+            // I do this .get only to check. The arrays of data aren't created unless the page relaods.
             $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
               console.log("object 'data' inside of .get AFTER submit of new exerise data: ", data);
               //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
@@ -1015,7 +1020,7 @@ $(document).ready(function() {
           // If clicked, increase kay by 1, go back to function enterExercises().
           $("#exerciseEntryForm").empty();
           if (e === 10) {
-            console.log("user has exceeded 10 exercises!");
+            console.log("user has exceeded 10 exercises!"); // needs to be put in modal to alert user
             $("#exerciseEntryForm").append("<h2>User has 10 exercises</h2><button id='noMoreExercises'>Finish</button>");
           } else {
             $("#exerciseEntryForm").append("<button id='moreExercises'>Add More Exercises</button>" +

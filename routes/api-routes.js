@@ -64,15 +64,30 @@ module.exports = function(router) {
     console.log("inside put route /api/createWorkout/:id - req.body: ", req.body);
     db.User.update(
       req.body,{
-      where: {
-      id: req.params.id
-      }
-    })
-    .then(function(result) {
-      res.json(result);
-      console.log("inside .then route /api/createWorkout/:id - result: ", result);
-    });
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(function(result) {
+        res.json(result);
+        console.log("inside .then route /api/createWorkout/:id - result: ", result);
+      });
   });
+
+  // Delete route for deleting data from a workout - not the entire user
+  // UNDER DEVELOPMENT
+  // router.delete("/api/deleteWorkout/:id", function(req, res) {
+  //   db.User.destroy(
+  //     req.body,{
+  //       where: {
+  //         id: req.params.id
+  //       }
+  //     })
+  //     .then(function(result) {
+  //       res.json(result);
+  //       console.log("inside .then route /api/deleteWorkout/:id - result: ", result);
+  //     });
+  // });
 
   // Route for logging user out
   router.get("/logout", function(req, res) {
