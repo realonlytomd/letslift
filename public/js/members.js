@@ -1057,6 +1057,9 @@ $(document).ready(function() {
             // this worked. so call a function that needs to be created around the code below
             // and will probably include code to rewrite DOM instead of hardcoding in members.html
             //jay is a counter, it corresponds 0-9 for A, 10-19 for B, etc.
+            // 12/26/2018 - just looking at this after a couple of weeks, and this code below
+            // is from quite a while ago. first look says jay and kay need to be relooked at 
+            // as they are not necessarily what I thought they were when this was created.
             kay = 0;
             createWorkout();
             break;
