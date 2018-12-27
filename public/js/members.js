@@ -1091,6 +1091,9 @@ $(document).ready(function() {
              $("span#weight[k]").html(" " + weight[k] + "lb");
              $("span#sets[k]").html(" " + sets[k] + " sets X "); 
              $("span$reps[k]").html(" " + reps[k] + " reps at ");
+             // not finished with this yet - need to build a <div> like in giphy
+             // and add the exerise/weight/sets/reps to the row of buttons below,
+             // and append them all to the <div> in the html file
           }
         }
         // assignments for 1st exercise
