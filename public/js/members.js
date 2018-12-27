@@ -1060,6 +1060,14 @@ $(document).ready(function() {
             // 12/26/2018 - just looking at this after a couple of weeks, and this code below
             // is from quite a while ago. first look says jay and kay need to be relooked at 
             // as they are not necessarily what I thought they were when this was created.
+            // I'm also going to have to put each exercise in a repeatable js code to fit
+            // in the div in the html file, instead of a div for each exercise in the html file.
+            //  so the code below can be in a loop corresponding to the number of exercises, and
+            // counting them up with kay, (the index in the exercise/weight/sets/reps arrays)
+            // kay should not be set to 0 in this sections
+            // jay is the index of workouts, kay is index of exercises, e is the number of exercises
+            //  is this all correct????
+            console.log("inside case workoutA of switch");
             kay = 0;
             createWorkout();
             break;
@@ -1071,22 +1079,18 @@ $(document).ready(function() {
           default:
             console.log("not in case A or B");
         }
-        // I don't think I need this line
-        //$("span#workoutA").text(data.workoutA);
 
         function createWorkout() {
-          $("span#workout").empty;
+          $("span#workout").empty();
           console.log("selectedWorkout = " + selectedWorkout);
-          $("span#workout").text(selectedWorkout); // but not sure what to do with exercise.length...check for null
-           console.log("jay = " + jay);
-           console.log("exercise.length: " + exercise.length);
-           for (var j = jay; j < 10; j++) {
-             console.log("j: " + j);
-             console.log("exercise[j]: " + exercise[j]);
-            // $("span#exercise[j]").text(exercise[j]);
-            // $("span#weight[j]").text(" " + weight[j] + "lb");
-            // etc.
-
+          $("span#workout").text(selectedWorkout);
+           for (var k = kay; k < (kay+10); k++) {
+             console.log("k: " + k);
+             console.log("exercise[k]: " + exercise[k]);
+             $("span#exercise[k]").text(exercise[k]);
+             $("span#weight[k]").html(" " + weight[k] + "lb");
+             $("span#sets[k]").html(" " + sets[k] + " sets X "); 
+             $("span$reps[k]").html(" " + reps[k] + " reps at ");
           }
         }
         // assignments for 1st exercise
