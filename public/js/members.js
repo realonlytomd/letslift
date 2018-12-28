@@ -1052,7 +1052,7 @@ $(document).ready(function() {
         console.log("the variable selectedWorkout: " + selectedWorkout);
         
         switch (selectedWorkout) {
-          case data.workoutA:
+          case data.workoutA: // could this also be workout[0]?
             console.log("inside case workoutA of switch");
             // this worked. so call a function that needs to be created around the code below
             // and will probably include code to rewrite DOM instead of hardcoding in members.html
@@ -1076,6 +1076,21 @@ $(document).ready(function() {
             kay = 10;
             createWorkout();
             break;
+          case data.workoutC:
+            console.log("inside case workoutC of switch");
+            kay = 20;
+            createWorkout();
+            break;
+          case data.workoutD:
+            console.log("inside case workoutD of switch");
+            kay = 30;
+            createWorkout();
+            break;
+          case data.workoutE:
+            console.log("inside case workoutB of switch");
+            kay = 40;
+            createWorkout();
+            break;
           default:
             console.log("not in case A or B");
         }
@@ -1084,81 +1099,51 @@ $(document).ready(function() {
           $("span#workout").empty();
           console.log("selectedWorkout = " + selectedWorkout);
           $("span#workout").text(selectedWorkout);
+
            for (var k = kay; k < (kay+10); k++) {
              console.log("k: " + k);
              console.log("exercise[k]: " + exercise[k]);
-             $("span#exercise[k]").text(exercise[k]);
-             $("span#weight[k]").html(" " + weight[k] + "lb");
-             $("span#sets[k]").html(" " + sets[k] + " sets X "); 
-             $("span$reps[k]").html(" " + reps[k] + " reps at ");
-             // not finished with this yet - need to build a <div> like in giphy
-             // and add the exerise/weight/sets/reps to the row of buttons below,
-             // and append them all to the <div> in the html file
+             $("#exercisesInfoButtons").append("<div class='row'>" +
+              "<div class='col-md-3'>" +
+              "<h3>" + exercise[k] + "</h3></div>" +
+              "<div class='col-md-3 col-md-offset-3'>" +
+              "<h3>" + ' ' + sets[k] + ' sets X ' + ' ' + reps[k] + ' reps at ' + 
+              ' ' + weight[k] + 'lb' + "</h3></div></div>");
+              // need to add the row containing the buttons to append to exercisesInfoButtons
+              var row = $("<div>");
+              row.addClass("row");
+              var col = $("<div>");
+              col.addClass("col-md-12");
+
+            // Start here, getting there!
+
+              // "<div class='col-md-12' id='setsRepsButtons'></div></div>");
+              $("#exercisesInfoButtons").append(row);
+              $("#exercisesInfoButtons").append(col);
+              $("#exercisesInfoButtons").append();//the buttons);)
           }
         }
-        // assignments for 1st exercise
-        $("span#exerciseOneofA").text(data.exerciseOneofA);
-        $("span#weightOneofA").text(" " + data.weightOneofA + "lb");
-        $("span#setsOneofA").text(data.setsOneofA + " sets X ");
-        $("span#repsOneofA").text(data.repsOneofA + " reps at ");
-
-        // assignments for 2nd exercise
-        $("span#exerciseTwoofA").text(data.exerciseTwoofA);
-        $("span#weightTwoofA").text(" " + data.weightTwoofA + "lb");
-        $("span#setsTwoofA").text(data.setsTwoofA + " sets X ");
-        $("span#repsTwoofA").text(data.repsTwoofA + " reps at ");
-
         //empty out the div containing sets/reps buttons inside the makeSetbuttons function
         // make the creation of the set buttons into a function
-        function makeSetButtonsExOne() {
+        function makeSetButtons() {
           clicksofSetButton = -1;
           indexofPreviousButton = 20;
-          $("#setsRepsButtonsExOne").empty();
-      
-              // create loop to go through the "array" of sets
-          
-          for (var i = 0; i < data.setsOneofA; i++) {
+          $("#setsRepsButtons").empty();
+              // create loop to go through the array of sets
+          for (var i = 0; i < sets[k]; i++) {
             var holder = $("<button>");
-
             holder.attr("type","button");
             holder.addClass("btn");
             holder.addClass("btn-success");
             holder.addClass("startTimer");
-            holder.attr("data-reps", data.repsOneofA);
+            holder.attr("data-reps", reps[k]);
             holder.attr("data-clicksofSetButton", clicksofSetButton);
             holder.attr("data-chosenSet", i);
             holder.text("Reps");
-            
-            $("#setsRepsButtonsExOne").append(holder);
+            $("#setsRepsButtons").append(holder);
           }
         }
-
-        function makeSetButtonsExTwo() {
-          clicksofSetButton = -1;
-          indexofPreviousButton = 20;
-          $("#setsRepsButtonsExTwo").empty();
-      
-              // create loop to go through the "array" of sets
-          
-          for (var i = 0; i < data.setsTwoofA; i++) {
-            var holder = $("<button>");
-
-            holder.attr("type","button");
-            holder.addClass("btn");
-            holder.addClass("btn-success");
-            holder.addClass("startTimer");
-            holder.attr("data-reps", data.repsTwoofA);
-            holder.attr("data-clicksofSetButton", clicksofSetButton);
-            holder.attr("data-chosenSet", i);
-            holder.text("Reps");
-            
-            $("#setsRepsButtonsExTwo").append(holder);
-          }
-        }
-            //..these lines wouild be included at end of code where generic names of db variables
-            // have been assigned.  They are repeated as the for loop continues.
-        makeSetButtonsExOne();
-        makeSetButtonsExTwo();
+        makeSetButtons();
 
         function timer() {
           //this span needs to be put in a fixed footer so user sees it on page while the
