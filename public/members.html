@@ -57,26 +57,30 @@
     </div>
     
 
-    <div id="currentWorkout"> <!--This portion is the the div containing the actual workout-->
+    <div id="currentWorkout"> <!--This portion is the the div containing the actual workout.
+      Will be hidden and shown as needed.-->
 
-      <div class="row">
+      <div class="row"> <!--This div is only the title of the workout. The span #workout
+        is supplied using jQuery in .js-->
         <div class="col-md-6">
           <h3>Title of Current Workout: <span id="workout"></span></h3>
         </div>
       </div>
 
-      <div id="exercisesInfoButtons"></div>
+      <div id="exercisesInfoButtons"></div> <!--This div is the portion that will be rewritten
+        from the .js file. Contains name of exercise, no. of sets, reps, and weight,
+        and then the row of reps buttons in the next row. 2 divs total. -->
       <!-- this is going to be removed - replaced with rewriting DOM in js file-->
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row"> <!-- This is called exerciseTitleInfo in .js-->
+        <div class="col-md-3"><!-- This div is called exerciseTitle-->
           <h3><span id="exerciseOneofA"></span></h3>
         </div>
-        <div class="col-md-3 col-md-offset-3">
+        <div class="col-md-3 col-md-offset-3"> <!-- This div is called exerciseInfo-->
             <h3><span id="setsOneofA"></span><span id="repsOneofA"></span><span id="weightOneofA"></span></h3>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row"> <!-- This is called setsRepsButtons in .js-->
         <div class="col-md-12" id="setsRepsButtonsExOne">
         </div>
       </div>

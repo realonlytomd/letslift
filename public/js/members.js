@@ -1100,50 +1100,63 @@ $(document).ready(function() {
           console.log("selectedWorkout = " + selectedWorkout);
           $("span#workout").text(selectedWorkout);
 
-           for (var k = kay; k < (kay+10); k++) {
-             console.log("k: " + k);
-             console.log("exercise[k]: " + exercise[k]);
-             $("#exercisesInfoButtons").append("<div class='row'>" +
-              "<div class='col-md-3'>" +
-              "<h3>" + exercise[k] + "</h3></div>" +
-              "<div class='col-md-3 col-md-offset-3'>" +
-              "<h3>" + ' ' + sets[k] + ' sets X ' + ' ' + reps[k] + ' reps at ' + 
-              ' ' + weight[k] + 'lb' + "</h3></div></div>");
-              // need to add the row containing the buttons to append to exercisesInfoButtons
-              var row = $("<div>");
-              row.addClass("row");
-              var col = $("<div>");
-              col.addClass("col-md-12");
+            for (var k = kay; k < (kay+10); k++) {
+              console.log("k: " + k);
+              console.log("exercise[k]: " + exercise[k]);
 
-            // Start here, getting there!
-
-              // "<div class='col-md-12' id='setsRepsButtons'></div></div>");
-              $("#exercisesInfoButtons").append(row);
-              $("#exercisesInfoButtons").append(col);
-              $("#exercisesInfoButtons").append();//the buttons);)
+              var exerciseTitleInfo = $("<div>");
+              exerciseTitleInfo.addClass("row");
+              var exerciseTitle = $("<div>");
+              exerciseTitle.addClass("col-md-3");
+              exerciseTitle.append("<h3>" + exercise[k] + "</h3>");
+              var exerciseInfo = $("<div>");
+              exerciseInfo.addClass("col-md-3");
+              exerciseInfo.addClass("col-md-offset-3");
+              exerciseInfo.append("<h3>" + ' ' + sets[k] + ' sets X ' + ' ' + reps[k] +
+                ' reps at ' + ' ' + weight[k] + 'lb' + "</h3>");
+             // now append the 2 divs to the title/info div
+              exerciseTitleInfo.append(exerciseTitle);
+              exerciseTitleInfo.append(exerciseInfo);
+              // need to build the button div
+              var setsRepsButtons = $("<div>");
+              setsRepsButtons.addClass("row");
+              var actualButtons = $("<div>");
+              for (var i = 0; i < sets[k]; i++) {
+                var holder = $("<button>");
+                holder.attr("type","button");
+                holder.addClass("btn");
+                holder.addClass("btn-success");
+                holder.addClass("startTimer");
+                holder.attr("data-reps", reps[k]);
+                holder.attr("data-clicksofSetButton", clicksofSetButton);
+                holder.attr("data-chosenSet", i);
+                holder.text("Reps");
+                actualButtons.append(holder);
+              }
+              setsRepsButtons.append(actualButtons);
+              $("#exercisesInfoButtons").append(exerciseTitleInfo);
+              $("#exercisesInfoButtons").append(setsRepsButtons);
           }
         }
         //empty out the div containing sets/reps buttons inside the makeSetbuttons function
         // make the creation of the set buttons into a function
-        function makeSetButtons() {
-          clicksofSetButton = -1;
-          indexofPreviousButton = 20;
-          $("#setsRepsButtons").empty();
-              // create loop to go through the array of sets
-          for (var i = 0; i < sets[k]; i++) {
-            var holder = $("<button>");
-            holder.attr("type","button");
-            holder.addClass("btn");
-            holder.addClass("btn-success");
-            holder.addClass("startTimer");
-            holder.attr("data-reps", reps[k]);
-            holder.attr("data-clicksofSetButton", clicksofSetButton);
-            holder.attr("data-chosenSet", i);
-            holder.text("Reps");
-            $("#setsRepsButtons").append(holder);
-          }
-        }
-        makeSetButtons();
+        // function makeSetButtons() {
+        //   clicksofSetButton = -1;
+        //   indexofPreviousButton = 20;
+        //       // create loop to go through the array of sets
+        //   for (var i = 0; i < sets[k]; i++) {
+        //     var holder = $("<button>");
+        //     holder.attr("type","button");
+        //     holder.addClass("btn");
+        //     holder.addClass("btn-success");
+        //     holder.addClass("startTimer");
+        //     holder.attr("data-reps", reps[k]);
+        //     holder.attr("data-clicksofSetButton", clicksofSetButton);
+        //     holder.attr("data-chosenSet", i);
+        //     holder.text("Reps");
+        //     actualButtons.append(holder);
+        //   }
+        // }
 
         function timer() {
           //this span needs to be put in a fixed footer so user sees it on page while the
