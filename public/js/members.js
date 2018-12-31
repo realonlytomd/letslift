@@ -1053,7 +1053,6 @@ $(document).ready(function() {
         
         switch (selectedWorkout) {
           case data.workoutA: // could this also be workout[0]?
-            console.log("inside case workoutA of switch");
             // this worked. so call a function that needs to be created around the code below
             // and will probably include code to rewrite DOM instead of hardcoding in members.html
             //jay is a counter, it corresponds 0-9 for A, 10-19 for B, etc.
@@ -1102,6 +1101,8 @@ $(document).ready(function() {
           $("span#workout").text(selectedWorkout);
 
             for (var k = kay; k < (kay+10); k++) {
+              if (exercise[k] === null || exercise[k] === "") {
+              } else {
               console.log("k: " + k);
               console.log("exercise[k]: " + exercise[k]);
 
@@ -1137,6 +1138,7 @@ $(document).ready(function() {
               setsRepsButtons.append(actualButtons);
               $("#exercisesInfoButtons").append(exerciseTitleInfo);
               $("#exercisesInfoButtons").append(setsRepsButtons);
+            }
           }
         }
         //empty out the div containing sets/reps buttons inside the makeSetbuttons function
