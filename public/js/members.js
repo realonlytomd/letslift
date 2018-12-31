@@ -1096,6 +1096,7 @@ $(document).ready(function() {
         }
 
         function createWorkout() {
+          $("#exercisesInfoButtons").empty();
           $("span#workout").empty();
           console.log("selectedWorkout = " + selectedWorkout);
           $("span#workout").text(selectedWorkout);
