@@ -1,9 +1,9 @@
 $(document).ready(function() {
   console.log("Hello World!");
     //start with the footer showing the timer hidden. It appears when the timer is counting
-  // $("#currentWorkout").hide();
-  // $(".footer").hide();
-  // $("#enterExercises").hide();
+   $("#currentWorkout").hide();
+   $(".footer").hide();
+  //
   //$("#enterRowHeading").hide();
   // set up the variables
   var startCount = 0;
@@ -1044,6 +1044,7 @@ $(document).ready(function() {
 
           // This function happens when the user clicks the chosen workout.
       $(document).on("click", ".selectedWorkout", function() {
+        $("#currentWorkout").show();
           // What happens? Hide previous divs. Show new actual workout div.
           // Build the workout page  -  where the user sees the title of workout, the exercises,
           // the weight, and corresponding sets buttons, and reps displayed after those buttons
@@ -1165,7 +1166,7 @@ $(document).ready(function() {
           //this span needs to be put in a fixed footer so user sees it on page while the
           //timer clock is running. Add a stop when workout is finished? (or somewhere before?)
           //So, there is no need for a different timer span for each exercise.
-          //$(".footer").show();
+          $(".footer").show();
           $("span#timerDisplay").html(startCount);
           startCount = startCount + 1;
           // set up to play a chime if startCount reaches 90, or whatever
@@ -1176,6 +1177,7 @@ $(document).ready(function() {
           //$(".footer").hide();
           clearTimeout(myTimer);
           startCount = 0;
+          $(".footer").hide();
         }
 
         // this function changes the .html (label) of each button
