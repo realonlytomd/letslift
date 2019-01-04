@@ -461,6 +461,7 @@ $(document).ready(function() {
             console.log("The workout name has been made null");
           }
         );
+        // this reloads the page to show the user deleted the workout
         window.location.reload();
       });
 
@@ -1100,13 +1101,11 @@ $(document).ready(function() {
           $("span#workout").empty();
           console.log("selectedWorkout = " + selectedWorkout);
           $("span#workout").text(selectedWorkout);
-
             for (var k = kay; k < (kay+10); k++) {
               if (exercise[k] === null || exercise[k] === "") {
               } else {
               console.log("k: " + k);
               console.log("exercise[k]: " + exercise[k]);
-
               var exerciseTitleInfo = $("<div>");
               exerciseTitleInfo.addClass("row");
               var exerciseTitle = $("<div>");
@@ -1141,26 +1140,26 @@ $(document).ready(function() {
               $("#exercisesInfoButtons").append(setsRepsButtons);
             }
           }
+          // insert a Finish button here to end the workout, stop the timer.  
+          var holder2 = $("<button>");
+          holder2.attr("type","button");
+          holder2.addClass("btn");
+          holder2.addClass("btn-success");
+          holder2.addClass("finishWorkout");
+          holder2.text("Workout Finished");
+          $("#exercisesInfoButtons").append(holder2);
         }
-        //empty out the div containing sets/reps buttons inside the makeSetbuttons function
-        // make the creation of the set buttons into a function
-        // function makeSetButtons() {
-        //   clicksofSetButton = -1;
-        //   indexofPreviousButton = 20;
-        //       // create loop to go through the array of sets
-        //   for (var i = 0; i < sets[k]; i++) {
-        //     var holder = $("<button>");
-        //     holder.attr("type","button");
-        //     holder.addClass("btn");
-        //     holder.addClass("btn-success");
-        //     holder.addClass("startTimer");
-        //     holder.attr("data-reps", reps[k]);
-        //     holder.attr("data-clicksofSetButton", clicksofSetButton);
-        //     holder.attr("data-chosenSet", i);
-        //     holder.text("Reps");
-        //     actualButtons.append(holder);
-        //   }
-        // }
+
+        $(document).on("click", ".finishWorkout", function() {
+          stopTimer();
+          // what else should happen?
+          // add a note section?
+          // put another logout button here?
+          // incorporate some sort of function that stores the actual number of reps the
+          // user finished?
+          // go back to beginning "screen" with list of workouts.
+          window.location.reload();
+        });
 
         function timer() {
           //this span needs to be put in a fixed footer so user sees it on page while the
@@ -1174,7 +1173,6 @@ $(document).ready(function() {
         }
 
         function stopTimer() {
-          //$(".footer").hide();
           clearTimeout(myTimer);
           startCount = 0;
           $(".footer").hide();
@@ -1199,13 +1197,6 @@ $(document).ready(function() {
           
           console.log("indexofNewButton is " + indexofNewButton);
           console.log("indexofPreviousButton is " + indexofPreviousButton);
-          
-
-            // there's a problem with going through some sets, but then if the user
-            // clicks the named workout again, the buttons are redrawn,
-            // but the old clicksofSetButton (and possibly other data) is not
-            // reset. Thought I changed that, but the clicksofSetButton is increasing
-            // by more than 1. - i don't think this does it anymore...
           clicksofSetButton = parseInt($(this).attr("data-clicksofSetButton"));
           reps = parseInt($(this).attr("data-reps"));
           console.log("clicksofSetButton from button: " + clicksofSetButton);
