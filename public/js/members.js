@@ -10,6 +10,7 @@ $(document).ready(function() {
   var myTimer;
   var clicksofSetButton = -1;
   var indexofPreviousButton = 20;
+  var previousExercise = "nothing";
   var selectedWorkout;
   // in progress: not sure what arrays I need:
   var workout = [];
@@ -126,20 +127,21 @@ $(document).ready(function() {
         var holder = $("<button>");
         holder.attr("index", i);
         holder.addClass("renameWorkoutNull");
-        holder.text("renameNull");
+        holder.text("Delete");
         //adding a 3rd button to actually delete the data in the db, not just update it to null
-        var holder2 = $("<button>");
-        holder2.attr("index", i);
-        holder2.addClass("deleteWorkout");
-        holder2.text("Really Delete");
+        // var holder2 = $("<button>");
+        // holder2.attr("index", i);
+        // holder2.addClass("deleteWorkout");
+        // holder2.text("Really Delete");
         $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
         // need to add data and attributes to the edit button to do edits of workouts - later
         $("#availableWorkouts").append("<button class='editWorkout'>Edit</button>");
         $("#availableWorkouts").append(holder);
-        $("#availableWorkouts").append(holder2);
+        //$("#availableWorkouts").append(holder2);
         // the Edit workout button will show the entire workout, and then
-        // under each exercise, weight, sets, and reps show an edit or delete button!
+        // ...or just enter any changes in the form??
         // at the bottom of the list of exercises: show a button to add more exercises, or Finish - done
+        //
         // This is where the number of workouts for that user is counted. Available throughout.
         numWorkouts++;
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
@@ -161,7 +163,7 @@ $(document).ready(function() {
         data.exerciseFourofE, data.exerciseFiveofE, data.exerciseSixofE, data.exerciseSevenofE, 
         data.exerciseEightofE, data.exerciseNineofE, data.exerciseTenofE];
         console.log("exercise array: " + exercise);
-        // for info: exercise.slice(0,10) would be the exercises for workoutA
+
       weight = [data.weightOneofA, data.weightTwoofA, data.weightThreeofA, 
         data.weightFourofA, data.weightFiveofA, data.weightSixofA, data.weightSevenofA, 
         data.weightEightofA, data.weightNineofA, data.weightTenofA,
@@ -466,7 +468,7 @@ $(document).ready(function() {
       });
 
       // These functions build the entry form when the user wants to enter new data,
-      // Update an existing workout still needs to be added.
+      // Update or edit an existing workout still needs to be added.
       // Need to check where there is a "null", and put the new workout there.
       $(document).on("click", "#enterWorkout", function() {
         console.log("Inside onclick function to build the form to enter a workout name-is this working?");
@@ -1132,6 +1134,7 @@ $(document).ready(function() {
                 holder.attr("data-reps", reps[k]);
                 holder.attr("data-clicksofSetButton", clicksofSetButton);
                 holder.attr("data-chosenSet", i);
+                holder.attr("data-exercise", exercise[k]);
                 holder.text("Reps");
                 actualButtons.append(holder);
               }
@@ -1186,11 +1189,14 @@ $(document).ready(function() {
 
           // Need to not stop and restart timer after each press of the same button
           // so set the variable that picks which button was just clicked
+          // also, if doing super-sets, need to know which exercise the user is on,
+          // so that the timer does stop if choosing the same set of a different exercise
           var indexofNewButton = parseInt($(this).attr("data-chosenSet"));
+          var currentExercise = $(this).attr("data-exercise");
           
           // check to see if it's different than the previous button
           // so as to not start the timer over while user pics the number of reps completed.
-          if (indexofNewButton !== indexofPreviousButton) {
+          if ((indexofNewButton !== indexofPreviousButton) || (currentExercise !== previousExercise)) {
             stopTimer();
             timer();
           }
@@ -1210,9 +1216,11 @@ $(document).ready(function() {
             clicksofSetButton = -1;
             $(this).attr("data-clicksofSetButton", clicksofSetButton);
             indexofPreviousButton = indexofNewButton;
+            previousExercise = currentExercise;
           } else {
             $(this).html(reps - clicksofSetButton);
             indexofPreviousButton = indexofNewButton;
+            previousExercise = currentExercise;
           }
         });
 
