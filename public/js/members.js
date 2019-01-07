@@ -124,24 +124,22 @@ $(document).ready(function() {
       for (i = 0; i < workout.length; i++) {
         if (workout[i] === null || workout[i] === "") {
         } else {
+        // need to create the Edit functon.  The Edit button should have the same as the delete button
+        var holder2 = $("<button>");
+        holder2.attr("index", i);
+        holder2.addClass("editWorkout");
+        holder2.text("Edit");
         var holder = $("<button>");
         holder.attr("index", i);
         holder.addClass("renameWorkoutNull");
         holder.text("Delete");
-        //adding a 3rd button to actually delete the data in the db, not just update it to null
-        // var holder2 = $("<button>");
-        // holder2.attr("index", i);
-        // holder2.addClass("deleteWorkout");
-        // holder2.text("Really Delete");
         $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
-        // need to add data and attributes to the edit button to do edits of workouts - later
-        $("#availableWorkouts").append("<button class='editWorkout'>Edit</button>");
+        $("#availableWorkouts").append(holder2);
         $("#availableWorkouts").append(holder);
-        //$("#availableWorkouts").append(holder2);
-        // the Edit workout button will show the entire workout, and then
-        // ...or just enter any changes in the form??
-        // at the bottom of the list of exercises: show a button to add more exercises, or Finish - done
-        //
+        // the Edit workout button will show all the exercises, START HERE!
+        // but the placeholder will show what is currently in the existing exercise.
+        // as the user changes the data, then the new data is submitted to the database.
+
         // This is where the number of workouts for that user is counted. Available throughout.
         numWorkouts++;
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
