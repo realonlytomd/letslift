@@ -215,6 +215,8 @@ $(document).ready(function() {
       $(document).on("click", ".editWorkout", function(event) {
         event.preventDefault();
         console.log("inside the new editWorkout function!");
+        // what do I know: the index of the workout i, which is jay
+        // and the exercise, weight, sets, reps arrays are all built.
       });
 
       // function to delete a workout - 1st method, renames the name of the workout to null
