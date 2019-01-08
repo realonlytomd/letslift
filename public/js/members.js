@@ -138,7 +138,7 @@ $(document).ready(function() {
         $("#availableWorkouts").append(holder);
         // the Edit workout button will show all the exercises, START HERE!
         // but the placeholder will show what is currently in the existing exercise.
-        // as the user changes the data, then the new data is submitted to the database.
+        // as the user submits the changes the data, then the new data is submitted to the database.
 
         // This is where the number of workouts for that user is counted. Available throughout.
         numWorkouts++;
@@ -210,6 +210,12 @@ $(document).ready(function() {
         data.repsFourofE, data.repsFiveofE, data.repsSixofE, data.repsSevenofE, 
         data.repsEightofE, data.repsNineofE, data.repsTenofE];
         console.log("reps array: " + reps);
+
+      // function to edit the workout. 
+      $(document).on("click", ".editWorkout", function(event) {
+        event.preventDefault();
+        console.log("inside the new editWorkout function!");
+      });
 
       // function to delete a workout - 1st method, renames the name of the workout to null
       // A User sees
