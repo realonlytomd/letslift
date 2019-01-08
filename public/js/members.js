@@ -467,7 +467,7 @@ $(document).ready(function() {
             console.log("The workout name has been made null");
           }
         );
-        // this reloads the page to show the user deleted the workout
+        // this reloads the page to show the user deleted the workout, and remakes the data arrays.
         window.location.reload();
       });
 
@@ -592,8 +592,31 @@ $(document).ready(function() {
       $(document).on("click", "#exSubButton", function(event) {
         event.preventDefault();
         // build the data object to be put into the database
-        // but it only works if there is data, so need to only put in the values
-        // that have data
+        
+        exerciseSwitchPut();
+            //window.location.reload(true);
+            // If there's an error, handle it by throwing up a boostrap alert
+        // ...and empty out the input fields for the form
+          $("#" + exerciseInput[kay]).val("");
+          $("#" + weightInput[kay]).val("");
+          $("#" + setsInput[kay]).val("");
+          $("#" + repsInput[kay]).val("");
+          //  
+          // Load button in section to ask the user if they want another exercise here
+          // If clicked, increase kay by 1, go back to function enterExercises().
+          $("#exerciseEntryForm").empty();
+          if (e === 10) {
+            console.log("user has exceeded 10 exercises!"); // needs to be put in modal to alert user
+            $("#exerciseEntryForm").append("<h2>User has 10 exercises</h2><button id='noMoreExercises'>Finish</button>");
+          } else {
+            $("#exerciseEntryForm").append("<button id='moreExercises'>Add More Exercises</button>" +
+            "<button id='noMoreExercises'>Finish</button>");
+          }
+      });
+
+      // This function contains the switch function to determine which of the data arrays
+      // are to be updated into the db.
+      function exerciseSwitchPut() {
         switch (kay) {
           case 0:
             var workoutExerciseInputs = {
@@ -999,12 +1022,7 @@ $(document).ready(function() {
           console.log("default in switch case code of assigning an exercise, something wrong");
         }
         console.log("workoutExerciseInputs after submitting the first exercise: ", workoutExerciseInputs);
-        //make sure the workout at least has a name
-        // if (!workoutAInputs.workoutA) {
-        //   //maybe add an alert here?
-        //   return;
-        // } else {
-          var currentURL = window.location.origin;
+        var currentURL = window.location.origin;
           $.ajax(currentURL + "/api/createWorkout/" + userdata.id, {
             type: "PUT",
             data: workoutExerciseInputs
@@ -1015,25 +1033,8 @@ $(document).ready(function() {
               //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
             });
           });
-            //window.location.reload(true);
-            // If there's an error, handle it by throwing up a boostrap alert
-        // ...and empty out the input fields for the form
-          $("#" + exerciseInput[kay]).val("");
-          $("#" + weightInput[kay]).val("");
-          $("#" + setsInput[kay]).val("");
-          $("#" + repsInput[kay]).val("");
-          //  
-          // Load button in section to ask the user if they want another exercise here
-          // If clicked, increase kay by 1, go back to function enterExercises().
-          $("#exerciseEntryForm").empty();
-          if (e === 10) {
-            console.log("user has exceeded 10 exercises!"); // needs to be put in modal to alert user
-            $("#exerciseEntryForm").append("<h2>User has 10 exercises</h2><button id='noMoreExercises'>Finish</button>");
-          } else {
-            $("#exerciseEntryForm").append("<button id='moreExercises'>Add More Exercises</button>" +
-            "<button id='noMoreExercises'>Finish</button>");
-          }
-      });
+      }
+
 
       $(document).on("click", "#moreExercises", function() {
         e++;
@@ -1043,8 +1044,8 @@ $(document).ready(function() {
 
       $(document).on("click", "#noMoreExercises", function() {
         console.log("User has finished inputting exercises for the particular workout!")
-        //this reloads the page to more simply get the data in the db,
-        // since it originally loads getting the data
+        //this reloads the page to more simply get the data from the db,
+        // since it originally loads getting the data, and filling in the arrays.
         window.location.reload();
       });
 
