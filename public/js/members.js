@@ -121,7 +121,7 @@ $(document).ready(function() {
      
       $("#availableWorkouts").empty();
       numWorkouts = 0;
-      for (i = 0; i < workout.length; i++) {
+      for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null || workout[i] === "") {
         } else {
         // need to create the Edit functon.  The Edit button should have the same as the delete button
@@ -215,9 +215,90 @@ $(document).ready(function() {
       $(document).on("click", ".editWorkout", function(event) {
         event.preventDefault();
         console.log("inside the new editWorkout function!");
-        // what do I know: the index of the workout i, which is jay
+        // what do I know: the index of the workout i, which is jay, what about kay?
+        // kay is put in as the for loop is counted through
         // and the exercise, weight, sets, reps arrays are all built.
+        var indexWorkout = parseInt($(this).attr("index"));
+        switch (indexWorkout) {
+          case 0:
+            $("#editExercisesForms").empty();
+            //this is WRONG! don't count with kay in loop, because at the end,
+            // kay is 10.  fix on Thurs or Friday.
+            for (kay = 0; kay < 10; kay++) {
+              console.log("inside for loop - kay = " + kay);
+              editExercises();
+            }
+            // the user would need to submit it (if I use the same submit code each time),
+            // and ...  not sure about using the same code. Should be generic. 
+            // need to think about the UI.
+            break;
+          case 1:
+            kay = 10;
+            break;
+          case 2:
+            kay = 20;
+            break;
+          case 3:
+            kay = 30;
+            break;
+          case 4:
+            kay = 40;
+            break;
+          default:
+            console.log("default in switch case code of kay to whatever workout to be edited. Something wrong");
+        }
+        
       });
+
+      // this is like the function that creates the form to enter a new exercise,
+      // but it's for editing existing exercises.
+      function editExercises() {
+        console.log("Inside function editExercises: kay = " + kay);
+        console.log("Inside function editExercises: exercise[kay] = " + exercise[kay]);
+        $("#editExercisesForms").append(
+          "<form class='editWorkoutExercises'><fieldset><legend>Edit Exercise " + (kay+1) + "</legend>" +
+          "<div class='form-group'><label for=" + exerciseInput[kay] + ">Name of Exercise. Currently: " + exercise[kay] + "</label>" +
+          "<input type='text' class='form-control' id=" + exerciseInput[kay] + " placeholder= '' ></div>" +
+          "<div class='form-group'><label for=" + weightInput[kay] + ">Weight. Currently: " + weight[kay] + "</label>" +
+          "<input type='number' class='form-control' id=" + weightInput[kay] + " placeholder='pounds'></div>" +
+          "<div class='form-group'><label for=" + setsInput[kay] + ">Number of Sets. Currently: " + sets[kay] + "</label>" +
+          "<input type='number' class='form-control' id=" + setsInput[kay] + " placeholder=''></div>" +
+          "<div class='form-group'><label for=" + repsInput[kay] + ">Number of Reps. Currently: " + reps[kay] + "</label>" +
+          "<input type='number' class='form-control' id=" + repsInput[kay] + " placeholder=''></div>" +
+          "<button type='submit' class='btn btn-default' id='exerciseEditSubButton'>Submit</button></fieldset></form>");
+      }
+
+      // When the submit button for editing any data of each exercise of a workout is clicked,
+      $(document).on("click", "#exerciseEditSubButton", function(event) {
+        event.preventDefault();
+        console.log("inside #exerciseEditSubButton, kay = " + kay);
+        console.log("inside #exerciseEditSubButton, exerciseInput[kay] = " + exerciseInput[kay]);
+        console.log("inside #exerciseEditSubButton, exercise[kay] = " + exercise[kay]);
+        // build the data object to be put into the database
+        // but what to do with any fields where the user hasn't changed the data?
+        // first test: don't worry about it, see what happens.
+        // I found out
+        // it can't .trim an undefined value... or, I can't submit empty fields.
+        // so add a test, if the user doesn't make an input, then submit what
+        // is currently in the data.
+        if (exerciseInput[kay] === null) {
+          exerciseInput[kay] = exercise[kay];
+        }
+        exerciseSwitchPut();
+
+        // ...and empty out the input fields for the form
+          $("#" + exerciseInput[kay]).val("");
+          $("#" + weightInput[kay]).val("");
+          $("#" + setsInput[kay]).val("");
+          $("#" + repsInput[kay]).val("");
+          //  
+          // Load button in section to ask the user if they want another exercise here
+          // If clicked, increase kay by 1, go back to function enterExercises().
+          // change line below to empty, or delete, just the current exercise's edit form.
+          //$("#exerciseEntryForm").empty();
+      });
+
+      
 
       // function to delete a workout - 1st method, renames the name of the workout to null
       // A User sees
@@ -509,6 +590,7 @@ $(document).ready(function() {
         //put the switchcase code here. 
         // The varible kay (the index for the arrays) is stair stepped by 10 
         // because there are a maximum of 10 exercises for each workout
+        //NEW: add a way to edit the name of a workout, but not change the rest of the data!
         switch (jay) {
           case 0:
             var workoutNameInputs = {
@@ -1029,7 +1111,7 @@ $(document).ready(function() {
             type: "PUT",
             data: workoutExerciseInputs
           }).then(function() {
-            // I do this .get only to check. The arrays of data aren't created unless the page relaods.
+            // I do this .get only to check. The arrays of data aren't rewritten unless the page relaods.
             $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
               console.log("object 'data' inside of .get AFTER submit of new exerise data: ", data);
               //console.log("testing testing to find individual values - workout name: " + data.dbUser[currentUser].workoutA);
