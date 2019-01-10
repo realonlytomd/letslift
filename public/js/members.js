@@ -222,10 +222,8 @@ $(document).ready(function() {
         switch (indexWorkout) {
           case 0:
             $("#editExercisesForms").empty();
-            //this is WRONG! don't count with kay in loop, because at the end,
-            // kay is 10.  fix on Thurs or Friday.
+            // don't count with kay in loop, because at the end,
             for (kay = 0; kay < 10; kay++) {
-              console.log("inside for loop - kay = " + kay);
               editExercises();
             }
             // the user would need to submit it (if I use the same submit code each time),
@@ -265,15 +263,22 @@ $(document).ready(function() {
           "<input type='number' class='form-control' id=" + setsInput[kay] + " placeholder=''></div>" +
           "<div class='form-group'><label for=" + repsInput[kay] + ">Number of Reps. Currently: " + reps[kay] + "</label>" +
           "<input type='number' class='form-control' id=" + repsInput[kay] + " placeholder=''></div>" +
-          "<button type='submit' class='btn btn-default' id='exerciseEditSubButton'>Submit</button></fieldset></form>");
+          "</fieldset></form>");
+          var holder = $("<button>");
+          holder.attr("type","submit");
+          holder.addClass("btn");
+          holder.addClass("btn-default");
+          holder.attr("id","exerciseEditSubButton");
+          holder.attr("index", kay);
+          holder.text("Submit");
+          $("#editExercisesForms").append(holder);
       }
+      // just above, I need to add the submit button to have the value of kay.
+      //  when kay is drawn in each case.
 
       // When the submit button for editing any data of each exercise of a workout is clicked,
       $(document).on("click", "#exerciseEditSubButton", function(event) {
         event.preventDefault();
-        console.log("inside #exerciseEditSubButton, kay = " + kay);
-        console.log("inside #exerciseEditSubButton, exerciseInput[kay] = " + exerciseInput[kay]);
-        console.log("inside #exerciseEditSubButton, exercise[kay] = " + exercise[kay]);
         // build the data object to be put into the database
         // but what to do with any fields where the user hasn't changed the data?
         // first test: don't worry about it, see what happens.
@@ -281,9 +286,19 @@ $(document).ready(function() {
         // it can't .trim an undefined value... or, I can't submit empty fields.
         // so add a test, if the user doesn't make an input, then submit what
         // is currently in the data.
-        if (exerciseInput[kay] === null) {
-          exerciseInput[kay] = exercise[kay];
+        // i've added the attr index to the button (which has the value of kay)
+        kay = parseInt($(this).attr("index"));
+        console.log("inside #exerciseEditSubButton function - kay = " + kay);
+        console.log("inside #exerciseEditSubButton function exercisename id " + $("#" + exerciseInput[kay]).val());
+        console.log("inside #exerciseEditSubButton function - exercise[kay] = " + exercise[kay]);
+        //not getting errors, but this if statement isn't workout. 
+        // don't know if undefined is correct, or null?
+        // how to assign the value? as below, or is it ... .val() = exercise[kay]   ?
+        if  ($("#" + exerciseInput[kay]).val() === undefined) {
+          $("#" + exerciseInput[kay]).val(exercise[kay]);
         }
+        console.log("after if statement: exercisename id " + $("#" + exerciseInput[kay]).val());
+        //console.log("after if statement, inside #exerciseEditSubButton function - exerciseInput[kay] = " + exerciseInput[kay]);
         exerciseSwitchPut();
 
         // ...and empty out the input fields for the form
@@ -703,6 +718,8 @@ $(document).ready(function() {
       function exerciseSwitchPut() {
         switch (kay) {
           case 0:
+          //check for forms the user has left blank so app doesn't crash
+          console.log("checking value of exercisename id " + $("#" + exerciseInput[kay]).val());
             var workoutExerciseInputs = {
               exerciseOneofA: $("#" + exerciseInput[kay]).val().trim(),
               weightOneofA:$("#" + weightInput[kay]).val().trim(),
