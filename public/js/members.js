@@ -1,8 +1,9 @@
 $(document).ready(function() {
   console.log("Hello World!");
     //start with the footer showing the timer hidden. It appears when the timer is counting
-   $("#currentWorkout").hide();
-   $(".footer").hide();
+  $("#editExercisesForms").hide();
+  $("#currentWorkout").hide();
+  $(".footer").hide();
   //
   //$("#enterRowHeading").hide();
   // set up the variables
@@ -218,29 +219,52 @@ $(document).ready(function() {
         // what do I know: the index of the workout i, which is jay, what about kay?
         // kay is put in as the for loop is counted through
         // and the exercise, weight, sets, reps arrays are all built.
+        $("#editExercisesForms").show();
         var indexWorkout = parseInt($(this).attr("index"));
-        switch (indexWorkout) {
+        switch (indexWorkout) {  //INSTEAD of printing all the exercises with the submit button
+          // after each, is this confusing?, maybe should I just print 1 exercise at a time?
+          //  but I want the user to see the entire workout in one place
+          // maybe print this out, then add the edit button to each exercise,
+          // so then the user updates 1 exercise at a time.
+          // Or, for now, leave as is, but each exercise should disappear as it's updates
+          // are submitted.
+          // then a Finish all editing button at the bottom.
           case 0:
             $("#editExercisesForms").empty();
-            // don't count with kay in loop, because at the end,
             for (kay = 0; kay < 10; kay++) {
               editExercises();
             }
-            // the user would need to submit it (if I use the same submit code each time),
-            // and ...  not sure about using the same code. Should be generic. 
-            // need to think about the UI.
+            // add the finish all edit button here.
+            var finishAllHolder = $("<button>");
+            finishAllHolder.attr("id", "hideEditExercise");
+            finishAllHolder.addClass("btn");
+            finishAllHolder.addClass("btn-default");
+            finishAllHolder.text("Finished Editing");
+            $("#editExercisesForms").append(finishAllHolder);
             break;
           case 1:
-            kay = 10;
+            $("#editExercisesForms").empty();
+            for (kay = 10; kay < 20; kay++) {
+              editExercises();
+            }
             break;
           case 2:
-            kay = 20;
+            $("#editExercisesForms").empty();
+            for (kay = 20; kay < 30; kay++) {
+              editExercises();
+            }
             break;
           case 3:
-            kay = 30;
+            $("#editExercisesForms").empty();
+            for (kay = 30; kay < 40; kay++) {
+              editExercises();
+            }
             break;
           case 4:
-            kay = 40;
+            $("#editExercisesForms").empty();
+            for (kay = 40; kay < 50; kay++) {
+              editExercises();
+            }
             break;
           default:
             console.log("default in switch case code of kay to whatever workout to be edited. Something wrong");
@@ -299,6 +323,8 @@ $(document).ready(function() {
         }
         console.log("after if statement: exercisename id " + $("#" + exerciseInput[kay]).val());
         //console.log("after if statement, inside #exerciseEditSubButton function - exerciseInput[kay] = " + exerciseInput[kay]);
+        // call the functin that assigns the user inputs to the appropriate column in the db, and updates
+        // the db
         exerciseSwitchPut();
 
         // ...and empty out the input fields for the form
@@ -306,11 +332,11 @@ $(document).ready(function() {
           $("#" + weightInput[kay]).val("");
           $("#" + setsInput[kay]).val("");
           $("#" + repsInput[kay]).val("");
-          //  
-          // Load button in section to ask the user if they want another exercise here
-          // If clicked, increase kay by 1, go back to function enterExercises().
-          // change line below to empty, or delete, just the current exercise's edit form.
-          //$("#exerciseEntryForm").empty();
+      });
+
+      $(document).on("click", "#hideEditExercise", function(event) {
+        event.preventDefault();
+        $("#editExercisesForms").hide();
       });
 
       
