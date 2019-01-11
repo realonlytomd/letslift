@@ -285,7 +285,7 @@ $(document).ready(function() {
         // I found out
         // it can't .trim an undefined value... or, I can't submit empty fields.
         // so add a test, if the user doesn't make an input, then submit what
-        // is currently in the data.
+        // is currently in the data.  testing.
         // i've added the attr index to the button (which has the value of kay)
         kay = parseInt($(this).attr("index"));
         console.log("inside #exerciseEditSubButton function - kay = " + kay);
