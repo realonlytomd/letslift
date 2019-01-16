@@ -229,9 +229,37 @@ $(document).ready(function() {
           // Or, for now, leave as is, but each exercise should disappear as it's updates
           // are submitted.
           // then a Finish all editing button at the bottom.
+          // possible problem: after the user clicks the submit, the "currently:" still shows the old info.
+          // I can fix this by hiding that exercise's form block. Is this a good idea?? don't know.
           case 0:
-            $("#editExercisesForms").empty();
-            for (kay = 0; kay < 10; kay++) {
+            kay = 0;
+            buildExerciseEditForms();
+            break;
+          case 1:
+            kay = 10;
+            buildExerciseEditForms();
+            break;
+          case 2:
+            kay = 20;
+            buildExerciseEditForms();
+            break;
+          case 3:
+            kay = 30;
+            buildExerciseEditForms();
+            break;
+          case 4:
+            kay = 40;
+            buildExerciseEditForms();
+            break;
+          default:
+            console.log("default in switch case code of kay to whatever workout to be edited. Something wrong");
+        }
+        
+      });
+
+      function buildExerciseEditForms() {
+        $("#editExercisesForms").empty();
+            for (kay; kay < 10; kay++) {
               editExercises();
             }
             // add the finish all edit button here.
@@ -241,36 +269,7 @@ $(document).ready(function() {
             finishAllHolder.addClass("btn-default");
             finishAllHolder.text("Finished Editing");
             $("#editExercisesForms").append(finishAllHolder);
-            break;
-          case 1:
-            $("#editExercisesForms").empty();
-            for (kay = 10; kay < 20; kay++) {
-              editExercises();
-            }
-            break;
-          case 2:
-            $("#editExercisesForms").empty();
-            for (kay = 20; kay < 30; kay++) {
-              editExercises();
-            }
-            break;
-          case 3:
-            $("#editExercisesForms").empty();
-            for (kay = 30; kay < 40; kay++) {
-              editExercises();
-            }
-            break;
-          case 4:
-            $("#editExercisesForms").empty();
-            for (kay = 40; kay < 50; kay++) {
-              editExercises();
-            }
-            break;
-          default:
-            console.log("default in switch case code of kay to whatever workout to be edited. Something wrong");
-        }
-        
-      });
+      }
 
       // this is like the function that creates the form to enter a new exercise,
       // but it's for editing existing exercises.
@@ -315,16 +314,25 @@ $(document).ready(function() {
         console.log("inside #exerciseEditSubButton function - kay = " + kay);
         console.log("inside #exerciseEditSubButton function exercisename id " + $("#" + exerciseInput[kay]).val());
         console.log("inside #exerciseEditSubButton function - exercise[kay] = " + exercise[kay]);
-        //not getting errors, but this if statement isn't workout. 
-        // don't know if undefined is correct, or null?
-        // how to assign the value? as below, or is it ... .val() = exercise[kay]   ?
-        if  ($("#" + exerciseInput[kay]).val() === undefined) {
+
+        
+        // check if the user made an input. if not, the input is "", (no input)
+        // and so the value is whatever the previous value
+        // probably need to add an error message if the user inputs a string instead of an integer
+        // or vice versa in the incorrect field.
+        if  ($("#" + exerciseInput[kay]).val().trim() === "") {
           $("#" + exerciseInput[kay]).val(exercise[kay]);
         }
-        console.log("after if statement: exercisename id " + $("#" + exerciseInput[kay]).val());
-        //console.log("after if statement, inside #exerciseEditSubButton function - exerciseInput[kay] = " + exerciseInput[kay]);
-        // call the functin that assigns the user inputs to the appropriate column in the db, and updates
-        // the db
+        if  ($("#" + weightInput[kay]).val().trim() === "") {
+          $("#" + weightInput[kay]).val(weight[kay]);
+        }
+        if  ($("#" + setsInput[kay]).val().trim() === "") {
+          $("#" + setsInput[kay]).val(sets[kay]);
+        }
+        if  ($("#" + repsInput[kay]).val().trim() === "") {
+          $("#" + repsInput[kay]).val(reps[kay]);
+        }
+
         exerciseSwitchPut();
 
         // ...and empty out the input fields for the form
@@ -332,11 +340,14 @@ $(document).ready(function() {
           $("#" + weightInput[kay]).val("");
           $("#" + setsInput[kay]).val("");
           $("#" + repsInput[kay]).val("");
+        // need to add code to remove this particular exercise's input form for editing
+
       });
 
       $(document).on("click", "#hideEditExercise", function(event) {
         event.preventDefault();
         $("#editExercisesForms").hide();
+        window.location.reload();
       });
 
       
