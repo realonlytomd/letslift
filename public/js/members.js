@@ -216,6 +216,8 @@ $(document).ready(function() {
       $(document).on("click", ".editWorkout", function(event) {
         event.preventDefault();
         console.log("inside the new editWorkout function!");
+        $("#currentWorkout").hide();
+        stopTimer();
         // what do I know: the index of the workout i, which is jay, what about kay?
         // kay is put in as the for loop is counted through
         // and the exercise, weight, sets, reps arrays are all built.
@@ -1318,12 +1320,6 @@ $(document).ready(function() {
           myTimer = setTimeout(function(){ timer() }, 1000);
         }
 
-        function stopTimer() {
-          clearTimeout(myTimer);
-          startCount = 0;
-          $(".footer").hide();
-        }
-
         // this function changes the .html (label) of each button
         // as the user clicks it. It must start at required number of reps
         // then go down by one with each press. after 0, it should go back to
@@ -1368,6 +1364,12 @@ $(document).ready(function() {
         });
 
       });
+
+      function stopTimer() {
+        clearTimeout(myTimer);
+        startCount = 0;
+        $(".footer").hide();
+      }
 
       $("#showWorkouts").on("click", function() {
         //reload the list of named workouts after the most recent creation
