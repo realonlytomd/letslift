@@ -162,7 +162,6 @@ $(document).ready(function() {
         data.exerciseFourofE, data.exerciseFiveofE, data.exerciseSixofE, data.exerciseSevenofE, 
         data.exerciseEightofE, data.exerciseNineofE, data.exerciseTenofE];
         console.log("exercise array: " + exercise);
-
       weight = [data.weightOneofA, data.weightTwoofA, data.weightThreeofA, 
         data.weightFourofA, data.weightFiveofA, data.weightSixofA, data.weightSevenofA, 
         data.weightEightofA, data.weightNineofA, data.weightTenofA,
@@ -338,6 +337,12 @@ $(document).ready(function() {
         exerciseSwitchPut();
 
         // ...and empty out the input fields for the form
+        // ... but maybe not do this, so user can see what he input and submitted.
+        // How do I tell the user that the finish all edit button must be clicked 
+        // to end the edit session?
+        // How about a note at the top, "below it all the exercises for this workout"
+        // "make any changes to each exercise in turn, and submit.""
+        // "Click 'Finished Editing' button after all changes have been input"  (?)
           $("#" + exerciseInput[kay]).val("");
           $("#" + weightInput[kay]).val("");
           $("#" + setsInput[kay]).val("");
