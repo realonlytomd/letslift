@@ -222,6 +222,7 @@ $(document).ready(function() {
         // and the exercise, weight, sets, reps arrays are all built.
         $("#editExercisesForms").show();
         var indexWorkout = parseInt($(this).attr("index"));
+        console.log("indexWorkout = " + indexWorkout);
         switch (indexWorkout) {  //INSTEAD of printing all the exercises with the submit button
           // after each, is this confusing?, maybe should I just print 1 exercise at a time?
           //  but I want the user to see the entire workout in one place
@@ -233,35 +234,42 @@ $(document).ready(function() {
           // possible problem: after the user clicks the submit, the "currently:" still shows the old info.
           // I can fix this by hiding that exercise's form block. Is this a good idea?? don't know.
           case 0:
-            kay = 0;
+            counter = 0;
             buildExerciseEditForms();
             break;
           case 1:
-            kay = 10;
+            counter = 10;
+            console.log("counter inside switch case: " + counter);
             buildExerciseEditForms();
             break;
           case 2:
-            kay = 20;
+            counter = 20;
             buildExerciseEditForms();
             break;
           case 3:
-            kay = 30;
+            counter = 30;
             buildExerciseEditForms();
             break;
           case 4:
-            kay = 40;
+            counter = 40;
             buildExerciseEditForms();
             break;
           default:
-            console.log("default in switch case code of kay to whatever workout to be edited. Something wrong");
+            console.log("default in switch case code of counter to whatever workout to be edited. Something wrong");
         }
         
       });
 
       function buildExerciseEditForms() {
         $("#editExercisesForms").empty();
-            for (kay; kay < 10; kay++) {
+        console.log("counter inside buildExerciseEditforms: " + counter);
+        e = 1;
+            for (kay = counter; kay < (counter + 10); kay++) {
               editExercises();
+              if (kay === 100) {
+                console.log("kay got to 100!");
+                break;
+              }
             }
             // add the finish all edit button here.
             var finishAllHolder = $("<button>");
@@ -278,7 +286,9 @@ $(document).ready(function() {
         console.log("Inside function editExercises: kay = " + kay);
         console.log("Inside function editExercises: exercise[kay] = " + exercise[kay]);
         $("#editExercisesForms").append(
-          "<form class='editWorkoutExercises'><fieldset><legend>Edit Exercise " + (kay+1) + "</legend>" +
+          // currently, the exercise plus 1 is kay from the first exercise
+          // and it needs to be 1 to 10, not 1 to 50....
+          "<form class='editWorkoutExercises'><fieldset><legend>Edit Exercise " + e + "</legend>" +
           "<div class='form-group'><label for=" + exerciseInput[kay] + ">Name of Exercise. Currently: " + exercise[kay] + "</label>" +
           "<input type='text' class='form-control' id=" + exerciseInput[kay] + " placeholder= '' ></div>" +
           "<div class='form-group'><label for=" + weightInput[kay] + ">Weight. Currently: " + weight[kay] + "</label>" +
@@ -296,6 +306,10 @@ $(document).ready(function() {
           holder.attr("index", kay);
           holder.text("Submit");
           $("#editExercisesForms").append(holder);
+          $("#editExercisesForms").append("<p>When finished editing all of the exercies, " +
+          "please click the Finished Editing button at the bottom" +
+          " of all the exercise edit forms.</p>");
+          e++;
       }
       // just above, I need to add the submit button to have the value of kay.
       //  when kay is drawn in each case.
@@ -343,10 +357,10 @@ $(document).ready(function() {
         // How about a note at the top, "below it all the exercises for this workout"
         // "make any changes to each exercise in turn, and submit.""
         // "Click 'Finished Editing' button after all changes have been input"  (?)
-          $("#" + exerciseInput[kay]).val("");
-          $("#" + weightInput[kay]).val("");
-          $("#" + setsInput[kay]).val("");
-          $("#" + repsInput[kay]).val("");
+          // $("#" + exerciseInput[kay]).val("");
+          // $("#" + weightInput[kay]).val("");
+          // $("#" + setsInput[kay]).val("");
+          // $("#" + repsInput[kay]).val("");
         // need to add code to remove this particular exercise's input form for editing
 
       });
