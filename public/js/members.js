@@ -612,7 +612,7 @@ $(document).ready(function() {
             };
             break;
           default:
-            console.log("default in switch case code of assigning a name to a workout, something wrong");
+            console.log("default in switch case code of assigning null to a workout, something wrong");
         }
         var currentURL = window.location.origin;
         $.ajax(currentURL + "/api/createWorkout/" + userdata.id, {
