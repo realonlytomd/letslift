@@ -76,7 +76,11 @@ $(document).ready(function() {
   $.get("/api/user_data").then(function(userdata) {
     console.log("object 'userdata' inside of the first .get is ", userdata);
     $(".member-id").text(userdata.id);
-    $(".member-name").text(userdata.email);
+    //Only need to call the user by the login name, not full email address
+    var fullEmail = userdata.email;
+    var justName = fullEmail.split("@")[0];
+    console.log("justName = " + justName);
+    $(".member-name").text(justName);
 
     // this function creates the delete user button in the navbar with the data of the user's id
     var holder = $("<button>");
@@ -97,20 +101,17 @@ $(document).ready(function() {
       $.ajax({
         method: "DELETE",
         url: "/api/deleteUser/" + id
-      }).then(
-        function(getDeletedUsers) {
+      }).then(function(getDeletedUsers) {
           if (getDeletedUsers === 1) {
             console.log("User has been deleted, deletedUsers: ", getDeletedUsers);
             // redirects to the /logout page so the logout api .get is called.
             // so, the user deletes himself, and the page reloads at the sign up page, "/"
             window.location.href = "/logout";
           }
-        }, {
-            function(err) {
+        }, {function(err) {
               console.log(err);
             }
-          }
-      )
+          })
     });
       //putting all of the below inside the first get so as to have the correct id (user)
     // this .get brings in all the data from the db
@@ -216,6 +217,7 @@ $(document).ready(function() {
         event.preventDefault();
         console.log("inside the new editWorkout function!");
         $("#currentWorkout").hide();
+        $("#enterRowHeading").hide();
         stopTimer();
         // what do I know: the index of the workout i, which is jay, what about kay?
         // kay is put in as the for loop is counted through
@@ -1389,27 +1391,6 @@ $(document).ready(function() {
         startCount = 0;
         $(".footer").hide();
       }
-
-      $("#showWorkouts").on("click", function() {
-        //reload the list of named workouts after the most recent creation
-        //must redo .get as data rewritten here won't be seen above outside this function
-        $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
-          console.log("object 'data' after click of show workouts button ", data);
-          workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
-          console.log("workout array after click of show workouts button: " + workout);
-          $("#availableWorkouts").empty();
-          numWorkouts = 0;
-          for (var i = 0; i < workout.length; i++) {
-            if (workout[i] === null || workout[i] === "null") {
-            } else {
-              $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
-              numWorkouts = numWorkouts + 1;
-              console.log("inside .get of info in show workouts button: numWorkouts = " + numWorkouts);
-            }
-          }
-        });
-      });
-
     });
 
   });
