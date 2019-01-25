@@ -14,13 +14,17 @@ form.login {
   margin-top: 50px;
 }
 
-h1 {
+/*h1#pageTitle {
+	display: inline-block;
 	text-align: center;
-  margin-bottom: 20px;
-}
+}*/
 
 h2 {
 	color: white;
+}
+
+button.deleteUser {
+	font-size: 16px;
 }
 
 .selectedWorkout,

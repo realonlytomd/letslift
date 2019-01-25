@@ -88,9 +88,10 @@ $(document).ready(function() {
     holder.data("userId", userdata.id);
     holder.addClass("deleteUser");
     holder.text("Delete User");
-    $(".navbar-header").append(holder);
+    //$("#navbarNames").append(holder); // or...
+    $("#placeDeleteButton").append(holder);
 
-    // This function deletes an entire user.
+    // This function deletes an entire user.  Need to add a warning modal!
     // need to log out user after they click the delete user button, and direct back to home page.
     $(document).on("click", ".deleteUser", function(event) {
       event.preventDefault();
