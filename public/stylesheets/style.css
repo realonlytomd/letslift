@@ -19,32 +19,50 @@ form.login {
 	text-align: center;
 }*/
 
-h2 {
+h2, h3, h4, p {
 	color: white;
 }
 
-button.deleteUser {
-	font-size: 16px;
+span a {
+	color:black;
 }
 
-.selectedWorkout,
-#enterWorkout {
+a {
+	color: white;
+}
+
+label {
+	color: white;
+}
+
+button {
+	margin-top: 10px;
+	margin-right: 10px;
+	text-decoration: none;
+	font-size: 16px;
+	color: black;
+}
+
+button.startTimer {
+	margin-left: 15px;
+	margin-right: 0px;
+}
+
+.selectedWorkout, #enterWorkout {
 	cursor: pointer;
 }
 
-fieldset 
-	{
+fieldset {
 		border: 1px solid black;
 		margin: 0;
 		padding: 10px;       
 		position: relative;
 		border-radius:4px;
-		background-color:white;
+		background-color:saddlebrown;
 		padding-left:10px;
 	}	
 	
-legend
-	{
+legend {
 		font-size:14px;
 		font-weight:bold;
 		margin-bottom: 0px; 
@@ -59,7 +77,8 @@ legend
   position: fixed;
   left: 0;
   bottom: 0;
-  width: 100%;
-  background-color: red;
+	width: 100%;
+	text-align: center;
+  background-color: aquamarine;
   color: white;
 }

@@ -309,7 +309,7 @@ $(document).ready(function() {
           holder.attr("index", kay);
           holder.text("Submit");
           $("#editExercisesForms").append(holder);
-          $("#editExercisesForms").append("<p>When finished editing all of the exercies, " +
+          $("#editExercisesForms").append("<p>When finished editing all of the exercies you wish, " +
           "please click the Finished Editing button at the bottom" +
           " of all the exercise edit forms.</p>");
           e++;
@@ -631,7 +631,6 @@ $(document).ready(function() {
       });
 
       // These functions build the entry form when the user wants to enter new data,
-      // Update or edit an existing workout still needs to be added.
       // Need to check where there is a "null", and put the new workout there.
       $(document).on("click", "#enterWorkout", function() {
         console.log("Inside onclick function to build the form to enter a workout name-is this working?");
@@ -1278,13 +1277,12 @@ $(document).ready(function() {
               var exerciseTitleInfo = $("<div>");
               exerciseTitleInfo.addClass("row");
               var exerciseTitle = $("<div>");
-              exerciseTitle.addClass("col-md-3");
-              exerciseTitle.append("<h3>" + exercise[k] + "</h3>");
+              exerciseTitle.addClass("col-xs-6");
+              exerciseTitle.append("<h4>" + exercise[k] + "</h4>");
               var exerciseInfo = $("<div>");
-              exerciseInfo.addClass("col-md-3");
-              exerciseInfo.addClass("col-md-offset-3");
-              exerciseInfo.append("<h3>" + ' ' + sets[k] + ' sets X ' + ' ' + reps[k] +
-                ' reps at ' + ' ' + weight[k] + 'lb' + "</h3>");
+              exerciseInfo.addClass("col-xs-6");
+              exerciseInfo.append("<h4>" + ' ' + sets[k] + ' sets X ' + ' ' + reps[k] +
+                ' reps at ' + ' ' + weight[k] + 'lb' + "</h4>");
              // now append the 2 divs to the title/info div
               exerciseTitleInfo.append(exerciseTitle);
               exerciseTitleInfo.append(exerciseInfo);
@@ -1296,7 +1294,7 @@ $(document).ready(function() {
                 var holder = $("<button>");
                 holder.attr("type","button");
                 holder.addClass("btn");
-                holder.addClass("btn-success");
+                //holder.addClass("btn-success");
                 holder.addClass("startTimer");
                 holder.attr("data-reps", reps[k]);
                 holder.attr("data-clicksofSetButton", clicksofSetButton);
@@ -1314,7 +1312,7 @@ $(document).ready(function() {
           var holder2 = $("<button>");
           holder2.attr("type","button");
           holder2.addClass("btn");
-          holder2.addClass("btn-success");
+          //holder2.addClass("btn-success");
           holder2.addClass("finishWorkout");
           holder2.text("Workout Finished");
           $("#exercisesInfoButtons").append(holder2);
