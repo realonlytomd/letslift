@@ -217,6 +217,7 @@ $(document).ready(function() {
       $(document).on("click", ".editWorkout", function(event) {
         event.preventDefault();
         console.log("inside the new editWorkout function!");
+        $("#workoutRow").hide();
         $("#currentWorkout").hide();
         $("#enterRowHeading").hide();
         stopTimer();
@@ -371,6 +372,7 @@ $(document).ready(function() {
       $(document).on("click", "#hideEditExercise", function(event) {
         event.preventDefault();
         $("#editExercisesForms").hide();
+        $("#workoutRow").show();
         window.location.reload();
       });
 
