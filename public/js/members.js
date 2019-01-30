@@ -1218,7 +1218,7 @@ $(document).ready(function() {
 
           // This function happens when the user clicks the chosen workout.
       $(document).on("click", ".selectedWorkout", function() {
-        $("#availableWorkouts").hide();
+        $("#workoutRow").hide();
         $("#enterRowHeading").hide();
         $("#currentWorkout").show();
           // What happens? Hide previous divs. Show new actual workout div.
