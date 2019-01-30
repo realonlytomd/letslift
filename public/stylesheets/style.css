@@ -18,9 +18,19 @@ span.member-name {
 	text-transform: capitalize;
 }
 
-h2, h3, h4, p {
+span.namebox {
+	padding: 5px;
+	background-color: saddlebrown;
 	color: white;
+	display: inline-block; /* this keeps wrapped text padding from obscuring previous lines */
+	/* Also, this was still a good exercise for the inline-block. I may take out the background pic...*/
 }
+
+/*h2, h3, h4, p {
+	color: white;
+	background-color: brown;
+	padding: 5px;
+}*/
 
 h3 {
 	margin-bottom: 0px;

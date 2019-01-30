@@ -136,7 +136,7 @@ $(document).ready(function() {
         holder.attr("index", i);
         holder.addClass("renameWorkoutNull");
         holder.text("Delete");
-        $("#availableWorkouts").append("<h3 class='selectedWorkout'>" + workout[i] + "</h3>");
+        $("#availableWorkouts").append("<h3 class='selectedWorkout'><span class='namebox'>" + workout[i] + "</span></h3>");
         $("#availableWorkouts").append(holder2);
         $("#availableWorkouts").append(holder);
         // the Edit workout button will show all the exercises, START HERE!
@@ -145,6 +145,9 @@ $(document).ready(function() {
 
         // This is where the number of workouts for that user is counted. Available throughout.
         numWorkouts++;
+        if (numWorkouts === 5) {
+          $("#enterRowHeading").hide();
+        }
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
         }
       }
@@ -310,9 +313,9 @@ $(document).ready(function() {
           holder.attr("index", kay);
           holder.text("Submit");
           $("#editExercisesForms").append(holder);
-          $("#editExercisesForms").append("<p>When finished editing all of the exercies you wish, " +
+          $("#editExercisesForms").append("<p><span class='namebox'>When finished editing all of the exercies you wish, " +
           "please click the Finished Editing button at the bottom" +
-          " of all the exercise edit forms.</p>");
+          " of all the exercise edit forms.</span></p>");
           e++;
       }
       // just above, I need to add the submit button to have the value of kay.
@@ -644,7 +647,7 @@ $(document).ready(function() {
             console.log("inside function to build form to name workouts, 1st if, numWorkouts = " + numWorkouts);
             // be open to putting this in it's own function to be called from here, for editing workout names later...
             //HERE: I think i'm counting kay wrong, if jay is 0, kay should be 0-9
-            $("#entryForm").append("<h2>Enter Name of New Workout</h2>" +
+            $("#entryForm").append("<h2><span class='namebox'>Enter Name of New Workout</span></h2>" +
               "<form class='enterWorkoutName'>" +
               "<div class='form-group'><label for=" + workoutInput[jay] + ">Name of New Workout</label>" +
               "<input type='text' class='form-control' id=" + workoutInput[jay] + " placeholder='enter new name'></div>" +
@@ -736,7 +739,7 @@ $(document).ready(function() {
         $("#exerciseEntryForm").empty();
         console.log("Inside creating of exercise form functin: kay = " + kay + ",   e = " + e);
         
-        $("#exerciseEntryForm").append("<h2>Enter exercise " + e + " of workout</h2>" +
+        $("#exerciseEntryForm").append("<h2><span class='namebox'>Enter exercise " + e + " of workout</span></h2>" +
           "<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercise " + e + " in  Workout</legend>" +
           "<div class='form-group'><label for=" + exerciseInput[kay] + ">Name of Exercise</label>" +
           "<input type='text' class='form-control' id=" + exerciseInput[kay] + " placeholder=''></div>" +
@@ -768,7 +771,7 @@ $(document).ready(function() {
           $("#exerciseEntryForm").empty();
           if (e === 10) {
             console.log("user has exceeded 10 exercises!"); // needs to be put in modal to alert user
-            $("#exerciseEntryForm").append("<h2>User has 10 exercises</h2><button id='noMoreExercises'>Finish</button>");
+            $("#exerciseEntryForm").append("<h2><span class='namebox'>User has 10 exercises</span></h2><button id='noMoreExercises'>Finish</button>");
           } else {
             $("#exerciseEntryForm").append("<button id='moreExercises'>Add More Exercises</button>" +
             "<button id='noMoreExercises'>Finish</button>");
@@ -1215,6 +1218,8 @@ $(document).ready(function() {
 
           // This function happens when the user clicks the chosen workout.
       $(document).on("click", ".selectedWorkout", function() {
+        $("#availableWorkouts").hide();
+        $("#enterRowHeading").hide();
         $("#currentWorkout").show();
           // What happens? Hide previous divs. Show new actual workout div.
           // Build the workout page  -  where the user sees the title of workout, the exercises,
@@ -1280,11 +1285,11 @@ $(document).ready(function() {
               exerciseTitleInfo.addClass("row");
               var exerciseTitle = $("<div>");
               exerciseTitle.addClass("col-xs-6");
-              exerciseTitle.append("<h4>" + exercise[k] + "</h4>");
+              exerciseTitle.append("<h4><span class='namebox'>" + exercise[k] + "</span></h4>");
               var exerciseInfo = $("<div>");
               exerciseInfo.addClass("col-xs-6");
-              exerciseInfo.append("<h4>" + ' ' + sets[k] + ' sets X ' + ' ' + reps[k] +
-                ' reps at ' + ' ' + weight[k] + 'lb' + "</h4>");
+              exerciseInfo.append("<h4><span class='namebox'>" + ' ' + sets[k] + ' sets X ' + ' ' + reps[k] +
+                ' reps at ' + ' ' + weight[k] + 'lb' + "</span></h4>");
              // now append the 2 divs to the title/info div
               exerciseTitleInfo.append(exerciseTitle);
               exerciseTitleInfo.append(exerciseInfo);
