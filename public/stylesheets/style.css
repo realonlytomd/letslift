@@ -1,12 +1,12 @@
 html, body {
   height: 100%;
 	margin: 0;
-	background-image: url("../img/plates.jpg");
-	background-position: center;
 }
 
 body {
   box-sizing: border-box;
+  background-image: url("../img/plates.jpg");
+  background-position: center;
 }
 
 form.signup,
@@ -22,8 +22,8 @@ span.namebox {
 	padding: 5px;
 	background-color: saddlebrown;
 	color: white;
-	display: inline-block; /* this keeps wrapped text padding from obscuring previous lines */
-	/* Also, this was still a good exercise for the inline-block. I may take out the background pic...*/
+	display: inline-block; /*this keeps wrapped text padding from obscuring previous lines
+	Also, this was still a good exercise for the inline-block. I may take out the background pic*/
 }
 
 /*h2, h3, h4, p {
