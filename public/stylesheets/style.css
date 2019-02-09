@@ -22,11 +22,11 @@ form.login {
 	border-left-style: solid;
 	border-color: white;
 	border-width: 2px;
-	padding-left: 40px;
+	padding-left: 15px;
 }
 
 #signupinLogin {
-	margin-right: 40px;
+	margin-right: 0px;
 }
 
 #signupDiv {
@@ -126,5 +126,9 @@ legend {
 		border-color: white;
 		border-width: 2px;
 		padding-top: 35px;
+	}
+
+	#loginDiv {
+		border-left-style: none;
 	}
   }
