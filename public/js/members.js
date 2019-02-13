@@ -1283,6 +1283,7 @@ $(document).ready(function() {
               console.log("exercise[k]: " + exercise[k]);
               var exerciseTitleInfo = $("<div>");
               exerciseTitleInfo.addClass("row");
+              exerciseTitleInfo.addClass("needTopBorder");
               var exerciseTitle = $("<div>");
               exerciseTitle.addClass("col-xs-6");
               exerciseTitle.append("<h4><span class='namebox'>" + exercise[k] + "</span></h4>");

@@ -61,7 +61,7 @@ label {
 
 button {
 	margin-top: 10px;
-	margin-right: 10px;
+	margin-right: 0px;
 	text-decoration: none;
 	font-size: 16px;
 	color: black;
@@ -79,6 +79,7 @@ span a, a:hover {
 button.startTimer {
 	margin-left: 15px;
 	margin-right: 0px;
+	margin-bottom: 10px;
 }
 
 .selectedWorkout, #enterWorkout {
@@ -86,25 +87,37 @@ button.startTimer {
 }
 
 fieldset {
-		border: 1px solid black;
-		margin: 0;
-		padding: 10px;       
-		position: relative;
-		border-radius:4px;
-		background-color: #5d4a44;
-		padding-left:10px;
-	}	
+	border: 1px solid black;
+	margin: 0;
+	padding: 10px;       
+	position: relative;
+	border-radius:4px;
+	background-color: #5d4a44;
+	padding-left:10px;
+}	
 	
 legend {
-		font-size:14px;
-		font-weight:bold;
-		margin-bottom: 0px; 
-		width: 35%; 
-		border: 1px solid #ddd;
-		border-radius: 4px; 
-		padding: 5px 5px 5px 10px; 
-		background-color: #ffffff;
-	}
+	font-size:14px;
+	font-weight:bold;
+	margin-bottom: 0px; 
+	width: 35%; 
+	border: 1px solid #ddd;
+	border-radius: 4px; 
+	padding: 5px 5px 5px 10px; 
+	background-color: #ffffff;
+}
+
+#nameWorkoutBorder {
+	margin-bottom: 10px;
+}
+
+.needTopBorder {
+	border-top: 1px solid black;
+}
+
+button#exerciseEditSubButton {
+	margin-bottom: 20px;
+}
 
 .footer {
   position: fixed;
