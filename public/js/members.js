@@ -281,8 +281,8 @@ $(document).ready(function() {
             // add the finish all edit button here.
             var finishAllHolder = $("<button>");
             finishAllHolder.attr("id", "hideEditExercise");
-            finishAllHolder.addClass("btn");
-            finishAllHolder.addClass("btn-default");
+            //finishAllHolder.addClass("btn");
+            //finishAllHolder.addClass("btn-default");
             finishAllHolder.text("Finished Editing");
             $("#editExercisesForms").append(finishAllHolder);
       }
@@ -307,8 +307,8 @@ $(document).ready(function() {
           "</fieldset></form>");
           var holder = $("<button>");
           holder.attr("type","submit");
-          holder.addClass("btn");
-          holder.addClass("btn-default");
+          //holder.addClass("btn");
+          //holder.addClass("btn-default");
           holder.attr("id","exerciseEditSubButton");
           holder.attr("index", kay);
           holder.text("Submit");
@@ -650,8 +650,9 @@ $(document).ready(function() {
             $("#entryForm").append("<h2><span class='namebox'>Enter Name of New Workout</span></h2>" +
               "<form class='enterWorkoutName'>" +
               "<div class='form-group'><label for=" + workoutInput[jay] + ">Name of New Workout</label>" +
-              "<input type='text' class='form-control' id=" + workoutInput[jay] + " placeholder='enter new name'></div>" +
+              "<input type='text' class='form-control' id=" + workoutInput[jay] + " placeholder='New Workout'></div>" +
               "<button type='submit' class='btn btn-default' id='nameSubButton'>Submit</button></form>");
+              // might need to romove or modify the classes for the button above, btn removed elsewhere
               console.log("jay inside creation of workout name form = " + jay);
               return;
             } else if (numWorkouts === 5) {
@@ -750,6 +751,7 @@ $(document).ready(function() {
           "<div class='form-group'><label for=" + repsInput[kay] + ">Number of Reps</label>" +
           "<input type='number' class='form-control' id=" + repsInput[kay] + " placeholder=''></div>" +
           "<button type='submit' class='btn btn-default' id='exSubButton'>Submit</button></fieldset></form>");
+          // again with the btn and btn-default
       }
       
       // When the submit button for building the exercises of a workout is clicked,
@@ -1319,7 +1321,7 @@ $(document).ready(function() {
           // insert a Finish button here to end the workout, stop the timer.  
           var holder2 = $("<button>");
           holder2.attr("type","button");
-          holder2.addClass("btn");
+          //holder2.addClass("btn");
           //holder2.addClass("btn-success");
           holder2.addClass("finishWorkout");
           holder2.text("Workout Finished");
