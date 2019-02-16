@@ -1301,7 +1301,7 @@ $(document).ready(function() {
               for (var i = 0; i < sets[k]; i++) {
                 var holder = $("<button>");
                 holder.attr("type","button");
-                holder.addClass("btn");
+                //holder.addClass("btn");
                 //holder.addClass("btn-success");
                 holder.addClass("startTimer");
                 holder.attr("data-reps", reps[k]);
