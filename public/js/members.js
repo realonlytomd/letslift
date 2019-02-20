@@ -640,6 +640,9 @@ $(document).ready(function() {
       $(document).on("click", "#enterWorkout", function() {
         console.log("Inside onclick function to build the form to enter a workout name-is this working?");
         $("#entryForm").empty();
+        $("#workoutRow").hide();
+        $("#currentWorkout").hide();
+        $("#enterRowHeading").hide();
         //test for next open workout by checking if workout[i] is null
         for (jay = 0; jay < workout.length; jay++) {
           console.log("jay = " + jay + ",   workout[jay] = " + workout[jay]);
