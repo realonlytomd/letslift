@@ -311,7 +311,7 @@ $(document).ready(function() {
           //holder.addClass("btn-default");
           holder.attr("id","exerciseEditSubButton");
           holder.attr("index", kay);
-          holder.text("Submit");
+          holder.text("Submit Changes For This Exercise");
           $("#editExercisesForms").append(holder);
           $("#editExercisesForms").append("<p><span class='namebox'>When finished editing all of the exercies you wish, " +
           "please click the Finished Editing button at the bottom" +
@@ -378,6 +378,14 @@ $(document).ready(function() {
         $("#workoutRow").show();
         window.location.reload();
       });
+
+      // 2/21/2019  NOTE for adding edit ability to info of each exercise during an actual workout:
+      //Want to click the info block: create an edit block JUST FOR THAT EXERCISE
+      // submit button for that exercise will change the db....
+      // But, unsure how to get the new data out of the db...
+      // then redraw the workout with the new data, and continue with the workout
+      // and the time should not be stopping - I'm not sure if the page reload is
+      // the way to go.......
 
       
 
