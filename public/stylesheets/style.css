@@ -13,6 +13,7 @@ body {
 
 .wrapper {
 	background-color: #f8f8f8;
+	width: 100%;
 }
 
 /* Change glow around all input fields to yellow from bootstrap's blue */
@@ -133,8 +134,8 @@ button#exerciseEditSubButton {
   position: fixed;
   left: 0;
   bottom: 0;
-	width: 100%;
-	text-align: center;
+  width: 100%;
+  text-align: center;
   background-color: aquamarine;
   color: white;
 }
