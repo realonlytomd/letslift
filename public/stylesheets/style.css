@@ -7,6 +7,8 @@ body {
   box-sizing: border-box;
   background-image: url("../img/plates.jpg");
   background-position: center;
+  background-size: cover;
+  background-color: #f8f8f8;
 }
 
 .wrapper {
