@@ -124,10 +124,12 @@ $(document).ready(function() {
      
       $("#availableWorkouts").empty();
       numWorkouts = 0;
+      $("#workoutRow").hide();
       for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null || workout[i] === "") {
         } else {
         // need to create the Edit functon.  The Edit button should have the same as the delete button
+        $("#workoutRow").show();
         var holder2 = $("<button>");
         holder2.attr("index", i);
         holder2.addClass("editWorkout");
