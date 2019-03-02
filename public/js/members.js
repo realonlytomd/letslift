@@ -82,6 +82,24 @@ $(document).ready(function() {
     console.log("justName = " + justName);
     $(".member-name").text(justName);
 
+    //new stuff for modal
+    // Get the modal
+    //var modal = $("#myModal");
+
+    // Get the button that opens the modal
+    //var btn = $("#myBtn");
+
+    // Get the <span> element that closes the modal
+    //var spanModalX = $(".close")[0];
+
+    // When the user clicks the button, open the modal 
+    $(document).on("click", "#myBtn", function(event) {
+      event.preventDefault();
+      $("#myModal").show();
+    });
+
+    //end of new stuff for modal
+
     // this function creates the delete user button in the navbar with the data of the user's id
     var holder = $("<button>");
     // not sure if I should use .data or .attr - study later
