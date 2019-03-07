@@ -93,9 +93,14 @@ $(document).ready(function() {
     //var spanModalX = $(".close")[0];
 
     // When the user clicks the button, open the modal 
-    $(document).on("click", "#myBtn", function(event) {
+    $(document).on("click", "#instructMe", function(event) {
       event.preventDefault();
       $("#myModal").show();
+    });
+
+    $(document).on("click", "#closeInstruct", function(event) {
+      event.preventDefault();
+      $("#myModal").hide();
     });
 
     //end of new stuff for modal
