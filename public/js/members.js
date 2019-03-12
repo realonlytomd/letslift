@@ -95,7 +95,8 @@ $(document).ready(function() {
     // When the user clicks the button, open the modal 
     $(document).on("click", "#instructMe", function(event) {
       event.preventDefault();
-      $("#myModal").show();
+      //$("#myModal").show();
+      $('#myModal').modal();
     });
 
     $(document).on("click", "#closeInstruct", function(event) {
