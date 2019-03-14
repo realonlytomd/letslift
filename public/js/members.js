@@ -72,6 +72,8 @@ $(document).ready(function() {
    "repsOneofE", "repsTwoofE","repsThreeofE", "repsFourofE", "repsFiveofE",
    "repsSixofE", "repsSevenofE", "repsEightofE", "repsNineofE", "repsTenofE"];
 
+   var boop = $("#myAudio");
+
     // This portion does a GET request to get which user logged in
   $.get("/api/user_data").then(function(userdata) {
     console.log("object 'userdata' inside of the first .get is ", userdata);
@@ -1359,7 +1361,13 @@ $(document).ready(function() {
           $(".footer").show();
           $("span#timerDisplay").html(startCount);
           startCount = startCount + 1;
-          // set up to play a chime if startCount reaches 90, or whatever
+          console.log("startCount = " + startCount);
+          // set up to play a sound as startCount reaches every 30 seconds, 5 for testing
+          if ((startCount % 30) === 0) {
+            // with several specific audio files (counting), i'll set them up in an array
+            // then count through the array as 30, then 60, then 90 seconds is reached
+            playAudio();
+          }
           myTimer = setTimeout(function(){ timer() }, 1000);
         }
 
@@ -1414,6 +1422,13 @@ $(document).ready(function() {
         startCount = 0;
         $(".footer").hide();
       }
+
+      function playAudio() { 
+        // the var boop is a jQuery object, and the play method only works on a native dom element
+        // or the first index of the array.  from stack overflow. who knew?
+        boop[0].play(); 
+      } 
+      
     });
 
   });
