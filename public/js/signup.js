@@ -13,6 +13,7 @@ $(document).ready(function() {
       };
   
       if (!userData.email || !userData.password) {
+        $("#signupNote").modal("show");
         return;
       }
       // If we have an email and password, run the signUpUser function
@@ -28,6 +29,7 @@ $(document).ready(function() {
         email: email,
         password: password
       }).then(function(data) {
+        console.log("in /api/signup post, data is: ", data);
         window.location.replace(data);
         // If there's an error, handle it by throwing up a boostrap alert
       }).catch(handleLoginErr);
