@@ -89,7 +89,7 @@ $(document).ready(function() {
     // not sure if I should use .data or .attr - study later
     holder.data("userId", userdata.id);
     holder.addClass("deleteUser");
-    holder.text("Delete User");
+    holder.text("Proceed");
     //$("#navbarNames").append(holder); // or...
     $("#placeDeleteButton").append(holder);
 

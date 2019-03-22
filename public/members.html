@@ -26,7 +26,10 @@
         <div class="col-xs-4 text-center">
           <h1 id="pageTitle">Let's Lift!</h1>
         </div>
-        <div class="col-xs-4 text-center" id="placeDeleteButton">
+        <div class="col-xs-4 text-center">
+            <button type="button" data-toggle="modal" data-target="#deleteWarning">
+                Delete User
+              </button>
         </div>
       </div>
     </div>
@@ -116,6 +119,23 @@
         from the .js file. Contains name of exercise, no. of sets, reps, and weight,
         and then the row of reps buttons in the next row. 2 divs total. -->
     </div>
+
+    <!-- Modal, warns user that deleting the user is not recoverable -->
+    <div class="modal fade" id="deleteWarning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h2>WARNING! This user will be deleted along with all the stored workouts!</h2>
+            <h1>This information cannot be recovered!!</h1>
+          </div>
+          <div class="modal-footer">
+            <div id="placeDeleteButton" data-dismiss="modal"></div>
+            <button type="button" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- End of Bootstrap modal code -->
 
   
 
