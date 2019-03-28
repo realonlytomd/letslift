@@ -24,6 +24,7 @@ module.exports = function(router) {
     // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
     // So we're sending the user back the route to the members page because the redirect will route on the front end
     // They won't get this or even be able to access this page if they aren't authorized
+    console.log("Now in /api/login!!!!");
     res.json("/members");
   });
 
@@ -36,10 +37,11 @@ module.exports = function(router) {
       email: req.body.email,
       password: req.body.password
     }).then(function() {
+      console.log("now just after .then(function()!!! ");
       res.redirect(307, "/api/login");
     }).catch(function(err) {
-      console.log(err);
-      res.json(err);
+      console.log("now in .catch!!! err = ", err);
+      //res.json(err);
       // res.status(422).json(err.errors[0].message);
     });
   });
