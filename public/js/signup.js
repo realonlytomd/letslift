@@ -32,17 +32,21 @@ $(document).ready(function() {
         console.log("in /api/signup post, data is: ", data);
         window.location.replace(data);
         // If there's an error, handle it by throwing up a boostrap alert
-      }).catch();
+      }).catch(handleLoginErr());
+      // console.log("after .catch in signup.js, err = ", err);
       // I've stopped here...its calling this even if it works. I need it to only
-      // call it if it's an error. arghhh
-      // handleLoginErr was in the () of .catch above.
-      $("#signupNote").modal("show");
-        return;
+      // call it if it's an error. 
+      // so.... overall, if I res.json(err), it goes to a nonexistant page, if I leave it out,
+      // it works, but the following function is called whether there is an error catch,
+      // or not!  the modal disappears, but still....
+      // 
     }
   
-    function handleLoginErr(err) {
-      $("#alert.msg").text(err.responseJSON);
-      $("#alert").fadeIn(500);
+    function handleLoginErr() {
+      console.log("In handleLoginErr!");
+      $("#signupNote").modal("show");
+      // $("#alert.msg").text(err.responseJSON);
+      // $("#alert").fadeIn(500);
     }
   });
   

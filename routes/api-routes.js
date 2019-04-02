@@ -41,7 +41,9 @@ module.exports = function(router) {
       res.redirect(307, "/api/login");
     }).catch(function(err) {
       console.log("now in .catch!!! err = ", err);
-      //res.json(err);
+      res.json("/signup");  //I just added this, it goes back to signup page, but doesn't allow
+      // the error modal to display
+      // however, if I log in correctly, the error modal is displayed briefly, then page is overwritten
       // res.status(422).json(err.errors[0].message);
     });
   });
