@@ -40,11 +40,12 @@ module.exports = function(router) {
       console.log("now just after .then(function()!!! ");
       res.redirect(307, "/api/login");
     }).catch(function(err) {
-      console.log("now in .catch!!! err = ", err);
-      res.json("/signup");  //I just added this, it goes back to signup page, but doesn't allow
-      // the error modal to display
+      console.log("now in api-routes.js .catch!!! err.errors[0].value = ", err.errors[0].value);
+      //res.json("/signup");
+      res.json(err.errors[0].value); 
+      // why does the signup.js file try to send the browser to /err.errors[0].value (or whatever is in the res.json?)
       // however, if I log in correctly, the error modal is displayed briefly, then page is overwritten
-      // res.status(422).json(err.errors[0].message);
+      // res.status(422).json(err.errors[0].message); this was in original file
     });
   });
 

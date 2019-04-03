@@ -29,11 +29,15 @@ $(document).ready(function() {
         email: email,
         password: password
       }).then(function(data) {
-        console.log("in /api/signup post, data is: ", data);
+        console.log("in /api/signup post, data is: ", data);  //WHY is this printing out if 
+        // I have a .catch??  and the variable data here, is what I've said below is errValue????
         window.location.replace(data);
         // If there's an error, handle it by throwing up a boostrap alert
-      }).catch(handleLoginErr());
-      // console.log("after .catch in signup.js, err = ", err);
+      }).catch(errValue);
+      console.log("after .catch in signup.js, errValue = ", errValue);
+      if (errValue) {
+        handleLoginErr();
+      }
       // I've stopped here...its calling this even if it works. I need it to only
       // call it if it's an error. 
       // so.... overall, if I res.json(err), it goes to a nonexistant page, if I leave it out,
