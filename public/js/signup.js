@@ -31,7 +31,8 @@ $(document).ready(function() {
       }).then(function(data) {
         console.log("in /api/signup post, data is: ", data);  //WHY is this printing out if 
         // I have a .catch??  and the variable data here, is what I've said below is errValue????
-        window.location.replace("/signup"); // this DOES go to /signup correctly, 
+        // maybe: add if data is not /members, set it to /signup??
+        window.location.replace("/signup"); // SHOULD be data variable, in (). this DOES go to /signup correctly, 
         // BUT, it really should be data, as if created properly, data is /members, but
         // it goes to the /members page as it should
         // STILL need data to NOT be what I thought was going into errValue, but
