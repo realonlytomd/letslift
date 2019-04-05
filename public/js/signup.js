@@ -31,7 +31,12 @@ $(document).ready(function() {
       }).then(function(data) {
         console.log("in /api/signup post, data is: ", data);  //WHY is this printing out if 
         // I have a .catch??  and the variable data here, is what I've said below is errValue????
-        window.location.replace(data);
+        window.location.replace("/signup"); // this DOES go to /signup correctly, 
+        // BUT, it really should be data, as if created properly, data is /members, but
+        // it goes to the /members page as it should
+        // STILL need data to NOT be what I thought was going into errValue, but
+        // that is consistantly not defined, even though it seems to be on the server side.
+        // sign
         // If there's an error, handle it by throwing up a boostrap alert
       }).catch(errValue);
       console.log("after .catch in signup.js, errValue = ", errValue);
