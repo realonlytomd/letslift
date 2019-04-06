@@ -32,18 +32,15 @@ $(document).ready(function() {
         console.log("in /api/signup post, data is: ", data);  //WHY is this printing out if 
         // I have a .catch??  and the variable data here, is what I've said below is errValue????
         // maybe: add if data is not /members, set it to /signup??
-        window.location.replace("/signup"); // SHOULD be data variable, in (). this DOES go to /signup correctly, 
+        window.location.replace(data); // SHOULD be data variable, in (). this DOES go to /signup correctly, 
         // BUT, it really should be data, as if created properly, data is /members, but
         // it goes to the /members page as it should
         // STILL need data to NOT be what I thought was going into errValue, but
         // that is consistantly not defined, even though it seems to be on the server side.
         // sign
         // If there's an error, handle it by throwing up a boostrap alert
-      }).catch(errValue);
-      console.log("after .catch in signup.js, errValue = ", errValue);
-      if (errValue) {
-        handleLoginErr();
-      }
+      }).catch(handleLoginErr());
+    
       // I've stopped here...its calling this even if it works. I need it to only
       // call it if it's an error. 
       // so.... overall, if I res.json(err), it goes to a nonexistant page, if I leave it out,
@@ -54,6 +51,7 @@ $(document).ready(function() {
   
     function handleLoginErr() {
       console.log("In handleLoginErr!");
+      //window.location.replace("/signup");
       $("#signupNote").modal("show");
       // $("#alert.msg").text(err.responseJSON);
       // $("#alert").fadeIn(500);
