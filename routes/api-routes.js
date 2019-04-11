@@ -31,6 +31,9 @@ module.exports = function(router) {
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
+
+  //experiment: this block works - commenting out to try to combine the .catch to the .then
+  // which is now the commented out code below
   router.post("/api/signup", function(req, res) {
     console.log("in post route /api/signup, req.body is: ", req.body);
     db.User.create({
@@ -48,6 +51,25 @@ module.exports = function(router) {
       // res.status(422).json(err.errors[0].message); this was in original file
     });
   });
+
+  // this is the experiment code. same as above but combining the .catch as a 2nd fuction in the .then
+  // router.post("/api/signup", function(req, res) {
+  //   console.log("in post route /api/signup, req.body is: ", req.body);
+  //   db.User.create({
+  //     email: req.body.email,
+  //     password: req.body.password
+  //   }).then(function() {
+  //     console.log("now just after .then(function()!!! ");
+  //     res.redirect(307, "/api/login");
+  //   }, function(err) {
+  //     console.log("now in api-routes.js .catch!!! err.errors[0].value = ", err.errors[0].value);
+  //     //res.json("/signup");
+  //     res.json(err.errors[0].value); 
+  //     // why does the signup.js file try to send the browser to /err.errors[0].value (or whatever is in the res.json?)
+  //     // however, if I log in correctly, the error modal is displayed briefly, then page is overwritten
+  //     // res.status(422).json(err.errors[0].message); this was in original file
+  //   })
+  // });
 
   // DELETE route for deleting users. We get the id of the user to be deleted from
   // req.params.id
