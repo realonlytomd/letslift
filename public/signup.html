@@ -18,11 +18,12 @@
     </div>
   </nav>
   <div class="container-fluid" id="signupBackground">
-    <!-- Modal, reminds user to enter both an email address and a password -->
+    <!-- Modal, reminds user to enter both a correct email address and a password -->
     <div class="modal fade" id="signupNote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
+            <h2>You entered <span id="wrongName"></span>as your email.</h2>
             <h2>Please enter an email address in the form name@something.com, and a 6 digit password.</h2>
           </div>
           <div class="modal-footer">

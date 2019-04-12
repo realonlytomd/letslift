@@ -3,7 +3,7 @@ $(document).ready(function() {
     var signUpForm = $("form.signup");
     var emailInput = $("input#email-input");
     var passwordInput = $("input#password-input");
-  
+    var data;
     // When the signup button is clicked, we validate the email and password are not blank
     signUpForm.on("submit", function(event) {
       event.preventDefault();
@@ -34,14 +34,25 @@ $(document).ready(function() {
         console.log("in /api/signup post, data is: ", data);  //WHY is this printing out if 
         // I have a .catch??  and the variable data here, is what I've said below is errValue????
         // maybe: add if data is not /members, set it to /signup??
-        window.location.replace(data); // SHOULD be data variable, in (). this DOES go to /signup correctly, 
+        
+        //new strategy - if data is either "/members" or "an incorrect login name",
+        // then make this an if statement.
+        if (data === "/members") {
+          console.log("in if statement, data = /members");
+          window.location.replace(data);
+        } else {
+          window.location.replace("/signup");
+          handleLoginErr(data);
+        }
+         // SHOULD be data variable, in (). this DOES go to /signup correctly, 
         // BUT, it really should be data, as if created properly, data is /members, but
         // it goes to the /members page as it should
         // STILL need data to NOT be what I thought was going into errValue, but
         // that is consistantly not defined, even though it seems to be on the server side.
         // sign
         // If there's an error, handle it by throwing up a boostrap alert
-      }).catch(handleLoginErr());
+      //}).catch(handleLoginErr());
+        }).catch();
     
       // I've stopped here...its calling this even if it works. I need it to only
       // call it if it's an error. 
@@ -51,9 +62,9 @@ $(document).ready(function() {
       // 
     }
   
-    function handleLoginErr() {
-      console.log("In handleLoginErr!");
-      //window.location.replace("/signup");
+    function handleLoginErr(data) {
+      console.log("In handleLoginErr! data = " + data);
+      $("#wrongName").text(data);
       $("#signupNote").modal("show");
       // $("#alert.msg").text(err.responseJSON);
       // $("#alert").fadeIn(500);

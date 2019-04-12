@@ -45,7 +45,7 @@ module.exports = function(router) {
     }).catch(function(err) {
       console.log("now in api-routes.js .catch!!! err.errors[0].value = ", err.errors[0].value);
       //res.json("/signup");
-      //res.json(err.errors[0].value); 
+      res.json(err.errors[0].value); 
       // why does the signup.js file try to send the browser to /err.errors[0].value (or whatever is in the res.json?)
       // however, if I log in correctly, the error modal is displayed briefly, then page is overwritten
       // res.status(422).json(err.errors[0].message); this was in original file
