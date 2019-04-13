@@ -19,7 +19,7 @@ module.exports = function(router) {
 
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
-  // Otherwise the user will be sent an error
+  // Otherwise the user will be sent an error modal
   router.post("/api/login", passport.authenticate("local"), function(req, res) {
     // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
     // So we're sending the user back the route to the members page because the redirect will route on the front end
@@ -32,44 +32,23 @@ module.exports = function(router) {
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
 
-  //experiment: this block works - commenting out to try to combine the .catch to the .then
-  // which is now the commented out code below
   router.post("/api/signup", function(req, res) {
     console.log("in post route /api/signup, req.body is: ", req.body);
     db.User.create({
       email: req.body.email,
       password: req.body.password
     }).then(function() {
-      console.log("now just after .then(function()!!! ");
       res.redirect(307, "/api/login");
     }).catch(function(err) {
       console.log("now in api-routes.js .catch!!! err.errors[0].value = ", err.errors[0].value);
-      //res.json("/signup");
+      // err.errors[0].value is just the email that the user entered flagged by the middleware
+      // it's sent back to the user and passed to a modal showing the error in signup.js.
       res.json(err.errors[0].value); 
       // why does the signup.js file try to send the browser to /err.errors[0].value (or whatever is in the res.json?)
       // however, if I log in correctly, the error modal is displayed briefly, then page is overwritten
       // res.status(422).json(err.errors[0].message); this was in original file
     });
   });
-
-  // this is the experiment code. same as above but combining the .catch as a 2nd fuction in the .then
-  // router.post("/api/signup", function(req, res) {
-  //   console.log("in post route /api/signup, req.body is: ", req.body);
-  //   db.User.create({
-  //     email: req.body.email,
-  //     password: req.body.password
-  //   }).then(function() {
-  //     console.log("now just after .then(function()!!! ");
-  //     res.redirect(307, "/api/login");
-  //   }, function(err) {
-  //     console.log("now in api-routes.js .catch!!! err.errors[0].value = ", err.errors[0].value);
-  //     //res.json("/signup");
-  //     res.json(err.errors[0].value); 
-  //     // why does the signup.js file try to send the browser to /err.errors[0].value (or whatever is in the res.json?)
-  //     // however, if I log in correctly, the error modal is displayed briefly, then page is overwritten
-  //     // res.status(422).json(err.errors[0].message); this was in original file
-  //   })
-  // });
 
   // DELETE route for deleting users. We get the id of the user to be deleted from
   // req.params.id
@@ -361,39 +340,4 @@ module.exports = function(router) {
         });
       });
   });
-
-  // // GET route for getting all of the burgers
-  // router.get("/", function(req, res) {
-  //   db.Burger.findAll({})
-  //   .then(function(dbBurger) {
-  //     // console.log(dbBurger);
-  //     var burger = {burger:dbBurger};
-  //     // console.log(burger);
-  //     res.render("index",burger);
-  //   });
-  // });
-
-  // // POST route for saving a new burger
-  // router.post("/api/burgers", function(req, res) {
-  //   // console.log(req.body);
-  //   db.Burger.create({
-  //     burger_name: req.body.burger_name
-  //   })
-  //   .then(function(result) {
-  //     res.json(result);
-  //   });
-  // });
-
-  // // PUT route for updating devoured
-  // router.put("/api/burgers/:id", function(req, res) {
-  //   db.Burger.update(
-  //     req.body,{
-  //     where: {
-  //     id: req.params.id
-  //   }
-  // })
-  //   .then(function(result) {
-  //     res.json(result);
-  //   });
-  // });
 };
