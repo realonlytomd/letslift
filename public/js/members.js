@@ -1376,7 +1376,8 @@ $(document).ready(function() {
         // then go down by one with each press. after 0, it should go back to
         // REPS.  then start over.
         $(document).on("click", ".startTimer", function() {
-          $(this).css('background-color', 'red');
+          $(this).css('background-color', '#9e3b29');
+          $(this).css('color', '#f3e0ba');
           // Need to not stop and restart timer after each press of the same button
           // so set the variable that picks which button was just clicked
           // also, if doing super-sets, need to know which exercise the user is on,
@@ -1403,7 +1404,8 @@ $(document).ready(function() {
 
           if (clicksofSetButton > reps) {
             $(this).text("Reps");
-            $(this).css('background-color', 'green'); // button back to green if user clicks back to "Reps"
+            $(this).css('background-color', '#f3e0ba');
+            $(this).css('color', '#9e3b29'); // button back to green if user clicks back to "Reps"
             clicksofSetButton = -1;
             $(this).attr("data-clicksofSetButton", clicksofSetButton);
             indexofPreviousButton = indexofNewButton;
