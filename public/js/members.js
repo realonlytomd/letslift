@@ -281,6 +281,11 @@ $(document).ready(function() {
         //
         // here, need to add ability to edit the name of the chosen workout
         // probably need to change workoutInput[jay] , jay needs to be indexWorkout? or is jay known?
+        // also, make the forms same look as editExercise function below, also the submit button.
+        // the submit here should just update the db, user still needs to hit the finished editing button
+        // AND, not go to the same function as to enter a new workout because THAT one calls
+        // the function to enter new exercises. Not what should be happening here.
+        // 
         $("#editExercisesForms").append("<h2><span class='namebox'>Wish To Change Name of Workout?</span></h2>" +
               "<form class='enterWorkoutName'>" +
               "<div class='form-group'><label for=" + workoutInput[jay] + ">Name of New Workout</label>" +
