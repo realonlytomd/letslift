@@ -93,8 +93,7 @@ $(document).ready(function() {
     //$("#navbarNames").append(holder); // or...
     $("#placeDeleteButton").append(holder);
 
-    // This function deletes an entire user.  Need to add a warning modal!
-    // need to log out user after they click the delete user button, and direct back to home page.
+    // This function deletes an entire user.
     $(document).on("click", ".deleteUser", function(event) {
       event.preventDefault();
       // copied from class example
@@ -130,7 +129,7 @@ $(document).ready(function() {
       for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null || workout[i] === "") {
         } else {
-        // need to create the Edit functon.  The Edit button should have the same as the delete button
+        // need to create the Edit functon.  The Edit button should look the same as the delete button
         $("#workoutRow").show();
         var holder2 = $("<button>");
         holder2.attr("index", i);
@@ -246,6 +245,7 @@ $(document).ready(function() {
           // I can fix this by hiding that exercise's form block. Is this a good idea?? don't know.
           case 0:
             counter = 0;
+            console.log("counter inside switch case: " + counter);
             buildExerciseEditForms();
             break;
           case 1:
@@ -255,14 +255,17 @@ $(document).ready(function() {
             break;
           case 2:
             counter = 20;
+            console.log("counter inside switch case: " + counter);
             buildExerciseEditForms();
             break;
           case 3:
             counter = 30;
+            console.log("counter inside switch case: " + counter);
             buildExerciseEditForms();
             break;
           case 4:
             counter = 40;
+            console.log("counter inside switch case: " + counter);
             buildExerciseEditForms();
             break;
           default:
@@ -275,20 +278,29 @@ $(document).ready(function() {
         $("#editExercisesForms").empty();
         console.log("counter inside buildExerciseEditforms: " + counter);
         e = 1;
-            for (kay = counter; kay < (counter + 10); kay++) {
-              editExercises();
-              if (kay === 100) {
-                console.log("kay got to 100!");
-                break;
-              }
-            }
-            // add the finish all edit button here.
-            var finishAllHolder = $("<button>");
-            finishAllHolder.attr("id", "hideEditExercise");
-            //finishAllHolder.addClass("btn");
-            //finishAllHolder.addClass("btn-default");
-            finishAllHolder.text("Finished Editing");
-            $("#editExercisesForms").append(finishAllHolder);
+        //
+        // here, need to add ability to edit the name of the chosen workout
+        // probably need to change workoutInput[jay] , jay needs to be indexWorkout? or is jay known?
+        $("#editExercisesForms").append("<h2><span class='namebox'>Wish To Change Name of Workout?</span></h2>" +
+              "<form class='enterWorkoutName'>" +
+              "<div class='form-group'><label for=" + workoutInput[jay] + ">Name of New Workout</label>" +
+              "<input type='text' class='form-control' id=" + workoutInput[jay] + " placeholder='New Name of Workout'></div>" +
+              "<button type='submit' id='nameSubButton'>Submit</button></form>");
+        //
+        for (kay = counter; kay < (counter + 10); kay++) {
+          editExercises();
+          if (kay === 100) {
+            console.log("kay got to 100!");
+            break;
+          }
+        }
+        // add the finish all edit button here.
+        var finishAllHolder = $("<button>");
+        finishAllHolder.attr("id", "hideEditExercise");
+        //finishAllHolder.addClass("btn");
+        //finishAllHolder.addClass("btn-default");
+        finishAllHolder.text("Finished Editing");
+        $("#editExercisesForms").append(finishAllHolder);
       }
 
       // this is like the function that creates the form to enter a new exercise,
@@ -671,6 +683,7 @@ $(document).ready(function() {
               console.log("jay inside creation of workout name form = " + jay);
               return;
             } else if (numWorkouts === 5) {
+              // add modal to explain there are already 5 workouts!
               console.log("inside function to build form to name workouts, 2nd if, numWorkouts = " + numWorkouts);
               console.log("this needs to be displayed to user, but .... already have 5 workouts!");
               return;
