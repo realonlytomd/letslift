@@ -22,8 +22,10 @@ $(document).ready(function() {
   var jay; //indeces of workouts array
   // indeces for exercise/weight/sets/reps arrays corresponding to
   var kay; //  j=0: kay=0-9; j=1:kay=10-19; j=2:kay=20-29; etc.
+  var counter; // arbitrary counter to assign kay to while stepping through exercise arrays
   // e is the count of exercises within each workout
   var e;
+  var onlyEdit = 0;
   var numWorkouts; // numWorkouts is count of workouts for listing purposes
   // build arrays for input of new data
   var workoutInput = ["workoutA", "workoutB", "workoutC", "workoutD", "workoutE"];
@@ -231,9 +233,9 @@ $(document).ready(function() {
         // kay is put in as the for loop is counted through
         // and the exercise, weight, sets, reps arrays are all built.
         $("#editExercisesForms").show();
-        var indexWorkout = parseInt($(this).attr("index"));
-        console.log("indexWorkout = " + indexWorkout);
-        switch (indexWorkout) {  //INSTEAD of printing all the exercises with the submit button
+        jay = parseInt($(this).attr("index"));
+        console.log("jay = " + jay);
+        switch (jay) {  //INSTEAD of printing all the exercises with the submit button
           // after each, is this confusing?, maybe should I just print 1 exercise at a time?
           //  but I want the user to see the entire workout in one place
           // maybe print this out, then add the edit button to each exercise,
@@ -287,10 +289,18 @@ $(document).ready(function() {
         // the function to enter new exercises. Not what should be happening here.
         // 
         $("#editExercisesForms").append("<h2><span class='namebox'>Wish To Change Name of Workout?</span></h2>" +
-              "<form class='enterWorkoutName'>" +
-              "<div class='form-group'><label for=" + workoutInput[jay] + ">Name of New Workout</label>" +
-              "<input type='text' class='form-control' id=" + workoutInput[jay] + " placeholder='New Name of Workout'></div>" +
-              "<button type='submit' id='nameSubButton'>Submit</button></form>");
+          "<form class='enterWorkoutName'><fieldset>" +
+          "<div class='form-group'><label for=" + workoutInput[jay] + ">New Name of Workout. Currently: " + workout[jay] + "</label>" +
+          "<input type='text' class='form-control' id=" + workoutInput[jay] + " placeholder='New Name of Workout'></div>" +
+          "</fieldset></form>");
+          var holder2 = $("<button>");
+          holder2.attr("type","submit");
+          holder2.attr("id","nameSubButton");
+          holder2.attr("index", jay);
+          holder2.text("Submit Workout Name Change");
+        $("#editExercisesForms").append(holder2);
+        onlyEdit = 1;
+        console.log("variable onlyEdit is now: " + onlyEdit);
         //
         for (kay = counter; kay < (counter + 10); kay++) {
           editExercises();
@@ -302,8 +312,6 @@ $(document).ready(function() {
         // add the finish all edit button here.
         var finishAllHolder = $("<button>");
         finishAllHolder.attr("id", "hideEditExercise");
-        //finishAllHolder.addClass("btn");
-        //finishAllHolder.addClass("btn-default");
         finishAllHolder.text("Finished Editing");
         $("#editExercisesForms").append(finishAllHolder);
       }
@@ -328,8 +336,6 @@ $(document).ready(function() {
           "</fieldset></form>");
           var holder = $("<button>");
           holder.attr("type","submit");
-          //holder.addClass("btn");
-          //holder.addClass("btn-default");
           holder.attr("id","exerciseEditSubButton");
           holder.attr("index", kay);
           holder.text("Submit Changes For This Exercise");
@@ -397,6 +403,7 @@ $(document).ready(function() {
         event.preventDefault();
         $("#editExercisesForms").hide();
         $("#workoutRow").show();
+        onlyEdit = 0;
         window.location.reload();
       });
 
@@ -699,12 +706,17 @@ $(document).ready(function() {
       // the data is stored in the db
       $(document).on("click", "#nameSubButton", function(event) {
         event.preventDefault();
+
         // build the data object to be put into the database
         // but it only works if there is data, so need to only put in the values that have data
         //put the switchcase code here. 
         // The varible kay (the index for the arrays) is stair stepped by 10 
         // because there are a maximum of 10 exercises for each workout
         //NEW: add a way to edit the name of a workout, but not change the rest of the data!
+        // if user entered nothing, the field's value should be what was previously there
+        if  ($("#" + workoutInput[jay]).val().trim() === "") {
+          $("#" + workoutInput[jay]).val(workout[jay]);
+        }
         switch (jay) {
           case 0:
             var workoutNameInputs = {
@@ -750,22 +762,28 @@ $(document).ready(function() {
         );
         // If there's an error, handle it by throwing up a boostrap alert.
         // empty out the input fields for the form
-        $("#" + workoutInput[jay]).val("");
-        // take away the entry form for naming a new workout
-        $("#entryForm").empty();
-        // Now call the function that builds the input form for exercises.
-        // what are the variables I know before this is called?:
-        // jay (which is the number of the workout: 0-4)
-        // need to set kay, (which is the index of the exercise/weight/sets/reps array), 
-        // and increase it as needed for more exercises
-        // then just need to put in the apprpriate variable: exercise, weight, sets, reps
-        // and add buttons to either add more exercises, or a button to finish at the end
-        // but each exercise needs to have a button to edit that exercise info... - maybe 
-        // only when the whole exercise is listed out...???
-        // the variable, e - the count of the exercise is set to 1 here because the user
-        // had just created the new workout.
-        e = 1;
-        enterExercises();
+        // but only if the user is inputting new workout info, not just editing
+        // the name of the the current workout. In that case, onlyEdit has been set to true
+        if (onlyEdit === 0) {
+          $("#" + workoutInput[jay]).val("");
+          // take away the entry form for naming a new workout
+          $("#entryForm").empty();
+          // Now call the function that builds the input form for exercises.
+          // what are the variables I know before this is called?:
+          // jay (which is the number of the workout: 0-4)
+          // need to set kay, (which is the index of the exercise/weight/sets/reps array), 
+          // and increase it as needed for more exercises
+          // then just need to put in the apprpriate variable: exercise, weight, sets, reps
+          // and add buttons to either add more exercises, or a button to finish at the end
+          // but each exercise needs to have a button to edit that exercise info... - maybe 
+          // only when the whole exercise is listed out...???
+          // the variable, e - the count of the exercise is set to 1 here because the user
+          // had just created the new workout.
+          e = 1;
+          enterExercises();
+          } else {
+            console.log("This is where I want to be! if boolean is correct");
+        }
       });
 
       // this function creates the form for inputting exercises
