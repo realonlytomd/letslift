@@ -74,7 +74,12 @@ $(document).ready(function() {
    "repsOneofE", "repsTwoofE","repsThreeofE", "repsFourofE", "repsFiveofE",
    "repsSixofE", "repsSevenofE", "repsEightofE", "repsNineofE", "repsTenofE"];
 
-   var boop = $("#myAudio");
+   
+   var resttime = ["resttime(1).mp3", "resttime(5).mp3", "resttime(6).mp3", "resttime(7).mp3", 
+    "resttime(8).mp3", "resttime(9).mp3"];
+    // soundCount is the variable that choose which sound file to play as the rest timer counts
+   var soundCount = 0;
+    //var boop = $("#myAudio");
 
     // This portion does a GET request to get which user logged in
   $.get("/api/user_data").then(function(userdata) {
@@ -1398,11 +1403,26 @@ $(document).ready(function() {
           $("span#timerDisplay").html(startCount);
           startCount = startCount + 1;
           console.log("startCount = " + startCount);
-          // set up to play a sound as startCount reaches every 30 seconds, 5 for testing
-          if ((startCount % 30) === 0) {
+          // set up to play a sound as startCount reaches every 30 seconds,
+          if ((startCount % 5) === 0) {
             // with several specific audio files (counting), i'll set them up in an array
-            // then count through the array as 30, then 60, then 90 seconds is reached
+            // then count through the array as 30, then 60, then 90 seconds is reached, etc.
+            // need to decide on a new variable counter, soundCount, which determines which sound
+            // file to play. 
+            // so, here, timer has started - checks if startCount is divisible by 30, so plays first sound
+            $("#myAudio").empty();
+            var source = $("<source>");
+            console.log("soundCount: " + soundCount);
+            console.log("sounds/resttime[soundCount]: sounds/" + resttime[soundCount]);
+            source.attr("src", "sounds/" + resttime[soundCount]);
+            source.attr("type", "audio/mpeg");
+            $("#myAudio").append(source);
+            $("#myAudio").append("Your browser does not support the audio element.");
             playAudio();
+            // count up soundCount by one, so the next time it's called, it plays the next sound
+            // in the array
+            soundCount++;
+            console.log("in Timer function, soundCount: " + soundCount);
           }
           myTimer = setTimeout(function(){ timer() }, 1000);
         }
@@ -1425,6 +1445,7 @@ $(document).ready(function() {
           // so as to not start the timer over while user pics the number of reps completed.
           if ((indexofNewButton !== indexofPreviousButton) || (currentExercise !== previousExercise)) {
             stopTimer();
+            soundCount = 0;
             timer();
           }
           
@@ -1461,10 +1482,16 @@ $(document).ready(function() {
         $(".footer").hide();
       }
 
-      function playAudio() { 
+      function playAudio() {
+        console.log("inside playAudio function, soundCount: " + soundCount);
         // the var boop is a jQuery object, and the play method only works on a native dom element
         // or the first index of the array.  from stack overflow. who knew?
-        boop[0].play(); 
+        $("#myAudio")[0].play();
+        
+        // but if over 5 minutes, start counting over, since user probably finished
+        if (soundCount === resttime.length) {
+          soundCount = 3;
+        }
       } 
       
     });
