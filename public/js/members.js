@@ -75,7 +75,7 @@ $(document).ready(function() {
    "repsSixofE", "repsSevenofE", "repsEightofE", "repsNineofE", "repsTenofE"];
 
    
-   var resttime = ["resttime(0).mp3", "resttime(1).mp3", "resttime(2).mp3", "resttime(3).mp3", 
+   var restTime = ["resttime(0).mp3", "resttime(1).mp3", "resttime(2).mp3", "resttime(3).mp3", 
    "resttime(4).mp3", "resttime(5).mp3", "resttime(6).mp3", "resttime(7).mp3", 
     "resttime(8).mp3", "resttime(9).mp3"];
     // soundCount is the variable that choose which sound file to play as the rest timer counts
@@ -1405,25 +1405,26 @@ $(document).ready(function() {
           startCount = startCount + 1;
           console.log("startCount = " + startCount);
           // set up to play a sound as startCount reaches every 30 seconds,
-          if ((startCount % 5) === 0) {
+          if ((startCount % 30) === 0) {
             // with several specific audio files (counting), i'll set them up in an array
             // then count through the array as 30, then 60, then 90 seconds is reached, etc.
             // need to decide on a new variable counter, soundCount, which determines which sound
             // file to play. 
             // so, here, timer has started - checks if startCount is divisible by 30, so plays first sound
-            $("#myAudio").empty();
+            $("#audioCode").empty();
+            var audio = $("<audio>");
+            audio.attr("id", "myAudio");
             var source = $("<source>");
-            console.log("soundCount: " + soundCount);
-            console.log("sounds/resttime[soundCount]: sounds/" + resttime[soundCount]);
-            source.attr("src", "sounds/" + resttime[soundCount]);
+            source.attr("src", "sounds/" + restTime[soundCount]);
             //$(this).attr  ?? not sure what to do.
             source.attr("type", "audio/mpeg");
-            $("#myAudio").append(source);
-            $("#myAudio").append("Your browser does not support the audio element.");
+            audio.append(source);
+            audio.append("Your browser does not support the audio element.");
+            $("#audioCode").append(audio);
+            
             playAudio();
             // count up soundCount by one, so the next time it's called, it plays the next sound
             // in the array
-            soundCount++;
             console.log("in Timer function, soundCount: " + soundCount);
           }
           myTimer = setTimeout(function(){ timer() }, 1000);
@@ -1491,8 +1492,10 @@ $(document).ready(function() {
         $("#myAudio")[0].play();
         
         // but if over 5 minutes, start counting over, since user probably finished
-        if (soundCount === resttime.length) {
-          soundCount = 3;
+        soundCount++;
+        console.log("restTime.length: " + restTime.length);
+        if (soundCount === restTime.length) {
+          soundCount = 0;
         }
       } 
       
