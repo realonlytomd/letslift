@@ -75,7 +75,8 @@ $(document).ready(function() {
    "repsSixofE", "repsSevenofE", "repsEightofE", "repsNineofE", "repsTenofE"];
 
    
-   var resttime = ["resttime(1).mp3", "resttime(5).mp3", "resttime(6).mp3", "resttime(7).mp3", 
+   var resttime = ["resttime(0).mp3", "resttime(1).mp3", "resttime(2).mp3", "resttime(3).mp3", 
+   "resttime(4).mp3", "resttime(5).mp3", "resttime(6).mp3", "resttime(7).mp3", 
     "resttime(8).mp3", "resttime(9).mp3"];
     // soundCount is the variable that choose which sound file to play as the rest timer counts
    var soundCount = 0;
@@ -1415,6 +1416,7 @@ $(document).ready(function() {
             console.log("soundCount: " + soundCount);
             console.log("sounds/resttime[soundCount]: sounds/" + resttime[soundCount]);
             source.attr("src", "sounds/" + resttime[soundCount]);
+            //$(this).attr  ?? not sure what to do.
             source.attr("type", "audio/mpeg");
             $("#myAudio").append(source);
             $("#myAudio").append("Your browser does not support the audio element.");
