@@ -78,6 +78,8 @@ $(document).ready(function() {
    var restTime = ["resttime(0).mp3", "resttime(1).mp3", "resttime(2).mp3", "resttime(3).mp3", 
    "resttime(4).mp3", "resttime(5).mp3", "resttime(6).mp3", "resttime(7).mp3", 
     "resttime(8).mp3", "resttime(9).mp3"];
+    var restTimeOgg = ["30-sec.ogg", "1-min.ogg", "1.5-min.ogg", "2-min.ogg", "2.5-min.ogg",
+      "3-min.ogg", "3.5-min.ogg", "4-min.ogg", "4.5-min.ogg", "5-min.ogg"];
     // soundCount is the variable that choose which sound file to play as the rest timer counts
    var soundCount = 0;
     //var boop = $("#myAudio");
@@ -1416,9 +1418,12 @@ $(document).ready(function() {
             audio.attr("id", "myAudio");
             var source = $("<source>");
             source.attr("src", "sounds/" + restTime[soundCount]);
-            //$(this).attr  ?? not sure what to do.
             source.attr("type", "audio/mpeg");
+            var source2 = $("<source>");
+            source2.attr("src", "sounds/" + restTimeOgg[soundCount]);
+            source2.attr("type", "audio/ogg");
             audio.append(source);
+            audio.append(source2);
             audio.append("Your browser does not support the audio element.");
             $("#audioCode").append(audio);
             
