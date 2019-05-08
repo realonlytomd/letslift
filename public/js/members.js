@@ -845,7 +845,6 @@ $(document).ready(function() {
         switch (kay) {
           case 0:
           //check for forms the user has left blank so app doesn't crash
-          console.log("checking value of exercisename id " + $("#" + exerciseInput[kay]).val());
             var workoutExerciseInputs = {
               exerciseOneofA: $("#" + exerciseInput[kay]).val().trim(),
               weightOneofA:$("#" + weightInput[kay]).val().trim(),

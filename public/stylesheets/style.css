@@ -57,12 +57,6 @@ span.namebox {
 	border-radius: 4px;
 }
 
-/*h2, h3, h4, p {
-	color: white;
-	background-color: brown;
-	padding: 5px;
-}*/
-
 h3 {
 	margin-bottom: 0px;
 }
@@ -72,10 +66,11 @@ label {
 }
 
 button {
+	background-color: #f3e0ba;
 	margin-top: 10px;
 	margin-right: 0px;
 	text-decoration: none;
-	font-size: 16px;
+	font-size: 14px;
 	color: black;
 	border-radius: 4px;
 	border-color: #5d4a44;
@@ -99,8 +94,8 @@ button.startTimer {
 	margin-left: 15px;
 	margin-right: 0px;
 	margin-bottom: 10px;
-	width: 50px;
-	height: 50px;
+	width: 60px;
+	height: 60px;
 	color: #9e3b29;
 	background-color: #f3e0ba;
 }
