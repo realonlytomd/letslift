@@ -133,7 +133,7 @@ legend {
 	border-top: 1px solid black;
 }
 
-button#exerciseEditSubButton {
+button#exerciseEditSubButton, button#nameSubButton {
 	margin-bottom: 20px;
 }
 

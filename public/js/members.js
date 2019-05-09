@@ -4,8 +4,6 @@ $(document).ready(function() {
   $("#editExercisesForms").hide();
   $("#currentWorkout").hide();
   $(".footer").hide();
-  //
-  //$("#enterRowHeading").hide();
   // set up the variables
   var startCount = 0;
   var myTimer;
@@ -13,7 +11,6 @@ $(document).ready(function() {
   var indexofPreviousButton = 20;
   var previousExercise = "nothing";
   var selectedWorkout;
-  // in progress: not sure what arrays I need:
   var workout = [];
   var exercise = [];
   var weight = [];
@@ -74,7 +71,7 @@ $(document).ready(function() {
    "repsOneofE", "repsTwoofE","repsThreeofE", "repsFourofE", "repsFiveofE",
    "repsSixofE", "repsSevenofE", "repsEightofE", "repsNineofE", "repsTenofE"];
 
-   
+   // array of sound files for timer - every 30 seconds
    var restTime = ["resttime(0).mp3", "resttime(1).mp3", "resttime(2).mp3", "resttime(3).mp3", 
    "resttime(4).mp3", "resttime(5).mp3", "resttime(6).mp3", "resttime(7).mp3", 
     "resttime(8).mp3", "resttime(9).mp3"];
@@ -82,9 +79,9 @@ $(document).ready(function() {
       "3-min.ogg", "3.5-min.ogg", "4-min.ogg", "4.5-min.ogg", "5-min.ogg"];
     // soundCount is the variable that choose which sound file to play as the rest timer counts
    var soundCount = 0;
-    //var boop = $("#myAudio");
 
     // This portion does a GET request to get which user logged in
+    // sets up id which is used throughout
   $.get("/api/user_data").then(function(userdata) {
     console.log("object 'userdata' inside of the first .get is ", userdata);
     $(".member-id").text(userdata.id);
@@ -125,21 +122,20 @@ $(document).ready(function() {
             }
           })
     });
-      //putting all of the below inside the first get so as to have the correct id (user)
+    // putting all of the below inside the first get so as to have the correct id (user)
     // this .get brings in all the data from the db
     $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
       // build array of named workouts - new for each data retrieval
       workout = [data.workoutA, data.workoutB, data.workoutC, data.workoutD, data.workoutE];
       console.log("workout array: " + workout);
       //this merely creates a list of workouts available, but the class "selectedWorkout" is assigned
-     
+      // below
       $("#availableWorkouts").empty();
       numWorkouts = 0;
       $("#workoutRow").hide();
       for (var i = 0; i < workout.length; i++) {
         if (workout[i] === null || workout[i] === "") {
         } else {
-        // need to create the Edit functon.  The Edit button should look the same as the delete button
         $("#workoutRow").show();
         var holder2 = $("<button>");
         holder2.attr("index", i);
@@ -152,18 +148,18 @@ $(document).ready(function() {
         $("#availableWorkouts").append("<h3 class='selectedWorkout'><span class='namebox'>" + workout[i] + "</span></h3>");
         $("#availableWorkouts").append(holder2);
         $("#availableWorkouts").append(holder);
-        // the Edit workout button will show all the exercises, START HERE!
-        // but the placeholder will show what is currently in the existing exercise.
+        // the Edit workout button will show all the exercises.
         // as the user submits the changes the data, then the new data is submitted to the database.
-
         // This is where the number of workouts for that user is counted. Available throughout.
         numWorkouts++;
+        // tests if there are already 5 workouts, so user is simply not prompted to enter more
         if (numWorkouts === 5) {
           $("#enterRowHeading").hide();
         }
         console.log("inside first .get of info: numWorkouts = " + numWorkouts);
         }
       }
+      // this sets up the arrays of data retrieved from the db for a specific user
       exercise = [data.exerciseOneofA, data.exerciseTwoofA, data.exerciseThreeofA, 
         data.exerciseFourofA, data.exerciseFiveofA, data.exerciseSixofA, data.exerciseSevenofA, 
         data.exerciseEightofA, data.exerciseNineofA, data.exerciseTenofA,
@@ -237,22 +233,16 @@ $(document).ready(function() {
         $("#currentWorkout").hide();
         $("#enterRowHeading").hide();
         stopTimer();
-        // what do I know: the index of the workout i, which is jay, what about kay?
         // kay is put in as the for loop is counted through
         // and the exercise, weight, sets, reps arrays are all built.
         $("#editExercisesForms").show();
         jay = parseInt($(this).attr("index"));
         console.log("jay = " + jay);
-        switch (jay) {  //INSTEAD of printing all the exercises with the submit button
-          // after each, is this confusing?, maybe should I just print 1 exercise at a time?
-          //  but I want the user to see the entire workout in one place
-          // maybe print this out, then add the edit button to each exercise,
+        // this switch case determines which workout will be edited
+        switch (jay) {
+          // The user should see the entire workout in one place
           // so then the user updates 1 exercise at a time.
-          // Or, for now, leave as is, but each exercise should disappear as it's updates
-          // are submitted.
           // then a Finish all editing button at the bottom.
-          // possible problem: after the user clicks the submit, the "currently:" still shows the old info.
-          // I can fix this by hiding that exercise's form block. Is this a good idea?? don't know.
           case 0:
             counter = 0;
             console.log("counter inside switch case: " + counter);
@@ -279,9 +269,8 @@ $(document).ready(function() {
             buildExerciseEditForms();
             break;
           default:
-            console.log("default in switch case code of counter to whatever workout to be edited. Something wrong");
+            console.log("Something wrong");
         }
-        
       });
 
       function buildExerciseEditForms() {
@@ -289,12 +278,8 @@ $(document).ready(function() {
         console.log("counter inside buildExerciseEditforms: " + counter);
         e = 1;
         //
-        // here, need to add ability to edit the name of the chosen workout
-        // probably need to change workoutInput[jay] , jay needs to be indexWorkout? or is jay known?
-        // also, make the forms same look as editExercise function below, also the submit button.
+        // here, add ability to edit the name of the chosen workout
         // the submit here should just update the db, user still needs to hit the finished editing button
-        // AND, not go to the same function as to enter a new workout because THAT one calls
-        // the function to enter new exercises. Not what should be happening here.
         // 
         $("#editExercisesForms").append("<h2><span class='namebox'>Wish To Change Name of Workout?</span></h2>" +
           "<form class='enterWorkoutName'><fieldset>" +
@@ -308,8 +293,7 @@ $(document).ready(function() {
           holder2.text("Submit Workout Name Change");
         $("#editExercisesForms").append(holder2);
         onlyEdit = 1;
-        console.log("variable onlyEdit is now: " + onlyEdit);
-        //
+        console.log("variable onlyEdit should be 1: " + onlyEdit);
         for (kay = counter; kay < (counter + 10); kay++) {
           editExercises();
           if (kay === 100) {
@@ -324,14 +308,12 @@ $(document).ready(function() {
         $("#editExercisesForms").append(finishAllHolder);
       }
 
-      // this is like the function that creates the form to enter a new exercise,
-      // but it's for editing existing exercises.
+      // editing existing exercises.
       function editExercises() {
         console.log("Inside function editExercises: kay = " + kay);
         console.log("Inside function editExercises: exercise[kay] = " + exercise[kay]);
         $("#editExercisesForms").append(
           // currently, the exercise plus 1 is kay from the first exercise
-          // and it needs to be 1 to 10, not 1 to 50....
           "<form class='editWorkoutExercises'><fieldset><legend>Edit Exercise " + e + "</legend>" +
           "<div class='form-group'><label for=" + exerciseInput[kay] + ">Name of Exercise. Currently: " + exercise[kay] + "</label>" +
           "<input type='text' class='form-control' id=" + exerciseInput[kay] + " placeholder= '' ></div>" +
@@ -353,30 +335,15 @@ $(document).ready(function() {
           " of all the exercise edit forms.</span></p>");
           e++;
       }
-      // just above, I need to add the submit button to have the value of kay.
-      //  when kay is drawn in each case.
 
-      // When the submit button for editing any data of each exercise of a workout is clicked,
+      // When the submit button for editing submitted data of each exercise of a workout is clicked,
       $(document).on("click", "#exerciseEditSubButton", function(event) {
         event.preventDefault();
         // build the data object to be put into the database
-        // but what to do with any fields where the user hasn't changed the data?
-        // first test: don't worry about it, see what happens.
-        // I found out
-        // it can't .trim an undefined value... or, I can't submit empty fields.
-        // so add a test, if the user doesn't make an input, then submit what
-        // is currently in the data.  testing.
         // i've added the attr index to the button (which has the value of kay)
         kay = parseInt($(this).attr("index"));
-        console.log("inside #exerciseEditSubButton function - kay = " + kay);
-        console.log("inside #exerciseEditSubButton function exercisename id " + $("#" + exerciseInput[kay]).val());
-        console.log("inside #exerciseEditSubButton function - exercise[kay] = " + exercise[kay]);
-
-        
         // check if the user made an input. if not, the input is "", (no input)
-        // and so the value is whatever the previous value
-        // probably need to add an error message if the user inputs a string instead of an integer
-        // or vice versa in the incorrect field.
+        // and so the value the previous value
         if  ($("#" + exerciseInput[kay]).val().trim() === "") {
           $("#" + exerciseInput[kay]).val(exercise[kay]);
         }
@@ -391,22 +358,8 @@ $(document).ready(function() {
         }
 
         exerciseSwitchPut();
-
-        // ...and empty out the input fields for the form
-        // ... but maybe not do this, so user can see what he input and submitted.
-        // How do I tell the user that the finish all edit button must be clicked 
-        // to end the edit session?
-        // How about a note at the top, "below it all the exercises for this workout"
-        // "make any changes to each exercise in turn, and submit.""
-        // "Click 'Finished Editing' button after all changes have been input"  (?)
-          // $("#" + exerciseInput[kay]).val("");
-          // $("#" + weightInput[kay]).val("");
-          // $("#" + setsInput[kay]).val("");
-          // $("#" + repsInput[kay]).val("");
-        // need to add code to remove this particular exercise's input form for editing
-
       });
-
+      // finished editing, hide forms, reload page to reload arrays from db
       $(document).on("click", "#hideEditExercise", function(event) {
         event.preventDefault();
         $("#editExercisesForms").hide();
@@ -415,20 +368,7 @@ $(document).ready(function() {
         window.location.reload();
       });
 
-      // 2/21/2019  NOTE for adding edit ability to info of each exercise during an actual workout:
-      //Want to click the info block: create an edit block JUST FOR THAT EXERCISE
-      // submit button for that exercise will change the db....
-      // But, unsure how to get the new data out of the db...
-      // then redraw the workout with the new data, and continue with the workout
-      // and the time should not be stopping - I'm not sure if the page reload is
-      // the way to go.......
-
-      
-
-      // function to delete a workout - 1st method, renames the name of the workout to null
-      // A User sees
-      // only the list of available workouts, and new ones are put in any space
-      // that is currently null. New exercises will be written over any current info.
+      // delete a workout. It actually update all forms to null or 0
       $(document).on("click", ".renameWorkoutNull", function(event) {
         event.preventDefault();
         var indexWorkout = parseInt($(this).attr("index"));
@@ -436,10 +376,10 @@ $(document).ready(function() {
         switch (indexWorkout) {
           case 0:
             var workoutNameInputs = {
-              // Big problem: the workout and exercises can be null, but the others 
-              // have to be integers, as they are defined as that in the user.js file!
-              //i've got to figure out how to return that cell back to null, not "", or "null"
-              // for now, I've set them to 0 (zero).
+              // The workout and exercises can be null, but the others 
+              // have to be integers, as they are defined as that in the user.js file.
+              // This method was faster to code than setting inputs to null or 0 as
+              // in the edit functions.
               workoutA: null,
               exerciseOneofA: null,
               exerciseTwoofA: null,
@@ -672,17 +612,15 @@ $(document).ready(function() {
           data: workoutNameInputs
         }).then(
           function() {
-            console.log("The workout name has been made null");
+            console.log("The workout has been made null");
           }
         );
-        // this reloads the page to show the user deleted the workout, and remakes the data arrays.
+        // this reloads the page to show the user deleted the workout, and fills the data arrays.
         window.location.reload();
       });
 
       // These functions build the entry form when the user wants to enter new data,
-      // Need to check where there is a "null", and put the new workout there.
       $(document).on("click", "#enterWorkout", function() {
-        console.log("Inside onclick function to build the form to enter a workout name-is this working?");
         $("#entryForm").empty();
         $("#workoutRow").hide();
         $("#currentWorkout").hide();
@@ -692,35 +630,28 @@ $(document).ready(function() {
           console.log("jay = " + jay + ",   workout[jay] = " + workout[jay]);
           if (workout[jay] === null || workout[jay] === "") {
             console.log("inside function to build form to name workouts, 1st if, numWorkouts = " + numWorkouts);
-            // be open to putting this in it's own function to be called from here, for editing workout names later...
-            //HERE: I think i'm counting kay wrong, if jay is 0, kay should be 0-9
             $("#entryForm").append("<h2><span class='namebox'>Enter Name of New Workout</span></h2>" +
               "<form class='enterWorkoutName'>" +
               "<div class='form-group'><label for=" + workoutInput[jay] + ">Name of New Workout</label>" +
               "<input type='text' class='form-control' id=" + workoutInput[jay] + " placeholder='New Workout'></div>" +
               "<button type='submit' id='nameSubButton'>Submit</button></form>");
-              // might need to romove or modify the classes for the button above, btn removed elsewhere
               console.log("jay inside creation of workout name form = " + jay);
               return;
             } else if (numWorkouts === 5) {
-              // add modal to explain there are already 5 workouts!
-              console.log("inside function to build form to name workouts, 2nd if, numWorkouts = " + numWorkouts);
-              console.log("this needs to be displayed to user, but .... already have 5 workouts!");
+              // if there are already 5 workouts, the user is simply not prompted
+              // to enter another one
               return;
             }
         }
       });
-      // when the submit button for inputing or changing the name of a workout is clicked,
+      // when the submit button for inputting or changing the name of a workout is clicked,
       // the data is stored in the db
       $(document).on("click", "#nameSubButton", function(event) {
         event.preventDefault();
 
         // build the data object to be put into the database
-        // but it only works if there is data, so need to only put in the values that have data
-        //put the switchcase code here. 
         // The varible kay (the index for the arrays) is stair stepped by 10 
-        // because there are a maximum of 10 exercises for each workout
-        //NEW: add a way to edit the name of a workout, but not change the rest of the data!
+        // because there are  10 exercises for each workout
         // if user entered nothing, the field's value should be what was previously there
         if  ($("#" + workoutInput[jay]).val().trim() === "") {
           $("#" + workoutInput[jay]).val(workout[jay]);
@@ -757,7 +688,7 @@ $(document).ready(function() {
             kay = 40;
             break;
           default:
-            console.log("default in switch case code of assigning a name to a workout, something wrong");
+            console.log("switch case code of assigning a name to a workout, something wrong");
         }
         var currentURL = window.location.origin;
         $.ajax(currentURL + "/api/createWorkout/" + userdata.id, {
@@ -768,29 +699,21 @@ $(document).ready(function() {
             console.log("a new workout name is stored, jay = " + jay + ". kay = " + kay + ".");
           }
         );
-        // If there's an error, handle it by throwing up a boostrap alert.
         // empty out the input fields for the form
-        // but only if the user is inputting new workout info, not just editing
-        // the name of the the current workout. In that case, onlyEdit has been set to true
+        // only if the user is inputting new workout info, not just editing
+        // the name of the the current workout. In that case, onlyEdit has been set to 1
         if (onlyEdit === 0) {
           $("#" + workoutInput[jay]).val("");
           // take away the entry form for naming a new workout
           $("#entryForm").empty();
-          // Now call the function that builds the input form for exercises.
-          // what are the variables I know before this is called?:
-          // jay (which is the number of the workout: 0-4)
-          // need to set kay, (which is the index of the exercise/weight/sets/reps array), 
-          // and increase it as needed for more exercises
-          // then just need to put in the apprpriate variable: exercise, weight, sets, reps
-          // and add buttons to either add more exercises, or a button to finish at the end
-          // but each exercise needs to have a button to edit that exercise info... - maybe 
-          // only when the whole exercise is listed out...???
-          // the variable, e - the count of the exercise is set to 1 here because the user
+          // call the function that builds the input form for exercises.
+          // need to put in the apprpriate variable: exercise, weight, sets, reps
+          // and add buttons to either add more exercises, or a button to finish adding.
+          // The variable, e - the count of the exercise - is set to 1 here because the user
           // had just created the new workout.
           e = 1;
           enterExercises();
           } else {
-            console.log("This is where I want to be! if boolean is correct");
         }
       });
 
@@ -810,7 +733,6 @@ $(document).ready(function() {
           "<div class='form-group'><label for=" + repsInput[kay] + ">Number of Reps</label>" +
           "<input type='number' class='form-control' id=" + repsInput[kay] + " placeholder=''></div>" +
           "<button type='submit' id='exSubButton'>Submit</button></fieldset></form>");
-          // again with the btn and btn-default
       }
       
       // When the submit button for building the exercises of a workout is clicked,
@@ -1276,34 +1198,19 @@ $(document).ready(function() {
         window.location.reload();
       });
 
-
-          // This function happens when the user clicks the chosen workout.
+      // This function happens when the user clicks the chosen workout.
       $(document).on("click", ".selectedWorkout", function() {
         $("#workoutRow").hide();
         $("#enterRowHeading").hide();
         $("#currentWorkout").show();
-          // What happens? Hide previous divs. Show new actual workout div.
           // Build the workout page  -  where the user sees the title of workout, the exercises,
           // the weight, and corresponding sets buttons, and reps displayed after those buttons
-          // are presssed.  Also the count up clock.
+          // are presssed.
         selectedWorkout = $(this).text();
         console.log("the variable selectedWorkout: " + selectedWorkout);
-        
+        // switch case picks which range of arrays correspond to chosen workout
         switch (selectedWorkout) {
-          case data.workoutA: // could this also be workout[0]?
-            // this worked. so call a function that needs to be created around the code below
-            // and will probably include code to rewrite DOM instead of hardcoding in members.html
-            //jay is a counter, it corresponds 0-9 for A, 10-19 for B, etc.
-            // 12/26/2018 - just looking at this after a couple of weeks, and this code below
-            // is from quite a while ago. first look says jay and kay need to be relooked at 
-            // as they are not necessarily what I thought they were when this was created.
-            // I'm also going to have to put each exercise in a repeatable js code to fit
-            // in the div in the html file, instead of a div for each exercise in the html file.
-            //  so the code below can be in a loop corresponding to the number of exercises, and
-            // counting them up with kay, (the index in the exercise/weight/sets/reps arrays)
-            // kay should not be set to 0 in this sections
-            // jay is the index of workouts, kay is index of exercises, e is the number of exercises
-            //  is this all correct????
+          case data.workoutA:
             console.log("inside case workoutA of switch");
             kay = 0;
             createWorkout();
@@ -1362,8 +1269,6 @@ $(document).ready(function() {
               for (var i = 0; i < sets[k]; i++) {
                 var holder = $("<button>");
                 holder.attr("type","button");
-                //holder.addClass("btn");
-                //holder.addClass("btn-success");
                 holder.addClass("startTimer");
                 holder.attr("data-reps", reps[k]);
                 holder.attr("data-clicksofSetButton", clicksofSetButton);
@@ -1380,8 +1285,6 @@ $(document).ready(function() {
           // insert a Finish button here to end the workout, stop the timer.  
           var holder2 = $("<button>");
           holder2.attr("type","button");
-          //holder2.addClass("btn");
-          //holder2.addClass("btn-success");
           holder2.addClass("finishWorkout");
           holder2.text("Workout Finished");
           $("#exercisesInfoButtons").append(holder2);
@@ -1389,30 +1292,19 @@ $(document).ready(function() {
 
         $(document).on("click", ".finishWorkout", function() {
           stopTimer();
-          // what else should happen?
-          // add a note section?
-          // put another logout button here?
-          // incorporate some sort of function that stores the actual number of reps the
-          // user finished?
           // go back to beginning "screen" with list of workouts.
           window.location.reload();
         });
 
         function timer() {
-          //this span needs to be put in a fixed footer so user sees it on page while the
-          //timer clock is running. Add a stop when workout is finished? (or somewhere before?)
-          //So, there is no need for a different timer span for each exercise.
+          //this span is in a fixed footer so user sees it on page while the
+          //timer clock is running.
           $(".footer").show();
           $("span#timerDisplay").html(startCount);
           startCount = startCount + 1;
           console.log("startCount = " + startCount);
           // set up to play a sound as startCount reaches every 30 seconds,
           if ((startCount % 30) === 0) {
-            // with several specific audio files (counting), i'll set them up in an array
-            // then count through the array as 30, then 60, then 90 seconds is reached, etc.
-            // need to decide on a new variable counter, soundCount, which determines which sound
-            // file to play. 
-            // so, here, timer has started - checks if startCount is divisible by 30, so plays first sound
             $("#audioCode").empty();
             var audio = $("<audio>");
             audio.attr("id", "myAudio");
@@ -1428,9 +1320,6 @@ $(document).ready(function() {
             $("#audioCode").append(audio);
             
             playAudio();
-            // count up soundCount by one, so the next time it's called, it plays the next sound
-            // in the array
-            console.log("in Timer function, soundCount: " + soundCount);
           }
           myTimer = setTimeout(function(){ timer() }, 1000);
         }
@@ -1443,12 +1332,10 @@ $(document).ready(function() {
           $(this).css('background-color', '#9e3b29');
           $(this).css('color', '#f3e0ba');
           // Need to not stop and restart timer after each press of the same button
-          // so set the variable that picks which button was just clicked
           // also, if doing super-sets, need to know which exercise the user is on,
           // so that the timer does stop if choosing the same set of a different exercise
           var indexofNewButton = parseInt($(this).attr("data-chosenSet"));
           var currentExercise = $(this).attr("data-exercise");
-          
           // check to see if it's different than the previous button
           // so as to not start the timer over while user pics the number of reps completed.
           if ((indexofNewButton !== indexofPreviousButton) || (currentExercise !== previousExercise)) {
@@ -1470,7 +1357,7 @@ $(document).ready(function() {
           if (clicksofSetButton > reps) {
             $(this).text("Reps");
             $(this).css('background-color', '#f3e0ba');
-            $(this).css('color', '#9e3b29'); // button back to green if user clicks back to "Reps"
+            $(this).css('color', '#9e3b29'); // button color back if user clicks back to "Reps"
             clicksofSetButton = -1;
             $(this).attr("data-clicksofSetButton", clicksofSetButton);
             indexofPreviousButton = indexofNewButton;
@@ -1492,10 +1379,9 @@ $(document).ready(function() {
 
       function playAudio() {
         console.log("inside playAudio function, soundCount: " + soundCount);
-        // the var boop is a jQuery object, and the play method only works on a native dom element
+        // the element is a jQuery object, and the play method only works on a native dom element
         // or the first index of the array.  from stack overflow. who knew?
         $("#myAudio")[0].play();
-        
         // but if over 5 minutes, start counting over, since user probably finished
         soundCount++;
         console.log("restTime.length: " + restTime.length);
