@@ -1252,7 +1252,8 @@ $(document).ready(function() {
           $.ajax(currentURL + "/api/createWorkout/" + userdata.id, {
             type: "PUT",
             data: workoutExerciseInputs
-          }).then(function() {
+          }).then(function(result) {
+            console.log("result from PUT (should be 1):" + result);
             // I do this .get only to check. The arrays of data aren't rewritten unless the page relaods.
             $.get("/api/specific_user_data/" + userdata.id).then(function(data) {
               console.log("object 'data' inside of .get AFTER submit of new exerise data: ", data);
@@ -1271,7 +1272,7 @@ $(document).ready(function() {
       $(document).on("click", "#noMoreExercises", function() {
         console.log("User has finished inputting exercises for the particular workout!")
         //this reloads the page to more simply get the data from the db,
-        // since it originally loads getting the data, and filling in the arrays.
+        // since it originally loads getting the data, and fills in the arrays.
         window.location.reload();
       });
 
