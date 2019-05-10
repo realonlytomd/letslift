@@ -284,14 +284,16 @@ $(document).ready(function() {
         $("#editExercisesForms").append("<h2><span class='namebox'>Wish To Change Name of Workout?</span></h2>" +
           "<form class='enterWorkoutName'><fieldset>" +
           "<div class='form-group'><label for=" + workoutInput[jay] + ">New Name of Workout. Currently: " + workout[jay] + "</label>" +
-          "<input type='text' class='form-control' id=" + workoutInput[jay] + " placeholder='New Name of Workout'></div>" +
+          "<input type='text' class='form-control' id=" + workoutInput[jay] + " placeholder=''></div>" +
           "</fieldset></form>");
           var holder2 = $("<button>");
           holder2.attr("type","submit");
           holder2.attr("id","nameSubButton");
           holder2.attr("index", jay);
-          holder2.text("Submit Workout Name Change");
+          holder2.text("Submit Change for Name of Workout");
         $("#editExercisesForms").append(holder2);
+        $("#editExercisesForms").append("<p><span class='namebox'>IMPORTANT: When finished editing all of the exercies, " +
+          "please click the Finished Editing button at the bottom.</span></p>");
         onlyEdit = 1;
         console.log("variable onlyEdit should be 1: " + onlyEdit);
         for (kay = counter; kay < (counter + 10); kay++) {
@@ -308,7 +310,7 @@ $(document).ready(function() {
         $("#editExercisesForms").append(finishAllHolder);
       }
 
-      // editing existing exercises.
+      // build editing existing exercises forms.
       function editExercises() {
         console.log("Inside function editExercises: kay = " + kay);
         console.log("Inside function editExercises: exercise[kay] = " + exercise[kay]);
@@ -330,9 +332,8 @@ $(document).ready(function() {
           holder.attr("index", kay);
           holder.text("Submit Changes For This Exercise");
           $("#editExercisesForms").append(holder);
-          $("#editExercisesForms").append("<p><span class='namebox'>When finished editing all of the exercies you wish, " +
-          "please click the Finished Editing button at the bottom" +
-          " of all the exercise edit forms.</span></p>");
+          $("#editExercisesForms").append("<p><span class='namebox'>IMPORTANT: When finished editing all of the exercies, " +
+          "please click the Finished Editing button at the bottom.</span></p>");
           e++;
       }
 

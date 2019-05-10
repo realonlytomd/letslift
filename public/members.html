@@ -10,7 +10,12 @@
 </head>
 
 <body>
-
+  <!-- This div holds the code to play audio while the user is resting between sets.
+    IOS seems to limit sound in an app to be only played if the user initiates the sound,
+    as in through a click event. I could accomplish this by playing a sound file that counts
+    after the user hits the Set button, but then they couldn't listen to music at the same time.
+    I've chosen to leave it as is, so only Android users will hear the time elapsed 
+    during rest phases.-->
   <div id="audioCode">
   </div>
 
@@ -59,11 +64,11 @@
             <h2>Most workout apps have a preset list of exercises and equipment.<br>
               The Let's Lift app allows a user to build their own workout using the equipment in 
               their particular gym, and with whatever exercises they choose. The experienced
-              person can build their own workouts, or a person can build any workout they see
+              user can build their own workouts, or they can build any workout they see
               online or in a magazine.</h2>
             <h2>Each individualized workout consists of exercises, the weight used, 
               number of sets in each exercise, and the number of repetitions (reps) during each set.
-              The user keeps track of sets completed and rest time between sets during a workout.</h2>
+              The user can keep track of sets completed and the rest time between sets during a workout.</h2>
             <h3>The Process:</h3>
             <p>After logging in with your email address, click on the text: Click here to enter a new workout.
               Each user is allowed 5 workouts with 10 exercises each. <br>
@@ -85,28 +90,29 @@
               store the changes for that exercise. 
               After the "Submit Changes For This Exercise" button is clicked, the input fields then display
               the changes that you just made.<br>
-              You may make changes to any of your exerices in these forms, <br>
+              You may make changes to any of your exercises in these forms, <br>
               but the user MUST then click the Finished Editing button at the  bottom of all the forms.<br>
               The user is then taken back to the list of available workouts.<br>
               <h4>Delete</h4>
-              The user can delete a workout by merely clicking the Delete button underneath each individualized
+              The user can delete a workout by merely clicking the Delete button underneath each individual
               workout.<br>
               <h4>Workout</h4>
               Click on the name of the workout to start your session.
               You'll see the title of your current workout, and then a list of each exercise name,
-              the associated number of sets and reps, and at the assigned weight.<br>
+              the associated number of sets and reps, and the assigned weight.<br>
               Next, there's a row of buttons that represent each set. As the user finishes their first set, click the first button.<br>
               The label of the button, "Reps", will change to the number of assigned reps for that exercise, 
               and the button changes color.<br>
-              This is also when the clock starts. It is counting your rest time between sets. Every thirty seconds,
-              a beep to will sound to alert the user.  When you're ready, complete your next set, and then click the 
-              next button. That "Reps" label changes to the required number of sets completed, the color changes,
+              This is also when the clock starts. It is counting your rest time between sets. 
+              Android users will hear the elapsed time every thirty seconds.  
+              When you're ready, complete your next set, and then click the 
+              second button. That "Reps" label changes to the required number of sets completed, the color changes,
               and the clock starts over.<br>
               Work through your entire workout, easily keeping track of which exercise you're on, and checking off
               each set as you finish them. The beeps during your rest time keep you from resting too much.<br>
-              If you don't complete the required number of sets, clicking a Set button further will count down the label 
+              If you don't complete the required number of sets, clicking a Set button again will count down the label 
               to however many reps you did complete. If a mistake is made, and you've clicked the button too many
-              times, just click the button repeatedly as it will count down to zero, and start over. then just stop
+              times, just click the button repeatedly as it will count down to zero, and start over. Just stop
               when it displays the correct number of completed reps.<br>
               Note: the clock continues to count while choosing the correct number of reps completed!
             </p>
