@@ -65,6 +65,10 @@ label {
 	color: white;
 }
 
+#exerciseEntryForm {
+	margin-top: 10px;
+}
+
 button {
 	background-color: #f3e0ba;
 	margin-top: 10px;

@@ -722,9 +722,8 @@ $(document).ready(function() {
       function enterExercises() {
         $("#exerciseEntryForm").empty();
         console.log("Inside creating of exercise form functin: kay = " + kay + ",   e = " + e);
-        
-        $("#exerciseEntryForm").append("<h2><span class='namebox'>Enter exercise " + e + " of workout</span></h2>" +
-          "<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercise " + e + " in  Workout</legend>" +
+        // temporary take out: "<h2><span class='namebox'>Enter exercise " + e + " of workout</span></h2>"
+        $("#exerciseEntryForm").append("<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercise " + e + " in  Workout</legend>" +
           "<div class='form-group'><label for=" + exerciseInput[kay] + ">Name of Exercise</label>" +
           "<input type='text' class='form-control' id=" + exerciseInput[kay] + " placeholder=''></div>" +
           "<div class='form-group'><label for=" + weightInput[kay] + ">Weight</label>" +
