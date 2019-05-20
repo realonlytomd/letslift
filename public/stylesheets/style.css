@@ -69,6 +69,10 @@ label {
 	color: white;
 }
 
+.renameWorkoutNull {
+	margin-left: 5px;
+}
+
 #exerciseEntryForm {
 	margin-top: 10px;
 }
@@ -99,7 +103,7 @@ span a, a:hover {
 }
 
 button.startTimer {
-	margin-left: 15px;
+	margin-left: 12px;
 	margin-right: 0px;
 	margin-bottom: 10px;
 	width: 60px;
