@@ -44,6 +44,10 @@ form.login {
 	margin-top: 50px;
 }
 
+#pageTitle {
+	display: inline-block;
+}
+
 span.member-name {
 	text-transform: capitalize;
 }
