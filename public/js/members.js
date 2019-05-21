@@ -91,13 +91,11 @@ $(document).ready(function() {
     console.log("justName = " + justName);
     $(".member-name").text(justName);
 
-    // this function creates the delete user button in the navbar with the data of the user's id
+    // this function creates the delete user button in the warning modal with the data of the user's id
     var holder = $("<button>");
-    // not sure if I should use .data or .attr - study later
     holder.data("userId", userdata.id);
     holder.addClass("deleteUser");
     holder.text("Proceed");
-    //$("#navbarNames").append(holder); // or...
     $("#placeDeleteButton").append(holder);
 
     // This function deletes an entire user.
@@ -142,12 +140,17 @@ $(document).ready(function() {
         holder2.addClass("editWorkout");
         holder2.text("Edit");
         var holder = $("<button>");
+        holder.attr("type", "button");
+        holder.attr("data-toggle", "modal");
+        holder.attr("data-target", "#deleteWorkoutWarning");
         holder.attr("index", i);
-        holder.addClass("renameWorkoutNull");
+        holder.addClass("continueWorkoutDelete");
         holder.text("Delete");
+        
         $("#availableWorkouts").append("<h3 class='selectedWorkout'><span class='namebox'>" + workout[i] + "</span></h3>");
         $("#availableWorkouts").append(holder2);
         $("#availableWorkouts").append(holder);
+        
         // the Edit workout button will show all the exercises.
         // as the user submits the changes the data, then the new data is submitted to the database.
         // This is where the number of workouts for that user is counted. Available throughout.
@@ -367,6 +370,17 @@ $(document).ready(function() {
         $("#workoutRow").show();
         onlyEdit = 0;
         window.location.reload();
+      });
+
+      // need a function that allows the deletion of a workout to continue
+      $(document).on("click", ".continueWorkoutDelete", function(event) {
+        $("#placeDeleteWorkoutButton").empty();
+        var index = parseInt($(this).attr("index"));
+        var holder3 = $("<button>");
+        holder3.attr("index", index);
+        holder3.addClass("renameWorkoutNull");
+        holder3.text("Proceed");
+        $("#placeDeleteWorkoutButton").append(holder3);
       });
 
       // delete a workout. It actually update all forms to null or 0
