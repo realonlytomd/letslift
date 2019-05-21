@@ -90,6 +90,10 @@ button {
 	border-color: #5d4a44;
 }
 
+button#noMoreExercises {
+	margin-left: 5px;
+}
+
 button:focus, button:visited {
 	border-color: #c6a57b;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(247,247,0,0.6);
