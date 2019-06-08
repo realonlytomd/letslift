@@ -61,6 +61,9 @@ span.namebox {
 	display: inline-block; /*this keeps wrapped text padding from obscuring previous lines
 	Also, this was still a good exercise for the inline-block. I may take out the background pic*/
 	border-radius: 4px;
+	border-style: outset;
+	border-width: 1px;
+	border-color: black;
 }
 
 h3 {
