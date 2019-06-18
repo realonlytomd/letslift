@@ -24,7 +24,7 @@
         <div class="modal-content">
           <div class="modal-body">
             <h2>You entered <span id="wrongName"></span> as your email.</h2>
-            <h2>Please enter an email address in the form name@something.com, and a 6 digit password.</h2>
+            <h2>Please enter an email address in the form name@anything.com, and a 6 digit password.</h2>
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Close</button>
@@ -36,6 +36,35 @@
     <div class="row">
       <div class="col-sm-offset-3 col-sm-6">
         <h2 class="text-center"><span class="namebox">Sign Up Form</span></h2>
+        <!-- Button trigger modal -->
+        <div class="text-center">
+          <button type="button" data-toggle="modal" data-target="#myModalSignUp">
+              Sign Up Advice
+          </button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModalSignUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title text-center" id="myModalLabel">Sign Up Advice</h2>
+              </div>
+              <div class="modal-body">
+                <h2>This is not a secure site.
+                  <br>There's no need to enter your actual email address. Just make up something that
+                  you'll remember when you want to use the workout app.
+                  <br>Please use the form name@anything.com, and 
+                  a six digit password. Don't forget your password!
+                </h2>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    <!-- End of Bootstrap code -->
         <form class="signup">
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
