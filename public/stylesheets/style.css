@@ -18,6 +18,10 @@ body {
 	border-radius: 4px;
 }
 
+#introExplain {
+	margin-bottom: 10px;
+}
+
 /* Change glow around all input fields to yellow from bootstrap's blue */
 .form-control:focus {
 	border-color: #c6a57b;
@@ -29,11 +33,16 @@ form.login {
   margin-top: 50px;
 }
 
+#formMarginBottom {
+	margin-bottom: 50px;
+}
+
 #loginDiv {
 	border-left-style: solid;
 	border-color: white;
 	border-width: 2px;
 	padding-left: 15px;
+	padding-bottom: 15px;
 }
 
 #signupinLogin {
