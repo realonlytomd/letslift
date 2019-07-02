@@ -735,7 +735,7 @@ $(document).ready(function() {
       // this function creates the form for inputting exercises
       function enterExercises() {
         $("#exerciseEntryForm").empty();
-        console.log("Inside creating of exercise form functin: kay = " + kay + ",   e = " + e);
+        console.log("Inside creating of exercise form function: kay = " + kay + ",   e = " + e);
         // temporary take out: "<h2><span class='namebox'>Enter exercise " + e + " of workout</span></h2>"
         $("#exerciseEntryForm").append("<form class='enterWorkoutExercises'><fieldset><legend>Enter Exercise " + e + " in  Workout</legend>" +
           "<div class='form-group'><label for=" + exerciseInput[kay] + ">Name of Exercise</label>" +
