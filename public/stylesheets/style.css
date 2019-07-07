@@ -68,7 +68,7 @@ span.namebox {
 	background-color: #5d4a44;
 	color: white;
 	display: inline-block; /*this keeps wrapped text padding from obscuring previous lines
-	Also, this was still a good exercise for the inline-block. I may take out the background pic*/
+	Also, this was still a good exercise for the inline-block. */
 	border-radius: 4px;
 	border-style: outset;
 	border-width: 1px;
