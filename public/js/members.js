@@ -387,7 +387,7 @@ $(document).ready(function() {
       $(document).on("click", ".renameWorkoutNull", function(event) {
         event.preventDefault();
         var indexWorkout = parseInt($(this).attr("index"));
-        console.log("inside function to rename workout data to null, index: " + indexWorkout);
+        // console.log("inside function to rename workout data to null, index: " + indexWorkout);
         switch (indexWorkout) {
           case 0:
             var workoutNameInputs = {
