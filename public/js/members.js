@@ -281,7 +281,7 @@ $(document).ready(function() {
         console.log("counter inside buildExerciseEditforms: " + counter);
         e = 1;
         //
-        // here, add ability to edit the name of the chosen workout
+        // here, add ability to edit the name of the user's chosen workout
         // the submit here should just update the db, user still needs to hit the finished editing button
         // 
         $("#editExercisesForms").append("<h2><span class='namebox'>Wish To Change Name of Workout?</span></h2>" +
